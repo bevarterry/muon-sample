@@ -7,6 +7,7 @@ import Splash from './src/view/Splash';
 import Home from './src/view/home';
 import Crypto from './src/view/crypto';
 import Asset from './src/view/asset';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const Stack = createStackNavigator();
 const baseTransitionOption = {
@@ -19,7 +20,6 @@ const App = () => {
   return (
     <NavigationContainer
       ref={navigationRef}
-      //@ts-ignore
       fallback={<ActivityIndicator color="blue" size="large" />}>
       <Stack.Navigator
         screenOptions={{headerShown: false}}
