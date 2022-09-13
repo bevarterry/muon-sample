@@ -10,7 +10,6 @@ import {
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {MAIN_BLACK} from './ColorCode';
-import FastImage from 'react-native-fast-image';
 import deviceInfoModule from 'react-native-device-info';
 import Home from './home';
 import Vault from './vault';
@@ -24,7 +23,7 @@ const home_icon = require('../../assets/image/home_icon.png');
 const vault_icon = require('../../assets/image/vault_icon.png');
 const nft_icon = require('../../assets/image/vault_icon.png');
 const life_icon = require('../../assets/image/vault_icon.png');
-const concierge_icon = require('../../assets/image/vault_icon.png');
+const concierge_icon = require('../../assets/image/concierge_icon.png');
 
 const Main = () => {
   // 탭 메뉴 함수

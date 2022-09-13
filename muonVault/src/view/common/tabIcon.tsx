@@ -29,7 +29,7 @@ const TabIcon: React.FC<React.PropsWithChildren<Props>> = ({
         }}
         source={icon}
       />
-      <View style={[s.tabOptionTextBox, {borderBottomWidth: active ? 1 : 0}]}>
+      <View style={[s.tabOptionTextBox, {borderBottomWidth: active ? 2 : 0}]}>
         <Text
           style={[
             s.tabOptionText,

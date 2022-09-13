@@ -2,7 +2,7 @@ import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
-import ButtonComponent from '../../component/ButtonComponent';
+import ButtonComponent from '../common/ButtonComponent';
 import {BASE_BACKGROUND, BASE_BUTTON, MAIN_BLACK} from '../ColorCode';
 const onboard_center_image = require('../../../assets/image/onboard_center_image.png');
 import Top from '../common/top';

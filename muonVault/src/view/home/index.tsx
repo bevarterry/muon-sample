@@ -1,13 +1,19 @@
 import React from 'react';
-import {View} from 'react-native';
-import Top from '../common/top';
+import {StyleSheet, Text, View} from 'react-native';
 
 const Home = () => {
   return (
     <>
-      <View></View>
+      <View style={s.wrapper}></View>
     </>
   );
 };
 
 export default Home;
+
+const s = StyleSheet.create({
+  wrapper: {
+    width: '100%',
+    height: '100%',
+  },
+});
