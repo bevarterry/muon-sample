@@ -7,11 +7,13 @@ type Props = {
   title: string;
   left?: boolean;
   backgroundColor?: string;
+  onTouchBackButton?: Function;
 };
 const top: React.FC<React.PropsWithChildren<Props>> = ({
   title,
   left,
   backgroundColor,
+  onTouchBackButton,
 }) => {
   return (
     <>
@@ -20,7 +22,12 @@ const top: React.FC<React.PropsWithChildren<Props>> = ({
           s.topWrapper,
           {backgroundColor: backgroundColor ? backgroundColor : '#ffffff'},
         ]}>
-        <TouchableOpacity style={s.buttonWrapper} activeOpacity={0.7}>
+        <TouchableOpacity
+          style={s.buttonWrapper}
+          activeOpacity={0.7}
+          onPress={() => {
+            if (onTouchBackButton) onTouchBackButton();
+          }}>
           {left && (
             <FastImage
               resizeMode="contain"

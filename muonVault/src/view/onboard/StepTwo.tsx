@@ -7,22 +7,19 @@ import {BASE_BACKGROUND, BASE_BUTTON, MAIN_BLACK} from '../ColorCode';
 const onboard_center_image = require('../../../assets/image/onboard_center_image.png');
 import Top from '../common/top';
 
-const StepOne = () => {
+const StepTwo = () => {
   const navigation = useNavigation();
-
-  function moveToCreate() {
-    navigation.navigate('MyWalletWeb' as never);
-  }
-
-  function moveToStep2() {
-    navigation.navigate('StepTwo' as never);
-  }
 
   return (
     <>
-      <Top title={''} backgroundColor={BASE_BACKGROUND} />
+      <Top
+        title={''}
+        backgroundColor={BASE_BACKGROUND}
+        left={true}
+        onTouchBackButton={navigation.goBack}
+      />
       <View style={s.wrapper}>
-        <Text style={s.centerText}>Are you new to{'\n'}Mu:Vault?</Text>
+        <Text style={s.centerText}>What can I help you?</Text>
         <FastImage
           resizeMode="contain"
           style={s.centerImage}
@@ -30,7 +27,7 @@ const StepOne = () => {
         />
         <View style={s.bottomButtonWrapper}>
           <ButtonComponent
-            title="Yes"
+            title="Find my Mu:Vault"
             width="100%"
             borderColor={BASE_BUTTON}
             titleColor={MAIN_BLACK}
@@ -40,13 +37,13 @@ const StepOne = () => {
           />
           <View style={{height: 10}} />
           <ButtonComponent
-            title="No"
+            title="Inherit MU:Vault"
             width="100%"
             borderColor={BASE_BUTTON}
             titleColor={MAIN_BLACK}
             borderRadius="20"
             bodyColor={BASE_BUTTON}
-            click={moveToStep2}
+            click={() => {}}
           />
         </View>
       </View>
@@ -54,7 +51,7 @@ const StepOne = () => {
   );
 };
 
-export default StepOne;
+export default StepTwo;
 
 const s = StyleSheet.create({
   wrapper: {
