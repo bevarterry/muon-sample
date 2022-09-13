@@ -8,8 +8,8 @@ const splash_log_3 = require('../../assets/image/splash_logo_3.png');
 const Splash = (props: any) => {
   useEffect(() => {
     setTimeout(() => {
-      props.navigation.replace('Home');
-    }, 8000000);
+      props.navigation.replace('StepOne');
+    }, 800);
   });
 
   return (

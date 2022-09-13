@@ -8,6 +8,7 @@ import Home from './src/view/home';
 import Crypto from './src/view/crypto';
 import Asset from './src/view/asset';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import StepOne from './src/view/onboard/StepOne';
 
 const Stack = createStackNavigator();
 const baseTransitionOption = {
@@ -38,6 +39,11 @@ const App = () => {
         <Stack.Screen
           name="Asset"
           component={Asset}
+          options={baseTransitionOption}
+        />
+        <Stack.Screen
+          name="StepOne"
+          component={StepOne}
           options={baseTransitionOption}
         />
         {/*
