@@ -2,7 +2,7 @@ import React from 'react';
 import {View} from 'react-native';
 import Top from '../common/top';
 
-const Home = () => {
+const Nft = () => {
   return (
     <>
       <View></View>
@@ -10,4 +10,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Nft;

@@ -10,6 +10,7 @@ import Asset from './src/view/asset';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import StepOne from './src/view/onboard/StepOne';
 import StepTwo from './src/view/onboard/StepTwo';
+import Main from './src/view/main';
 
 const Stack = createStackNavigator();
 const baseTransitionOption = {
@@ -27,6 +28,11 @@ const App = () => {
         screenOptions={{headerShown: false}}
         initialRouteName="Splash">
         <Stack.Screen name="Splash" component={Splash} />
+        <Stack.Screen
+          name="Main"
+          component={Main}
+          options={baseTransitionOption}
+        />
         <Stack.Screen
           name="Home"
           component={Home}

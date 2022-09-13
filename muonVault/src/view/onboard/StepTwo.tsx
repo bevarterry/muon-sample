@@ -10,6 +10,9 @@ import Top from '../common/top';
 const StepTwo = () => {
   const navigation = useNavigation();
 
+  function moveToHome() {
+    navigation.navigate('Main' as never);
+  }
   return (
     <>
       <Top
@@ -33,7 +36,7 @@ const StepTwo = () => {
             titleColor={MAIN_BLACK}
             borderRadius="20"
             bodyColor={BASE_BUTTON}
-            click={() => {}}
+            click={moveToHome}
           />
           <View style={{height: 10}} />
           <ButtonComponent
