@@ -1,0 +1,17 @@
+{
+    "data":[
+        {"countryId": "FRA","krName": "프랑스"}
+        ,{"countryId": "ITA","krName": "이탈리아"}
+        ,{"countryId": "CHL","krName": "칠레"}
+        ,{"countryId": "USA","krName": "미국"}
+        ,{"countryId": "AUS","krName": "호주"}
+        ,{"countryId": "ESP","krName": "스페인"}
+        ,{"countryId": "DEU","krName": "독일"}
+        ,{"countryId": "PRT","krName": "포르투칼"}
+        ,{"countryId": "NZL","krName": "뉴질랜드"}
+        ,{"countryId": "ATG","krName": "아르헨티나"}
+        ,{"countryId": "HUN","krName": "헝가리"}
+        ,{"countryId": "CAN","krName": "캐나다"}
+        ,{"countryId": "HRV","krName": "크로아티아"}
+        ]
+} 

@@ -1,0 +1,24 @@
+{
+    "data":[
+        {
+            "code" : "RED",
+            "name" : "레드"
+        },
+        {
+            "code" : "WHITE",
+            "name" : "화이트"
+        },
+        {
+            "code" : "SPARKLE",
+            "name" : "스파클링"
+        },
+        {
+            "code" : "ROSE",
+            "name" : "로제"
+        },
+        {
+            "code" : "FORTIFIED",
+            "name" : "주정강화"
+        }
+    ]
+}

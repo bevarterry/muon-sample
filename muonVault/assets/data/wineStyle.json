@@ -1,0 +1,88 @@
+{
+    "data":[
+        {
+            "code" : "SUGAR",
+            "name" : "당도",
+            "property" : [
+                {
+                    "name" : "드라이한",
+                    "min" : 0,
+                    "max" : 2
+                },
+                {
+                    "name" : "적당한",
+                    "min" : 3,
+                    "max" : 3
+                },
+                {
+                    "name" : "달콤한편",
+                    "min" : 4,
+                    "max" : 5
+                }
+            ]
+        },
+        {
+            "code" : "ACIDITY",
+            "name" : "산미",
+            "property" : [
+                {
+                    "name" : "산미없는",
+                    "min" : 0,
+                    "max" : 2
+                },
+                {
+                    "name" : "적당한",
+                    "min" : 3,
+                    "max" : 3
+                },
+                {
+                    "name" : "산미있는",
+                    "min" : 4,
+                    "max" : 5
+                }
+            ]
+        },
+        {
+            "code" : "TANIN",
+            "name" : "타닌",
+            "property" : [
+                {
+                    "name" : "부드러운",
+                    "min" : 0,
+                    "max" : 2
+                },
+                {
+                    "name" : "적당한",
+                    "min" : 3,
+                    "max" : 3
+                },
+                {
+                    "name" : "떫은편",
+                    "min" : 4,
+                    "max" : 5
+                }
+            ]
+        },
+        {
+            "code" : "BODY",
+            "name" : "바디",
+            "property" : [
+                {
+                    "name" : "가벼운",
+                    "min" : 0,
+                    "max" : 2
+                },
+                {
+                    "name" : "적당한",
+                    "min" : 3,
+                    "max" : 3
+                },
+                {
+                    "name" : "묵직한편",
+                    "min" : 4,
+                    "max" : 5
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="18" height="30" viewBox="0 0 18 30">
+    <g fill="none" fill-rule="evenodd">
+        <g>
+            <g>
+                <g>
+                    <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.904 0C3.67 0 1.049 2.621 1.049 5.855v2.8h11.708v-2.8C12.757 2.62 10.137 0 6.904 0z" transform="translate(-441 -424) translate(425 414) translate(18 12)"/>
+                    <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11.964 25.426H1.79c-1.036 0-1.855-.854-1.787-1.863l.41-13.938c.017-.54.47-.971 1.024-.971h10.82c.552 0 1.005.427 1.023.966l.47 13.943c.067 1.009-.752 1.863-1.787 1.863z" transform="translate(-441 -424) translate(425 414) translate(18 12)"/>
+                    <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" d="M9.406 12.168L9.706 21.875M4.374 12.168L4.073 21.875" opacity=".5" transform="translate(-441 -424) translate(425 414) translate(18 12)"/>
+                    <path fill="#000" d="M7.607 3.613c0 .394-.319.713-.714.713-.393 0-.712-.32-.712-.713 0-.395.319-.714.712-.714.395 0 .714.32.714.714M9.964 4.812c0 .394-.32.712-.713.712-.395 0-.713-.318-.713-.712 0-.395.318-.714.713-.714.394 0 .713.32.713.714M5.25 4.812c0 .394-.32.712-.713.712-.394 0-.714-.318-.714-.712 0-.395.32-.714.714-.714.394 0 .713.32.713.714" transform="translate(-441 -424) translate(425 414) translate(18 12)"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

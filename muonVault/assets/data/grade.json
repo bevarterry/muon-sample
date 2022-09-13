@@ -1,0 +1,24 @@
+{
+    "data":[
+        {
+            "code" : "FOUR",
+            "name" : "베스트 칠러",
+            "description": "시음노트 100개 / 받은 좋아요 1,000개"
+        },
+        {
+            "code" : "THREE",
+            "name" : "에이스 칠러",
+            "description": "시음노트 50개 / 받은 좋아요 500개"
+        },
+        {
+            "code" : "TWO",
+            "name" : "와인러버",
+            "description": "시음노트 10개 / 받은 좋아요 10개 "
+        },
+        {
+            "code" : "ONE",
+            "name" : "와린이",
+            "description": "가입시 기본등급"
+        }
+    ]
+}

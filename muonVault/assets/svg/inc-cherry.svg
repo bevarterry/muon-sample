@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
+    <g fill="none" fill-rule="evenodd">
+        <g stroke="#000" stroke-width="1.5">
+            <g>
+                <g>
+                    <path d="M12.056 22.439c-1.213 1.473-3.384 2.732-5.441 2.732C2.961 25.17 0 22.209 0 18.556c0-3.653 2.961-6.615 6.615-6.615 2.221 0 4.187 1.095 5.386 2.774" transform="translate(-165 -80) translate(165 80) translate(3.412 2.334)"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5.134 15.693h0c.948.948 2.465 1.01 3.486.141l.166-.14" transform="translate(-165 -80) translate(165 80) translate(3.412 2.334)"/>
+                    <path d="M24.268 16.259c1.269 3.425-.48 7.23-3.905 8.5-3.425 1.269-7.231-.48-8.5-3.905-1.268-3.426.48-7.231 3.905-8.5 3.426-1.27 7.23.479 8.5 3.905z" transform="translate(-165 -80) translate(165 80) translate(3.412 2.334)"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.683 16.386h0c1.218.56 2.662.09 3.318-1.08l.107-.19" transform="translate(-165 -80) translate(165 80) translate(3.412 2.334)"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.603 16S4.234 6.024 15.291 3.364c0 0-1.58 7.15 2.37 12.636M12.175 0s2.157 4.749 7.572 4.048" transform="translate(-165 -80) translate(165 80) translate(3.412 2.334)"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

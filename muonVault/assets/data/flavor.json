@@ -1,0 +1,150 @@
+{
+    "data":[
+        {
+            "flavor" : "RASPBERRY",
+            "name" : "라즈베리향",
+            "backColor": "#b22e3c"
+        },
+        {
+            "flavor" : "PLUM",
+            "name" : "자두향",
+            "backColor": "#7b0f4f"
+        },
+        {
+            "flavor" : "ORANGE",
+            "name" : "오렌지향",
+            "backColor": "#ff7514"
+        },
+        {
+            "flavor" : "APPLE",
+            "name" : "사과향",
+            "backColor": "#e43f3f"
+        },
+        {
+            "flavor" : "PEACH",
+            "name" : "복숭아향",
+            "backColor": "#ff9583"
+        },
+        {
+            "flavor" : "LEATHER",
+            "name" : "가죽향",
+            "backColor": "#844526"
+        },
+        {
+            "flavor" : "EARTHY",
+            "name" : "흙향",
+            "backColor": "#698745"
+        },
+        {
+            "flavor" : "SMOKE",
+            "name" : "스모크향",
+            "backColor": "#544f4c"
+        },
+        {
+            "flavor" : "VANILLA",
+            "name" : "바닐라향",
+            "backColor": "#ffc85a"
+        },
+        {
+            "flavor" : "CHOCOLATE",
+            "name" : "초콜릿향",
+            "backColor": "#3a1f13"
+        },
+        {
+            "flavor" : "OAKY",
+            "name" : "오크향",
+            "backColor": "#975e40"
+        },
+        {
+            "flavor" : "CHERRY",
+            "name" : "체리향",
+            "backColor": "#cd3469"
+        },
+        {
+            "flavor" : "PEAR",
+            "name" : "배향",
+            "backColor": "#eaaf59"
+        },
+        {
+            "flavor" : "STRAWBERRY",
+            "name" : "딸기향",
+            "backColor": "#f14b6f"
+        },
+        {
+            "flavor" : "MELON",
+            "name" : "메론향",
+            "backColor": "#48bc66"
+        },{
+            "flavor" : "LEMON",
+            "name" : "레몬향",
+            "backColor": "#ffdb43"
+        },
+        
+        {
+            "flavor" : "FLOWER",
+            "name" : "꽃향",
+            "backColor": "#ff7f8f"
+        },
+        {
+            "flavor" : "STONE",
+            "name" : "돌향",
+            "backColor": "#605950"
+        },
+
+        {
+            "flavor" : "BUTTER",
+            "name" : "버터향",
+            "backColor": "#edd591"
+        },
+        {
+            "flavor" : "YOGURT",
+            "name" : "요거트향",
+            "backColor": "#e2c196"
+        },
+        {
+            "flavor" : "BANANA",
+            "name" : "바나나향",
+            "backColor": "#ffc932"
+        },
+        
+        {
+            "flavor" : "BARN",
+            "name" : "마굿간향",
+            "backColor": "#6a5824"
+        },
+        {
+            "flavor" : "TOAST",
+            "name" : "토스트향",
+            "backColor": "#bf8856"
+        },
+
+
+        {
+            "flavor" : "NUTTY",
+            "name" : "견과류향",
+            "backColor": "#af6522"
+        },
+        {
+            "flavor" : "PEPPER",
+            "name" : "후추향",
+            "backColor": "#000000"
+        },
+
+
+        {
+            "flavor" : "CARAMEL",
+            "name" : "카라멜향",
+            "backColor": "#db7028"
+        },
+        {
+            "flavor" : "HONEY",
+            "name" : "꿀향",
+            "backColor": "#f4a32c"
+        },
+        {
+            "flavor" : "CINNAMON",
+            "name": "계피향",
+            "backColor": "#b04801"
+        }
+    ]
+}
