@@ -77,6 +77,7 @@ const s = StyleSheet.create({
   wrapper: {
     width: '100%',
     height: '100%',
+    backgroundColor: BASE_BACKGROUND,
   },
   topComponentWrapper: {
     width: '100%',

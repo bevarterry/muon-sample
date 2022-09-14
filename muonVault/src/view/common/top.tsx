@@ -61,7 +61,9 @@ const s = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: 25,
+    fontSize: 16,
+    fontWeight: '700',
+    lineHeight: 32,
   },
   buttonWrapper: {
     width: 40,

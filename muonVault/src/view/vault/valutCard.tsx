@@ -1,3 +1,4 @@
+import {useNavigation} from '@react-navigation/native';
 import React, {useEffect} from 'react';
 import {Dimensions, StyleSheet, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
@@ -6,6 +7,7 @@ import {useSelector} from 'react-redux';
 import {Vault} from '../../model/vaults';
 import {RootState} from '../../store/modules';
 import {DIMED_GRAY} from '../ColorCode';
+import CoinTitleComponent from '../common/coinTitleComponent';
 
 const btc_icon = require('../../../assets/image/btc_icon.png');
 const eth_icon = require('../../../assets/image/eth_icon.png');
@@ -20,37 +22,11 @@ type Prop = {
   vault: Vault;
 };
 const ValutCard: React.FC<React.PropsWithChildren<Prop>> = ({vault}) => {
+  const navigation = useNavigation();
+
   const ratioStore = useSelector((root: RootState) => root.ratioStore);
 
   useEffect(() => {}, [vault]);
-
-  const coinRigntView = (symbol: string, imageSource: any) => {
-    return (
-      <View
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-        }}>
-        <View
-          style={{
-            width: 20,
-            height: 20,
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginRight: 10,
-          }}>
-          <FastImage
-            resizeMode="contain"
-            style={s.coinIcon}
-            source={imageSource}
-          />
-        </View>
-        <Text style={{fontSize: 14, fontWeight: '700'}}>{symbol}</Text>
-      </View>
-    );
-  };
 
   const devider = () => {
     return (
@@ -85,8 +61,14 @@ const ValutCard: React.FC<React.PropsWithChildren<Prop>> = ({vault}) => {
     );
   };
 
+  function moveDetail() {
+    navigation.navigate('VaultDetail' as never, {element: vault} as never);
+  }
   return (
-    <TouchableOpacity style={s.valutCard} activeOpacity={0.7}>
+    <TouchableOpacity
+      style={s.valutCard}
+      activeOpacity={0.7}
+      onPress={moveDetail}>
       <View style={[s.cardTitle, {backgroundColor: vault.color}]}>
         <Text style={s.cardTitleText}>{vault.name}</Text>
         <Text style={{fontSize: 16, fontWeight: '700', color: '#ffffff'}}>
@@ -94,35 +76,35 @@ const ValutCard: React.FC<React.PropsWithChildren<Prop>> = ({vault}) => {
         </Text>
       </View>
       <View style={s.cardRow}>
-        {coinRigntView('BTC', btc_icon)}
+        <CoinTitleComponent symbol="BTC" imageSource={btc_icon} />
         {displayValue(vault.BTC, ratioStore.ratioSet.BTC)}
       </View>
 
       {devider()}
 
       <View style={s.cardRow}>
-        {coinRigntView('ETH', eth_icon)}
+        <CoinTitleComponent symbol="ETH" imageSource={eth_icon} />
         {displayValue(vault.ETH, ratioStore.ratioSet.ETH)}
       </View>
 
       {devider()}
 
       <View style={s.cardRow}>
-        {coinRigntView('BNB', bnb_icon)}
+        <CoinTitleComponent symbol="BNB" imageSource={bnb_icon} />
         {displayValue(vault.BNB, ratioStore.ratioSet.BNB)}
       </View>
 
       {devider()}
 
       <View style={s.cardRow}>
-        {coinRigntView('USDC', usdc_icon)}
+        <CoinTitleComponent symbol="USDC" imageSource={usdc_icon} />
         {displayValue(vault.USDC, ratioStore.ratioSet.USDC)}
       </View>
 
       {devider()}
 
       <View style={s.cardRow}>
-        {coinRigntView('MU', muon_icon)}
+        <CoinTitleComponent symbol="MU" imageSource={muon_icon} />
         {displayValue(vault.MU, ratioStore.ratioSet.MU)}
       </View>
     </TouchableOpacity>

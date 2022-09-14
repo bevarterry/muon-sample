@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
-import {MAIN_BLACK} from './ColorCode';
+import {BASE_BACKGROUND, MAIN_BLACK} from './ColorCode';
 import deviceInfoModule from 'react-native-device-info';
 import Home from './home';
 import Vault from './vault';
@@ -98,13 +98,14 @@ const Main = () => {
   return (
     <>
       <StatusBar
-        backgroundColor="#0000ff00"
+        backgroundColor={BASE_BACKGROUND}
         barStyle="dark-content"
         translucent={true}
       />
       <View
         style={{
           width: '100%',
+          backgroundColor: BASE_BACKGROUND,
           height: getStatusBarHeight(),
         }}
       />
@@ -132,6 +133,7 @@ export default Main;
 const s = StyleSheet.create({
   wrapper: {
     zIndex: 1,
+    backgroundColor: BASE_BACKGROUND,
     flexDirection: 'row',
     paddingHorizontal: 22,
     paddingTop: 5,

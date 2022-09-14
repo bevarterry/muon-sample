@@ -13,6 +13,7 @@ import StepTwo from './src/view/onboard/StepTwo';
 import Main from './src/view/main';
 import {Provider} from 'react-redux';
 import store from './src/store';
+import VaultDetail from './src/view/vault/detail';
 
 const Stack = createStackNavigator();
 const baseTransitionOption = {
@@ -59,6 +60,11 @@ const App = () => {
           <Stack.Screen
             name="StepTwo"
             component={StepTwo}
+            options={baseTransitionOption}
+          />
+          <Stack.Screen
+            name="VaultDetail"
+            component={VaultDetail}
             options={baseTransitionOption}
           />
           {/*
