@@ -11,6 +11,8 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import StepOne from './src/view/onboard/StepOne';
 import StepTwo from './src/view/onboard/StepTwo';
 import Main from './src/view/main';
+import {Provider} from 'react-redux';
+import store from './src/store';
 
 const Stack = createStackNavigator();
 const baseTransitionOption = {
@@ -21,50 +23,52 @@ const modalPresentOption = {
 };
 const App = () => {
   return (
-    <NavigationContainer
-      ref={navigationRef}
-      fallback={<ActivityIndicator color="blue" size="large" />}>
-      <Stack.Navigator
-        screenOptions={{headerShown: false}}
-        initialRouteName="Splash">
-        <Stack.Screen name="Splash" component={Splash} />
-        <Stack.Screen
-          name="Main"
-          component={Main}
-          options={baseTransitionOption}
-        />
-        <Stack.Screen
-          name="Home"
-          component={Home}
-          options={baseTransitionOption}
-        />
-        <Stack.Screen
-          name="Crypto"
-          component={Crypto}
-          options={baseTransitionOption}
-        />
-        <Stack.Screen
-          name="Asset"
-          component={Asset}
-          options={baseTransitionOption}
-        />
-        <Stack.Screen
-          name="StepOne"
-          component={StepOne}
-          options={baseTransitionOption}
-        />
-        <Stack.Screen
-          name="StepTwo"
-          component={StepTwo}
-          options={baseTransitionOption}
-        />
-        {/*
+    <Provider store={store}>
+      <NavigationContainer
+        ref={navigationRef}
+        fallback={<ActivityIndicator color="blue" size="large" />}>
+        <Stack.Navigator
+          screenOptions={{headerShown: false}}
+          initialRouteName="Splash">
+          <Stack.Screen name="Splash" component={Splash} />
+          <Stack.Screen
+            name="Main"
+            component={Main}
+            options={baseTransitionOption}
+          />
+          <Stack.Screen
+            name="Home"
+            component={Home}
+            options={baseTransitionOption}
+          />
+          <Stack.Screen
+            name="Crypto"
+            component={Crypto}
+            options={baseTransitionOption}
+          />
+          <Stack.Screen
+            name="Asset"
+            component={Asset}
+            options={baseTransitionOption}
+          />
+          <Stack.Screen
+            name="StepOne"
+            component={StepOne}
+            options={baseTransitionOption}
+          />
+          <Stack.Screen
+            name="StepTwo"
+            component={StepTwo}
+            options={baseTransitionOption}
+          />
+          {/*
         <Stack.Screen name="Character" component={Character} options={{...TransitionPresets.ModalSlideFromBottomIOS, 
           title: 'Select Character',
           headerShown: true }}
           /> */}
-      </Stack.Navigator>
-    </NavigationContainer>
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 };
 

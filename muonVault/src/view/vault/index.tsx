@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {BASE_BACKGROUND} from '../ColorCode';
+import TotalAssetsComponent from './totalAssetsComponent';
 
 const Vault = () => {
   return (
@@ -9,6 +10,7 @@ const Vault = () => {
       <View style={s.wrapper}>
         <TopComponent />
         <AssetSummaryComponent />
+        <TotalAssetsComponent />
       </View>
     </>
   );

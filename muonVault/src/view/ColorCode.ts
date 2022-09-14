@@ -8,3 +8,4 @@ export const SPLASH_BACKGROUND = '#000000';
 export const BASE_BACKGROUND = '#F9F9F9';
 export const BASE_BUTTON = '#E4E4E4';
 export const MAIN_BLACK = '#1F1F1F';
+export const DIMED_GRAY = '#838383';
