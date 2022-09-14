@@ -28,6 +28,7 @@ const VaultDetail = (props: any) => {
     MU: 0,
     color: '#000000',
   });
+
   useEffect(() => {
     if (props.route.params.element) {
       setVault(props.route.params.element);
@@ -46,7 +47,21 @@ const VaultDetail = (props: any) => {
 
   const coinRow = (symbol: string, icon: any, value: number, ratio: number) => {
     return (
-      <TouchableOpacity style={s.coinRow} activeOpacity={0.7}>
+      <TouchableOpacity
+        style={s.coinRow}
+        activeOpacity={0.7}
+        onPress={() => {
+          navigation.navigate(
+            'CoinDetail' as never,
+            {
+              value: value,
+              symbol: symbol,
+              ratio: ratio,
+              icon: icon,
+              vault: vault,
+            } as never,
+          );
+        }}>
         <CoinTitleComponent
           symbol={symbol}
           imageSource={icon}
