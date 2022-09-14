@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View, Dimensions} from 'react-native';
+import {StyleSheet, Text, View, Dimensions, ScrollView} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {CoinDetailType} from '../../../model/coin';
@@ -20,7 +20,6 @@ const CoinDetail = (props: any) => {
     value: 0,
     ratio: 0,
     symbol: '',
-    txHistories: [],
   });
 
   const [vault, setVault] = useState<Vault>({
@@ -56,7 +55,11 @@ const CoinDetail = (props: any) => {
         left={true}
         onTouchBackButton={navigation.goBack}
       />
-      <View style={s.wrapper}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={{height: '100%'}}
+        contentContainerStyle={s.wrapper}
+        bounces={false}>
         <FastImage
           resizeMode="contain"
           style={{
@@ -73,7 +76,7 @@ const CoinDetail = (props: any) => {
 
         <TransactionButtonContainer onPress={(type: string) => {}} />
         <TransactionHistoryContainer symbol={coin.symbol} vault={vault} />
-      </View>
+      </ScrollView>
     </>
   );
 };
@@ -82,12 +85,13 @@ export default CoinDetail;
 
 const s = StyleSheet.create({
   wrapper: {
-    marginTop: 50 + getStatusBarHeight(),
+    paddingTop: 50 + getStatusBarHeight(),
     width: '100%',
-    height: '100%',
+
     backgroundColor: BASE_BACKGROUND,
     display: 'flex',
     alignItems: 'center',
+    paddingBottom: 50,
   },
   coinValue: {
     marginTop: 15,
