@@ -1,17 +1,29 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {BASE_BACKGROUND} from '../ColorCode';
 import TotalAssetsComponent from './totalAssetsComponent';
+import ValutCardComponent from './valutCardComponent';
 
 const Vault = () => {
   return (
     <>
-      <View style={s.wrapper}>
+      <ScrollView style={s.wrapper}>
         <TopComponent />
         <AssetSummaryComponent />
+        <View
+          style={{
+            width: '100%',
+            opacity: 0.1,
+            borderBottomWidth: 1,
+            marginTop: 15,
+            marginBottom: 10,
+            marginHorizontal: 33,
+          }}
+        />
         <TotalAssetsComponent />
-      </View>
+        <ValutCardComponent />
+      </ScrollView>
     </>
   );
 };
@@ -55,14 +67,6 @@ const AssetSummaryComponent = () => {
         }}>
         $72,032,532
       </Text>
-      <View
-        style={{
-          width: '100%',
-          opacity: 0.1,
-          borderBottomWidth: 1,
-          marginVertical: 20,
-        }}
-      />
     </View>
   );
 };

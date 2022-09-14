@@ -43,12 +43,15 @@ const s = StyleSheet.create({
   wrapper: {
     width: '100%',
     paddingHorizontal: 34,
+    paddingVertical: 0,
+    marginBottom: 20,
   },
   assetWrapper: {
     width: '100%',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    height: 24,
   },
   assetValueWrapper: {
     display: 'flex',

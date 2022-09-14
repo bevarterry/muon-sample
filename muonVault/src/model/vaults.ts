@@ -1,12 +1,11 @@
+export interface VaultList {
+  vaults: Array<Vault>;
+}
 export interface Vault {
   id?: string;
   name: string;
-}
-
-export interface ScAssetInfo {
-  symbol: string;
-  displayName: string;
-  contractAddress?: string;
-  totalValue?: string;
-  ratio?: number;
+  BTC: string;
+  BNB: string;
+  USDC: string;
+  ETH: string;
 }
