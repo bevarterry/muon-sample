@@ -10,10 +10,6 @@ import Top from '../../common/top';
 import TransactionButtonContainer from './transactionButtonContainer';
 import TransactionHistoryContainer from './transactionHistoryContainer';
 
-const {width, height} = Dimensions.get('window');
-const paddingHorizontal = 25;
-const gap = 12;
-
 const CoinDetail = (props: any) => {
   const navigation = useNavigation();
   const [coin, setCoin] = useState<CoinDetailType>({

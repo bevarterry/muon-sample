@@ -4,7 +4,7 @@ import FastImage from 'react-native-fast-image';
 import {BASE_BACKGROUND} from '../ColorCode';
 import TotalAssetsComponent from './totalAssetsComponent';
 import ValutCardListComponent from './valutCardListComponent';
-
+const top_logo = require('../../../assets/image/top_logo.png');
 const Vault = () => {
   return (
     <>
@@ -31,8 +31,15 @@ const Vault = () => {
 const TopComponent = () => {
   return (
     <View style={s.topComponentWrapper}>
-      <Text>MU:onoff</Text>
-      <Text>2,436 VP</Text>
+      <FastImage
+        resizeMode="contain"
+        style={{
+          width: 101,
+          height: 20,
+        }}
+        source={top_logo}
+      />
+      <Text style={{fontSize: 16, fontWeight: '700'}}>2,436 VP</Text>
     </View>
   );
 };
