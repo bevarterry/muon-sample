@@ -5,7 +5,7 @@ import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {useSelector} from 'react-redux';
 import {Vault} from '../../../model/vaults';
 import {RootState} from '../../../store/modules';
-import {BASE_BACKGROUND, DIMED_GRAY} from '../../ColorCode';
+import {BASE_BACKGROUND, DIMED_GRAY, MAIN_BORDER_COROR} from '../../ColorCode';
 import CoinTitleComponent from '../../common/coinTitleComponent';
 import Top from '../../common/top';
 
@@ -141,7 +141,7 @@ const s = StyleSheet.create({
     paddingVertical: 18,
     borderRadius: 14,
     borderWidth: 1,
-    borderColor: '#ECECEC',
+    borderColor: MAIN_BORDER_COROR,
     paddingHorizontal: 24,
   },
   value: {

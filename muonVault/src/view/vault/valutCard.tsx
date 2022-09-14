@@ -6,7 +6,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useSelector} from 'react-redux';
 import {Vault} from '../../model/vaults';
 import {RootState} from '../../store/modules';
-import {DIMED_GRAY} from '../ColorCode';
+import {DIMED_GRAY, MAIN_BORDER_COROR} from '../ColorCode';
 import CoinTitleComponent from '../common/coinTitleComponent';
 
 const btc_icon = require('../../../assets/image/btc_icon.png');
@@ -34,7 +34,7 @@ const ValutCard: React.FC<React.PropsWithChildren<Prop>> = ({vault}) => {
         style={{
           width: width - (paddingHorizontalLength * 2 + 26),
           borderBottomWidth: 1,
-          borderColor: '#ECECEC',
+          borderColor: MAIN_BORDER_COROR,
         }}
       />
     );

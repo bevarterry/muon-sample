@@ -8,6 +8,7 @@ import {Vault} from '../../../model/vaults';
 import {BASE_BACKGROUND, DIMED_GRAY} from '../../ColorCode';
 import Top from '../../common/top';
 import TransactionButtonContainer from './transactionButtonContainer';
+import TransactionHistoryContainer from './transactionHistoryContainer';
 
 const {width, height} = Dimensions.get('window');
 const paddingHorizontal = 25;
@@ -71,6 +72,7 @@ const CoinDetail = (props: any) => {
         <Text style={s.dollarValue}>Value ${coin.value * coin.ratio}</Text>
 
         <TransactionButtonContainer onPress={(type: string) => {}} />
+        <TransactionHistoryContainer symbol={coin.symbol} vault={vault} />
       </View>
     </>
   );
