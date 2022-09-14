@@ -13,9 +13,11 @@ import {
 } from '../../ColorCode';
 import BasicBadge from '../../common/basicBadge';
 import ButtonComponent from '../../common/ButtonComponent';
+import TextInputComponent from '../../common/TextInputComponent';
 import Top from '../../common/top';
 
 const WithDraw = (props: any) => {
+  const [toAddress, setToAddress] = useState('');
   const navigation = useNavigation();
   const [coin, setCoin] = useState<CoinDetailType>({
     value: 0,
@@ -80,7 +82,17 @@ const WithDraw = (props: any) => {
           />
           <Text style={{fontSize: 22, fontWeight: '700'}}>{vault.name}</Text>
         </View>
-        <View style={{width: '100%', paddingHorizontal: 20}}>
+        <TextInputComponent
+          placeHolder={'Enter withdrawal address or ENS'}
+          backgroundColor={'#ffffff'}
+          update={(e: string) => {
+            setToAddress(e);
+          }}
+          active={toAddress !== ''}
+          blur={(e: string) => {}}
+        />
+
+        <View style={{width: '100%', paddingHorizontal: 20, marginTop: 30}}>
           <ButtonComponent
             title="Next"
             width="100%"
