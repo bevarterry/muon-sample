@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react';
-import {Dimensions, FlatList, StyleSheet, Text, View} from 'react-native';
+import React, {useEffect} from 'react';
+import {Dimensions, StyleSheet, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useSelector} from 'react-redux';
 import {Vault} from '../../model/vaults';
 import {RootState} from '../../store/modules';
-import {BASE_BACKGROUND, DIMED_GRAY} from '../ColorCode';
+import {DIMED_GRAY} from '../ColorCode';
 
 const btc_icon = require('../../../assets/image/btc_icon.png');
 const eth_icon = require('../../../assets/image/eth_icon.png');
@@ -20,6 +20,8 @@ type Prop = {
   vault: Vault;
 };
 const ValutCard: React.FC<React.PropsWithChildren<Prop>> = ({vault}) => {
+  const ratioStore = useSelector((root: RootState) => root.ratioStore);
+
   useEffect(() => {}, [vault]);
 
   const coinRigntView = (symbol: string, imageSource: any) => {
@@ -62,42 +64,66 @@ const ValutCard: React.FC<React.PropsWithChildren<Prop>> = ({vault}) => {
     );
   };
 
+  const displayValue = (value: number, ratio: number) => {
+    return (
+      <>
+        <View style={s.assetValueWrapper}>
+          <Text style={s.displayCoinName}>{value}</Text>
+          <Text style={s.dollarValue}>(${value * ratio})</Text>
+        </View>
+      </>
+    );
+  };
+
+  const totalValueInDallor = () => {
+    return (
+      vault.BTC * ratioStore.ratioSet.BTC +
+      vault.ETH * ratioStore.ratioSet.ETH +
+      vault.BNB * ratioStore.ratioSet.BNB +
+      vault.USDC * ratioStore.ratioSet.USDC +
+      vault.MU * ratioStore.ratioSet.MU
+    );
+  };
+
   return (
-    <TouchableOpacity style={s.valutCard}>
-      <View style={s.cardTitle}>
+    <TouchableOpacity style={s.valutCard} activeOpacity={0.7}>
+      <View style={[s.cardTitle, {backgroundColor: vault.color}]}>
         <Text style={s.cardTitleText}>{vault.name}</Text>
+        <Text style={{fontSize: 16, fontWeight: '700', color: '#ffffff'}}>
+          ${totalValueInDallor()}
+        </Text>
       </View>
       <View style={s.cardRow}>
         {coinRigntView('BTC', btc_icon)}
-        <Text>{vault.BTC}</Text>
+        {displayValue(vault.BTC, ratioStore.ratioSet.BTC)}
       </View>
 
       {devider()}
 
       <View style={s.cardRow}>
         {coinRigntView('ETH', eth_icon)}
-        <Text>{vault.ETH}</Text>
+        {displayValue(vault.ETH, ratioStore.ratioSet.ETH)}
       </View>
 
       {devider()}
 
       <View style={s.cardRow}>
         {coinRigntView('BNB', bnb_icon)}
-        <Text>{vault.BNB}</Text>
+        {displayValue(vault.BNB, ratioStore.ratioSet.BNB)}
       </View>
 
       {devider()}
 
       <View style={s.cardRow}>
         {coinRigntView('USDC', usdc_icon)}
-        <Text>{vault.USDC}</Text>
+        {displayValue(vault.USDC, ratioStore.ratioSet.USDC)}
       </View>
 
       {devider()}
 
       <View style={s.cardRow}>
         {coinRigntView('MU', muon_icon)}
-        <Text>{vault.MU}</Text>
+        {displayValue(vault.MU, ratioStore.ratioSet.MU)}
       </View>
     </TouchableOpacity>
   );
@@ -118,15 +144,18 @@ const s = StyleSheet.create({
   },
   cardTitle: {
     width: '100%',
+    borderTopRightRadius: 14,
+    borderTopLeftRadius: 14,
     paddingHorizontal: 20,
-    paddingVertical: 17,
+    paddingVertical: 16,
     display: 'flex',
     justifyContent: 'space-between',
     flexDirection: 'row',
   },
   cardTitleText: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '800',
+    color: '#FFFFFF',
   },
   cardRow: {
     width: '100%',
@@ -134,10 +163,34 @@ const s = StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'row',
     paddingHorizontal: 20,
-    paddingVertical: 12,
+    paddingVertical: 8,
   },
   coinIcon: {
     width: 20,
     height: 20,
+  },
+  displayCoinName: {
+    fontSize: 14,
+    fontWeight: '700',
+    lineHeight: 28,
+    marginRight: 2,
+  },
+  coinValue: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#000000',
+    lineHeight: 28,
+    marginRight: 5,
+  },
+  dollarValue: {
+    fontSize: 14,
+    fontWeight: '400',
+    color: DIMED_GRAY,
+    lineHeight: 28,
+  },
+  assetValueWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });

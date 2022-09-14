@@ -1,11 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {Dimensions, FlatList, StyleSheet, Text, View} from 'react-native';
-import FastImage from 'react-native-fast-image';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useSelector} from 'react-redux';
 import {Vault} from '../../model/vaults';
 import {RootState} from '../../store/modules';
-import {BASE_BACKGROUND, DIMED_GRAY} from '../ColorCode';
 import ValutCard from './valutCard';
 
 const {width, height} = Dimensions.get('window');
@@ -40,7 +37,6 @@ const ValutCardListComponent = () => {
         snapToInterval={width - (paddingHorizontalLength * 2 - 8)}
         onScroll={onScroll}
         pagingEnabled
-        keyExtractor={(item: Vault, index) => String(index)}
         renderItem={({item}) => <ValutCard vault={item} />}
       />
       <View
@@ -74,12 +70,5 @@ const s = StyleSheet.create({
   wrapper: {
     paddingLeft: paddingHorizontalLength,
     paddingRight: paddingHorizontalLength - 8,
-  },
-  valutCard: {
-    width: width - paddingHorizontalLength * 2,
-    paddingVertical: 20,
-    marginRight: 8,
-    backgroundColor: 'red',
-    borderRadius: 14,
   },
 });

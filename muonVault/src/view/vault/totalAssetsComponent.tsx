@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {useSelector} from 'react-redux';
-import {ScAssetInfo} from '../../model/vaults';
+import {ScAssetInfo} from '../../model/scAssets';
 import {RootState} from '../../store/modules';
 import {BASE_BACKGROUND, DIMED_GRAY} from '../ColorCode';
 

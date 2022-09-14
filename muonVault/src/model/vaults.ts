@@ -4,9 +4,10 @@ export interface VaultList {
 export interface Vault {
   id?: string;
   name: string;
-  BTC: string;
-  BNB: string;
-  USDC: string;
-  ETH: string;
-  MU: string;
+  BTC: number;
+  BNB: number;
+  USDC: number;
+  ETH: number;
+  MU: number;
+  color: string;
 }
