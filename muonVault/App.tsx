@@ -15,6 +15,7 @@ import {Provider} from 'react-redux';
 import store from './src/store';
 import VaultDetail from './src/view/vault/detail';
 import CoinDetail from './src/view/vault/coinDetail';
+import WithDraw from './src/view/vault/transaction/withDraw';
 
 const Stack = createStackNavigator();
 const baseTransitionOption = {
@@ -71,6 +72,11 @@ const App = () => {
           <Stack.Screen
             name="CoinDetail"
             component={CoinDetail}
+            options={baseTransitionOption}
+          />
+          <Stack.Screen
+            name="WithDraw"
+            component={WithDraw}
             options={baseTransitionOption}
           />
           {/*

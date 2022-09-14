@@ -7,6 +7,7 @@ import {CoinDetailType} from '../../../model/coin';
 import {Vault} from '../../../model/vaults';
 import {BASE_BACKGROUND, DIMED_GRAY} from '../../ColorCode';
 import Top from '../../common/top';
+import {WITHDRAW} from '../../constantProperties';
 import TransactionButtonContainer from './transactionButtonContainer';
 import TransactionHistoryContainer from './transactionHistoryContainer';
 
@@ -43,6 +44,12 @@ const CoinDetail = (props: any) => {
     }
   }, []);
 
+  function moveTOWithDraw() {
+    navigation.navigate(
+      'WithDraw' as never,
+      {vault: vault, coin: coin} as never,
+    );
+  }
   return (
     <>
       <Top
@@ -70,7 +77,11 @@ const CoinDetail = (props: any) => {
         </Text>
         <Text style={s.dollarValue}>Value ${coin.value * coin.ratio}</Text>
 
-        <TransactionButtonContainer onPress={(type: string) => {}} />
+        <TransactionButtonContainer
+          onPress={(type: string) => {
+            if (type === WITHDRAW) moveTOWithDraw();
+          }}
+        />
         <TransactionHistoryContainer symbol={coin.symbol} vault={vault} />
       </ScrollView>
     </>

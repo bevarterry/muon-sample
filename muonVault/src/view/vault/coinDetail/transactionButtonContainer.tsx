@@ -8,6 +8,7 @@ import {
   Dimensions,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
+import {BUY_VP, DEPOSIT, WITHDRAW} from '../../constantProperties';
 
 const withdraw_icon = require('../../../../assets/image/withdraw_icon.png');
 const deposit_icon = require('../../../../assets/image/deposit_icon.png');
@@ -27,7 +28,7 @@ const TransactionButtonContainer: React.FC<React.PropsWithChildren<Props>> = ({
       <TouchableOpacity
         style={s.button}
         activeOpacity={0.7}
-        onPress={() => onPress('Deposit')}>
+        onPress={() => onPress(DEPOSIT)}>
         <FastImage
           resizeMode="contain"
           style={s.buttonIcon}
@@ -39,7 +40,7 @@ const TransactionButtonContainer: React.FC<React.PropsWithChildren<Props>> = ({
       <TouchableOpacity
         style={s.button}
         activeOpacity={0.7}
-        onPress={() => onPress('Withdraw')}>
+        onPress={() => onPress(WITHDRAW)}>
         <FastImage
           resizeMode="contain"
           style={s.buttonIcon}
@@ -51,7 +52,7 @@ const TransactionButtonContainer: React.FC<React.PropsWithChildren<Props>> = ({
       <TouchableOpacity
         style={s.button}
         activeOpacity={0.7}
-        onPress={() => onPress('BuyVP')}>
+        onPress={() => onPress(BUY_VP)}>
         <FastImage
           resizeMode="contain"
           style={s.buttonIcon}

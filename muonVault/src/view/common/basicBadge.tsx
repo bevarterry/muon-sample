@@ -4,6 +4,7 @@ import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 type Props = {
   title: string;
   paddingHorizontal?: number;
+  paddingVertical?: number;
   backgroundColor?: string;
   borderWidth?: number;
   fontColor?: string;
@@ -12,6 +13,7 @@ type Props = {
 const BasicBadge: React.FC<React.PropsWithChildren<Props>> = ({
   title,
   paddingHorizontal,
+  paddingVertical,
   backgroundColor,
   fontColor,
   fontSize,
@@ -27,7 +29,7 @@ const BasicBadge: React.FC<React.PropsWithChildren<Props>> = ({
             borderWidth: borderWidth ? borderWidth : 0,
             borderRadius: 14,
             paddingHorizontal: paddingHorizontal ? paddingHorizontal : 5,
-            paddingVertical: 3,
+            paddingVertical: paddingVertical ? paddingVertical : 3,
           },
         ]}>
         <Text

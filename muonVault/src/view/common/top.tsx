@@ -8,12 +8,14 @@ type Props = {
   left?: boolean;
   backgroundColor?: string;
   onTouchBackButton?: Function;
+  component?: any;
 };
 const top: React.FC<React.PropsWithChildren<Props>> = ({
   title,
   left,
   backgroundColor,
   onTouchBackButton,
+  component,
 }) => {
   return (
     <>
@@ -36,7 +38,8 @@ const top: React.FC<React.PropsWithChildren<Props>> = ({
             />
           )}
         </TouchableOpacity>
-        <Text style={s.title}>{title}</Text>
+        {!component && <Text style={s.title}>{title}</Text>}
+        {component && <View>{component}</View>}
         <View style={s.buttonWrapper}>
           <Text></Text>
         </View>
