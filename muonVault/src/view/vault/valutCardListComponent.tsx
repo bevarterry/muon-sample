@@ -6,11 +6,12 @@ import {useSelector} from 'react-redux';
 import {Vault} from '../../model/vaults';
 import {RootState} from '../../store/modules';
 import {BASE_BACKGROUND, DIMED_GRAY} from '../ColorCode';
+import ValutCard from './valutCard';
 
 const {width, height} = Dimensions.get('window');
 const paddingHorizontalLength = 17;
 
-const ValutCardComponent = () => {
+const ValutCardListComponent = () => {
   const [page, setPage] = useState(0);
   const valutsStore = useSelector((root: RootState) => root.vaultsStore);
 
@@ -40,11 +41,7 @@ const ValutCardComponent = () => {
         onScroll={onScroll}
         pagingEnabled
         keyExtractor={(item: Vault, index) => String(index)}
-        renderItem={({item}) => (
-          <TouchableOpacity style={s.valutCard}>
-            <Text>{item.id}</Text>
-          </TouchableOpacity>
-        )}
+        renderItem={({item}) => <ValutCard vault={item} />}
       />
       <View
         style={{
@@ -71,7 +68,7 @@ const ValutCardComponent = () => {
   );
 };
 
-export default ValutCardComponent;
+export default ValutCardListComponent;
 
 const s = StyleSheet.create({
   wrapper: {

@@ -8,4 +8,5 @@ export interface Vault {
   BNB: string;
   USDC: string;
   ETH: string;
+  MU: string;
 }

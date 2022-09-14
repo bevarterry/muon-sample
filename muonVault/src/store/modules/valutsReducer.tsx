@@ -25,6 +25,7 @@ const initialState: VaultList = {
       BNB: '200',
       USDC: '200',
       ETH: '200',
+      MU: '0',
     },
     {
       id: '2',
@@ -33,14 +34,16 @@ const initialState: VaultList = {
       BNB: '200',
       USDC: '300',
       ETH: '400',
+      MU: '0',
     },
     {
       id: '3',
-      name: 'SAFE2',
+      name: 'SAFE3',
       BTC: '100',
       BNB: '200',
       USDC: '300',
       ETH: '400',
+      MU: '0',
     },
   ],
 };

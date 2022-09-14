@@ -3,7 +3,7 @@ import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {BASE_BACKGROUND} from '../ColorCode';
 import TotalAssetsComponent from './totalAssetsComponent';
-import ValutCardComponent from './valutCardComponent';
+import ValutCardListComponent from './valutCardListComponent';
 
 const Vault = () => {
   return (
@@ -22,7 +22,7 @@ const Vault = () => {
           }}
         />
         <TotalAssetsComponent />
-        <ValutCardComponent />
+        <ValutCardListComponent />
       </ScrollView>
     </>
   );
