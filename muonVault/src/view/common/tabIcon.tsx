@@ -23,8 +23,8 @@ const TabIcon: React.FC<React.PropsWithChildren<Props>> = ({
       <FastImage
         resizeMode="contain"
         style={{
-          width: 28,
-          height: 28,
+          width: 60,
+          height: 40,
           opacity: active ? 1 : 0.2,
         }}
         source={icon}

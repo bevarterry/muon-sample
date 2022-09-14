@@ -21,8 +21,8 @@ const Tab = createBottomTabNavigator();
 
 const home_icon = require('../../assets/image/home_icon.png');
 const vault_icon = require('../../assets/image/vault_icon.png');
-const nft_icon = require('../../assets/image/vault_icon.png');
-const life_icon = require('../../assets/image/vault_icon.png');
+const nft_icon = require('../../assets/image/nft_icon.png');
+const life_icon = require('../../assets/image/life_icon.png');
 const concierge_icon = require('../../assets/image/concierge_icon.png');
 
 const Main = () => {
@@ -136,18 +136,7 @@ const s = StyleSheet.create({
     paddingHorizontal: 22,
     paddingTop: 5,
     paddingBottom:
-      Platform.OS === 'ios' && deviceInfoModule.hasNotch() ? 21 : 0,
-    ...Platform.select({
-      ios: {
-        shadowColor: 'rgb(50, 50, 50)',
-        shadowOpacity: 0.08,
-        shadowRadius: 13,
-        shadowOffset: {
-          height: 1,
-          width: 2,
-        },
-      },
-    }),
+      Platform.OS === 'ios' && deviceInfoModule.hasNotch() ? 30 : 0,
   },
   tabOptionWrapper: {
     width: '20%',
