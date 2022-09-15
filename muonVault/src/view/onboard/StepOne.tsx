@@ -34,7 +34,7 @@ const StepOne = () => {
             width="100%"
             borderColor={BASE_BUTTON}
             titleColor={MAIN_BLACK}
-            borderRadius="20"
+            borderRadius={20}
             bodyColor={BASE_BUTTON}
             click={() => {}}
           />
@@ -44,7 +44,7 @@ const StepOne = () => {
             width="100%"
             borderColor={BASE_BUTTON}
             titleColor={MAIN_BLACK}
-            borderRadius="20"
+            borderRadius={20}
             bodyColor={BASE_BUTTON}
             click={moveToStep2}
           />

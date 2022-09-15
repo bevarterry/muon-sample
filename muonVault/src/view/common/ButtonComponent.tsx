@@ -8,36 +8,55 @@ import {
   Image,
 } from 'react-native';
 
-const ButtonComponent = (props: any) => {
-  const [value, onChangeText] = useState('');
-  const [isValid, setIsValid] = useState(false);
-  const refInput = useRef();
-
-  useEffect(() => {
-    onChangeText(props.input);
-  }, [props.input]);
-
+type Props = {
+  title: string;
+  borderColor?: string;
+  bodyColor?: string;
+  marginTop?: string;
+  click: Function;
+  width: number | string;
+  titleColor: string;
+  borderRadius: number;
+  activeColor?: string;
+  activeFontColor?: string;
+};
+const ButtonComponent: React.FC<React.PropsWithChildren<Props>> = ({
+  title,
+  titleColor,
+  borderColor,
+  bodyColor,
+  marginTop,
+  width,
+  click,
+  activeColor,
+  activeFontColor,
+  borderRadius,
+}) => {
   return (
     <View
       style={[
         s.button,
         {
-          borderColor: props.borderColor,
-          backgroundColor: props.bodyColor,
-          marginTop: props.marginTop ? props.marginTop : 0,
+          borderColor: borderColor,
+          backgroundColor: activeColor ? activeColor : bodyColor,
+          marginTop: marginTop ? marginTop : 0,
         },
       ]}>
       <TouchableOpacity
-        style={{width: props.width, flexDirection: 'row'}}
+        style={{width: width, flexDirection: 'row'}}
         activeOpacity={0.7}
         onPress={() => {
-          props.click();
+          click();
         }}>
         <View style={s.editBox}>
           <Text
             allowFontScaling={false}
-            style={{fontSize: 16, color: props.titleColor, fontWeight: 'bold'}}>
-            {props.title}
+            style={{
+              fontSize: 16,
+              color: activeFontColor ? activeFontColor : titleColor,
+              fontWeight: 'bold',
+            }}>
+            {title}
           </Text>
         </View>
       </TouchableOpacity>

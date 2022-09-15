@@ -8,6 +8,7 @@ import {Vault} from '../../../model/vaults';
 import {
   BASE_BACKGROUND,
   BASE_BUTTON,
+  CC_WHITE,
   DIMED_GRAY,
   MAIN_BLACK,
 } from '../../ColorCode';
@@ -15,9 +16,20 @@ import BasicBadge from '../../common/basicBadge';
 import ButtonComponent from '../../common/ButtonComponent';
 import TextInputComponent from '../../common/TextInputComponent';
 import Top from '../../common/top';
+import {
+  WITHDRAW_BEFORE_EXECUTE,
+  WITHDRAW_INPUT_AMOUNT,
+  WITHDRAW_INPUT_TO_ADDRESS,
+} from '../../constantProperties';
+import Step0 from './step0';
+import Step1 from './step1';
 
 const WithDraw = (props: any) => {
   const [toAddress, setToAddress] = useState('');
+  const [amount, setAmount] = useState('');
+  const [step, setStep] = useState(WITHDRAW_INPUT_TO_ADDRESS);
+  const [showAmountInput, setShowAmountInput] = useState(false);
+
   const navigation = useNavigation();
   const [coin, setCoin] = useState<CoinDetailType>({
     value: 0,
@@ -82,27 +94,19 @@ const WithDraw = (props: any) => {
           />
           <Text style={{fontSize: 22, fontWeight: '700'}}>{vault.name}</Text>
         </View>
-        <TextInputComponent
-          placeHolder={'Enter withdrawal address or ENS'}
-          backgroundColor={'#ffffff'}
-          update={(e: string) => {
-            setToAddress(e);
-          }}
-          active={toAddress !== ''}
-          blur={(e: string) => {}}
-        />
 
-        <View style={{width: '100%', paddingHorizontal: 20, marginTop: 30}}>
-          <ButtonComponent
-            title="Next"
-            width="100%"
-            borderColor={BASE_BUTTON}
-            titleColor={DIMED_GRAY}
-            borderRadius="20"
-            bodyColor={BASE_BUTTON}
-            click={() => {}}
+        {step === WITHDRAW_INPUT_TO_ADDRESS && (
+          <Step0
+            updateStep={(next: string) => {
+              setStep(next);
+            }}
+            updateToAddress={(toAddress: string) => {
+              setToAddress(toAddress);
+            }}
           />
-        </View>
+        )}
+
+        {step === WITHDRAW_INPUT_AMOUNT && <Step1 toAddress={toAddress} />}
       </View>
     </>
   );

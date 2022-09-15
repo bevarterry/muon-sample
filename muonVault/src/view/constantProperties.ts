@@ -1,3 +1,7 @@
 export const WITHDRAW = 'WITHDRAW';
 export const DEPOSIT = 'DEPOSIT';
 export const BUY_VP = 'BUY_VP';
+
+export const WITHDRAW_INPUT_TO_ADDRESS = 'INPUT_TO_ADDRESS';
+export const WITHDRAW_INPUT_AMOUNT = 'INPUT_AMOUNT';
+export const WITHDRAW_BEFORE_EXECUTE = 'BEFORE_EXECUTE';
