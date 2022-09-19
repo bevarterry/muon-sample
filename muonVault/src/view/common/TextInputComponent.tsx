@@ -7,14 +7,13 @@ import {
   Dimensions,
   Text,
 } from 'react-native';
-import FastImage from 'react-native-fast-image';
-import {MAIN_BLACK} from '../ColorCode';
-import BasicBadge from './basicBadge';
-const qr_icon = require('../../../assets/image/qr_icon.png');
+
 const {width, height} = Dimensions.get('window');
 
 type Props = {
   title?: string;
+  fontSize?: number;
+  fontWeight?: any;
   left?: boolean;
   placeHolder?: string;
   backgroundColor?: string;
@@ -28,6 +27,8 @@ type Props = {
   update: Function;
   blur?: Function;
   summit?: Function;
+  leftComponent?: any;
+  rightComponent?: any;
 };
 const TextInputComponent: React.FC<React.PropsWithChildren<Props>> = ({
   title,
@@ -40,7 +41,11 @@ const TextInputComponent: React.FC<React.PropsWithChildren<Props>> = ({
   blur,
   update,
   summit,
+  fontSize,
+  fontWeight,
   placeHolder,
+  leftComponent,
+  rightComponent,
 }) => {
   const ref_input = useRef(null);
   const [value, onChangeText] = useState('');
@@ -65,19 +70,20 @@ const TextInputComponent: React.FC<React.PropsWithChildren<Props>> = ({
           },
           {borderColor: mainColor},
         ]}>
-        <BasicBadge
-          title={'To'}
-          paddingHorizontal={12}
-          paddingVertical={4}
-          backgroundColor={MAIN_BLACK}
-          fontColor={'#ffffff'}
-          fontSize={12}
-        />
+        {leftComponent}
 
         <TextInput
           secureTextEntry={password ? password : false}
-          style={[s.editBox, {width: 250, maxWidth: 300}]}
-          textAlign={'center'}
+          style={[
+            s.editBox,
+            {
+              width: 210,
+              maxWidth: 300,
+              fontSize: fontSize ? fontSize : 13,
+              fontWeight: fontWeight ? fontWeight : '400',
+            },
+          ]}
+          textAlign={value ? 'right' : 'center'}
           editable
           ref={ref_input}
           numberOfLines={1}
@@ -99,16 +105,7 @@ const TextInputComponent: React.FC<React.PropsWithChildren<Props>> = ({
           placeholderTextColor="#9C9C9C"
           value={value}
         />
-        <View style={{width: 16}}>
-          <FastImage
-            resizeMode="contain"
-            style={{
-              width: 16,
-              height: 16,
-            }}
-            source={qr_icon}
-          />
-        </View>
+        {rightComponent}
       </View>
     </>
   );
@@ -116,9 +113,7 @@ const TextInputComponent: React.FC<React.PropsWithChildren<Props>> = ({
 
 const s = StyleSheet.create({
   editBox: {
-    fontSize: 13,
     color: '#222222',
-    fontWeight: '400',
   },
 });
 

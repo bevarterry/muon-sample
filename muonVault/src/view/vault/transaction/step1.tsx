@@ -1,6 +1,12 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {CoinDetailType} from '../../../model/coin';
@@ -15,10 +21,17 @@ import {
 import BasicBadge from '../../common/basicBadge';
 import ButtonComponent from '../../common/ButtonComponent';
 import TextInputComponent from '../../common/TextInputComponent';
+import {WITHDRAW_BEFORE_EXECUTE} from '../../constantProperties';
+const convert_value_icon = require('../../../../assets/image/convert_value_icon.png');
+
 type Props = {
-  toAddress: string;
+  updateStep: Function;
+  updateAmount: Function;
 };
-const Step1: React.FC<React.PropsWithChildren<Props>> = ({toAddress}) => {
+const Step1: React.FC<React.PropsWithChildren<Props>> = ({
+  updateStep,
+  updateAmount,
+}) => {
   const [amount, setAmount] = useState('');
   const leftComponent = (
     <View
@@ -34,23 +47,73 @@ const Step1: React.FC<React.PropsWithChildren<Props>> = ({toAddress}) => {
   };
   return (
     <>
-      <View style={s.fromRow}>
-        <BasicBadge
-          title={'To'}
-          paddingHorizontal={12}
-          paddingVertical={4}
-          backgroundColor={MAIN_BLACK}
-          fontColor={'#ffffff'}
-          fontSize={12}
-        />
-        <Text style={{fontSize: 22, fontWeight: '700'}}>{toAddress}</Text>
-      </View>
       <TextInputComponent
+        leftComponent={
+          <BasicBadge
+            title={'Amount'}
+            paddingHorizontal={12}
+            paddingVertical={4}
+            backgroundColor={MAIN_BLACK}
+            fontColor={'#ffffff'}
+            fontSize={12}
+          />
+        }
+        rightComponent={
+          <View style={{marginLeft: 5}}>
+            <Text style={{fontSize: 22, fontWeight: '700'}}>ETH</Text>
+          </View>
+        }
+        fontSize={22}
+        fontWeight={'700'}
         backgroundColor={'#ffffff'}
-        update={(e: string) => {}}
+        update={(e: string) => {
+          updateAmount(e);
+          setAmount(e);
+        }}
         active={amount !== ''}
         blur={(e: string) => {}}
       />
+      <View
+        style={[
+          s.rowCenter,
+          {
+            width: '100%',
+            justifyContent: 'space-between',
+            marginTop: 14,
+            paddingLeft: 32,
+            paddingRight: 23,
+          },
+        ]}>
+        <Text>Value</Text>
+        <View style={[s.rowCenter, {paddingHorizontal: 0}]}>
+          <TouchableOpacity style={s.convertButton} activeOpacity={0.7}>
+            <FastImage
+              resizeMode="contain"
+              style={{
+                width: 13.5,
+                height: 13.5,
+              }}
+              source={convert_value_icon}
+            />
+          </TouchableOpacity>
+          <Text>$19,702.20</Text>
+        </View>
+      </View>
+      <View
+        style={[
+          {
+            display: 'flex',
+            alignItems: 'center',
+            width: '100%',
+            justifyContent: 'center',
+            marginTop: 24,
+          },
+        ]}>
+        <Text style={s.balanceText}>
+          Balance <Text style={{color: MAIN_BLACK}}>23.5ETH</Text>($38,528.12)
+        </Text>
+        <Text style={s.balanceText}>1 ETH = $1,642.04</Text>
+      </View>
       <View style={{width: '100%', paddingHorizontal: 20, marginTop: 30}}>
         <ButtonComponent
           title="Done"
@@ -63,7 +126,7 @@ const Step1: React.FC<React.PropsWithChildren<Props>> = ({toAddress}) => {
           bodyColor={BASE_BUTTON}
           click={() => {
             if (isActiveDoneButton()) {
-              //setStep(WITHDRAW_BEFORE_EXECUTE);
+              updateStep(WITHDRAW_BEFORE_EXECUTE);
             }
           }}
         />
@@ -89,39 +152,26 @@ const s = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 30,
   },
-  topComponentWrapper: {
-    width: '100%',
-    height: 45,
-    alignItems: 'center',
-    paddingHorizontal: 25,
+  rowCenter: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  summaryComponentWrapper: {
-    width: '100%',
     alignItems: 'center',
-    paddingHorizontal: 33,
-    display: 'flex',
-    marginTop: 37,
   },
-  centerText: {
-    textAlign: 'center',
-    fontSize: 24,
-    fontWeight: '700',
-    lineHeight: 28.8,
+  convertButton: {
+    paddingHorizontal: 17,
+    paddingVertical: 9,
+    backgroundColor: CC_WHITE,
+    borderRadius: 20,
   },
-  centerImage: {
-    width: 240,
-    height: 240,
-    marginTop: 54,
-    marginBottom: 100,
+  convertValue: {
+    fontSize: 16,
+    marginLeft: 10,
+    fontWeight: '500',
+    backgroundColor: MAIN_BLACK,
   },
-  bottomButtonWrapper: {
-    width: '100%',
-    paddingHorizontal: 37,
-    zIndex: 2,
-    position: 'absolute',
-    bottom: 80,
+  balanceText: {
+    color: DIMED_GRAY,
+    fontSize: 14,
+    fontWeight: '500',
   },
 });

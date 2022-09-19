@@ -13,6 +13,7 @@ type Props = {
   borderColor?: string;
   bodyColor?: string;
   marginTop?: string;
+  paddingVertical?: number;
   click: Function;
   width: number | string;
   titleColor: string;
@@ -29,6 +30,7 @@ const ButtonComponent: React.FC<React.PropsWithChildren<Props>> = ({
   width,
   click,
   activeColor,
+  paddingVertical,
   activeFontColor,
   borderRadius,
 }) => {
@@ -37,6 +39,7 @@ const ButtonComponent: React.FC<React.PropsWithChildren<Props>> = ({
       style={[
         s.button,
         {
+          paddingVertical: paddingVertical ? paddingVertical : 17,
           borderColor: borderColor,
           backgroundColor: activeColor ? activeColor : bodyColor,
           marginTop: marginTop ? marginTop : 0,
@@ -71,8 +74,6 @@ const s = StyleSheet.create({
     paddingLeft: 10,
   },
   button: {
-    width: '100%',
-    paddingVertical: 17,
     borderWidth: 1,
     alignItems: 'center',
     borderRadius: 14,

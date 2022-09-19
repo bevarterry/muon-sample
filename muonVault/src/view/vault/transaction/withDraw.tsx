@@ -23,6 +23,7 @@ import {
 } from '../../constantProperties';
 import Step0 from './step0';
 import Step1 from './step1';
+import Step2 from './step2';
 
 const WithDraw = (props: any) => {
   const [toAddress, setToAddress] = useState('');
@@ -94,6 +95,46 @@ const WithDraw = (props: any) => {
           />
           <Text style={{fontSize: 22, fontWeight: '700'}}>{vault.name}</Text>
         </View>
+        {step !== WITHDRAW_INPUT_TO_ADDRESS && (
+          <View style={s.fromRow}>
+            <BasicBadge
+              title={'To'}
+              paddingHorizontal={12}
+              paddingVertical={4}
+              backgroundColor={MAIN_BLACK}
+              fontColor={'#ffffff'}
+              fontSize={12}
+            />
+            <Text style={{fontSize: 22, fontWeight: '700'}}>{toAddress}</Text>
+          </View>
+        )}
+        {step !== WITHDRAW_INPUT_TO_ADDRESS && step !== WITHDRAW_INPUT_AMOUNT && (
+          <>
+            <View style={s.fromRow}>
+              <BasicBadge
+                title={'Amount'}
+                paddingHorizontal={12}
+                paddingVertical={4}
+                backgroundColor={MAIN_BLACK}
+                fontColor={'#ffffff'}
+                fontSize={12}
+              />
+              <Text style={{fontSize: 22, fontWeight: '700'}}>
+                {amount} ETH
+              </Text>
+            </View>
+            <View
+              style={{
+                marginTop: 0,
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'flex-end',
+                paddingRight: 30,
+              }}>
+              <Text style={s.dollarAmount}>($19.702.20)</Text>
+            </View>
+          </>
+        )}
 
         {step === WITHDRAW_INPUT_TO_ADDRESS && (
           <Step0
@@ -106,7 +147,18 @@ const WithDraw = (props: any) => {
           />
         )}
 
-        {step === WITHDRAW_INPUT_AMOUNT && <Step1 toAddress={toAddress} />}
+        {step === WITHDRAW_INPUT_AMOUNT && (
+          <Step1
+            updateStep={(next: string) => {
+              setStep(next);
+            }}
+            updateAmount={(amount: string) => {
+              setAmount(amount);
+            }}
+          />
+        )}
+
+        {step === WITHDRAW_BEFORE_EXECUTE && <Step2 />}
       </View>
     </>
   );
@@ -129,39 +181,9 @@ const s = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 30,
   },
-  topComponentWrapper: {
-    width: '100%',
-    height: 45,
-    alignItems: 'center',
-    paddingHorizontal: 25,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  summaryComponentWrapper: {
-    width: '100%',
-    alignItems: 'center',
-    paddingHorizontal: 33,
-    display: 'flex',
-    marginTop: 37,
-  },
-  centerText: {
-    textAlign: 'center',
-    fontSize: 24,
-    fontWeight: '700',
-    lineHeight: 28.8,
-  },
-  centerImage: {
-    width: 240,
-    height: 240,
-    marginTop: 54,
-    marginBottom: 100,
-  },
-  bottomButtonWrapper: {
-    width: '100%',
-    paddingHorizontal: 37,
-    zIndex: 2,
-    position: 'absolute',
-    bottom: 80,
+  dollarAmount: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: DIMED_GRAY,
   },
 });
