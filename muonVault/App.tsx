@@ -16,6 +16,7 @@ import store from './src/store';
 import VaultDetail from './src/view/vault/detail';
 import CoinDetail from './src/view/vault/coinDetail';
 import WithDraw from './src/view/vault/transaction/withDraw';
+import CompleteTransaction from './src/view/vault/transaction/completeTransaction';
 
 const Stack = createStackNavigator();
 const baseTransitionOption = {
@@ -77,6 +78,11 @@ const App = () => {
           <Stack.Screen
             name="WithDraw"
             component={WithDraw}
+            options={baseTransitionOption}
+          />
+          <Stack.Screen
+            name="CompleteTransaction"
+            component={CompleteTransaction}
             options={baseTransitionOption}
           />
           {/*

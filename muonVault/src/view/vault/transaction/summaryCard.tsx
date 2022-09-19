@@ -62,7 +62,8 @@ export default SummaryCard;
 
 const s = StyleSheet.create({
   withdrawSummary: {
-    marginTop: 13,
+    width: '100%',
+    marginTop: 0,
     marginHorizontal: 8,
     paddingHorizontal: 13,
     paddingVertical: 39,

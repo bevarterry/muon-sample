@@ -35,7 +35,11 @@ const ButtonComponent: React.FC<React.PropsWithChildren<Props>> = ({
   borderRadius,
 }) => {
   return (
-    <View
+    <TouchableOpacity
+      activeOpacity={0.9}
+      onPress={() => {
+        click();
+      }}
       style={[
         s.button,
         {
@@ -45,12 +49,7 @@ const ButtonComponent: React.FC<React.PropsWithChildren<Props>> = ({
           marginTop: marginTop ? marginTop : 0,
         },
       ]}>
-      <TouchableOpacity
-        style={{width: width, flexDirection: 'row'}}
-        activeOpacity={0.7}
-        onPress={() => {
-          click();
-        }}>
+      <View style={{width: width, flexDirection: 'row'}}>
         <View style={s.editBox}>
           <Text
             allowFontScaling={false}
@@ -62,8 +61,8 @@ const ButtonComponent: React.FC<React.PropsWithChildren<Props>> = ({
             {title}
           </Text>
         </View>
-      </TouchableOpacity>
-    </View>
+      </View>
+    </TouchableOpacity>
   );
 };
 

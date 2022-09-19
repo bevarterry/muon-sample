@@ -28,6 +28,8 @@ const {width, height} = Dimensions.get('window');
 const buttonWidth = (width - 34) / 2;
 type Props = {};
 const Step2: React.FC<React.PropsWithChildren<Props>> = ({}) => {
+  const navigation = useNavigation();
+
   const [amount, setAmount] = useState('');
   const leftComponent = (
     <View
@@ -89,7 +91,17 @@ const Step2: React.FC<React.PropsWithChildren<Props>> = ({}) => {
           activeColor={isActiveDoneButton() ? MAIN_BLACK : undefined}
           activeFontColor={isActiveDoneButton() ? CC_WHITE : undefined}
           bodyColor={BASE_BUTTON}
-          click={() => {}}
+          click={() => {
+            //@ts-ignore
+            navigation.replace('CompleteTransaction', {
+              from: '',
+              to: '',
+              symbol: '',
+              estimateGasFee: 0,
+              serviceFee: 0,
+              totalAmount: 0,
+            });
+          }}
         />
       </View>
     </>

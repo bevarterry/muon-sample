@@ -133,6 +133,7 @@ const WithDraw = (props: any) => {
               }}>
               <Text style={s.dollarAmount}>($19.702.20)</Text>
             </View>
+            <View style={{height: 13}} />
           </>
         )}
 
