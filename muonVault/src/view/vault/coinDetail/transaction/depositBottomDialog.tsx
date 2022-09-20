@@ -33,8 +33,8 @@ import {
   BASE_GRAY_BACKGROUND,
   CC_WHITE,
   MAIN_BLACK,
-} from '../ColorCode';
-import ButtonComponent from './ButtonComponent';
+} from '../../../ColorCode';
+import ButtonComponent from '../../../common/ButtonComponent';
 const {width, height} = Dimensions.get('window');
 const buttonWidth = (width - 30) / 2;
 

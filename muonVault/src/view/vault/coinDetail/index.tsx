@@ -14,7 +14,7 @@ import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {CoinDetailType} from '../../../model/coin';
 import {Vault} from '../../../model/vaults';
 import {BASE_BACKGROUND, DIMED_GRAY} from '../../ColorCode';
-import DepositBottomDialog from '../../common/depositBottomDialog';
+import DepositBottomDialog from './transaction/depositBottomDialog';
 import Top from '../../common/top';
 import {DEPOSIT, WITHDRAW} from '../../constantProperties';
 import TransactionButtonContainer from './transactionButtonContainer';

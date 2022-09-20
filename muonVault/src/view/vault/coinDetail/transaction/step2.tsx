@@ -1,5 +1,5 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   Dimensions,
   ScrollView,
@@ -22,23 +22,17 @@ import BasicBadge from '../../../common/basicBadge';
 import ButtonComponent from '../../../common/ButtonComponent';
 import TextInputComponent from '../../../common/TextInputComponent';
 import {WITHDRAW_BEFORE_EXECUTE} from '../../../constantProperties';
+import PilotWithdrawBottomDialog from './pilotWithdrawBottomDialog';
 import SummaryCard from './summaryCard';
 const convert_value_icon = require('../../../../../assets/image/convert_value_icon.png');
 const {width, height} = Dimensions.get('window');
 const buttonWidth = (width - 34) / 2;
 type Props = {};
 const Step2: React.FC<React.PropsWithChildren<Props>> = ({}) => {
+  const pilotWithdrawModalRef = useRef();
   const navigation = useNavigation();
 
   const [amount, setAmount] = useState('');
-  const leftComponent = (
-    <View
-      style={{
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-      }}></View>
-  );
 
   const isActiveDoneButton = () => {
     return amount !== '';
@@ -92,7 +86,10 @@ const Step2: React.FC<React.PropsWithChildren<Props>> = ({}) => {
           activeColor={isActiveDoneButton() ? MAIN_BLACK : undefined}
           activeFontColor={isActiveDoneButton() ? CC_WHITE : undefined}
           bodyColor={MAIN_BLACK}
-          click={() => {}}
+          click={() => {
+            //@ts-ignore
+            pilotWithdrawModalRef.current.openModal();
+          }}
         />
         <View style={{width: 10}} />
         <ButtonComponent
@@ -118,6 +115,7 @@ const Step2: React.FC<React.PropsWithChildren<Props>> = ({}) => {
           }}
         />
       </View>
+      <PilotWithdrawBottomDialog ref={pilotWithdrawModalRef} />
     </>
   );
 };

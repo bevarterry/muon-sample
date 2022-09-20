@@ -1,5 +1,5 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
@@ -21,6 +21,7 @@ import {
   WITHDRAW_INPUT_AMOUNT,
   WITHDRAW_INPUT_TO_ADDRESS,
 } from '../../../constantProperties';
+import PilotWithdrawBottomDialog from './pilotWithdrawBottomDialog';
 import Step0 from './step0';
 import Step1 from './step1';
 import Step2 from './step2';
@@ -76,14 +77,14 @@ const WithDraw = (props: any) => {
 
   return (
     <>
-      <Top
-        title={''}
-        component={topCompoennt}
-        backgroundColor={BASE_BACKGROUND}
-        left={true}
-        onTouchBackButton={navigation.goBack}
-      />
       <View style={s.wrapper}>
+        <Top
+          title={''}
+          component={topCompoennt}
+          backgroundColor={BASE_BACKGROUND}
+          left={true}
+          onTouchBackButton={navigation.goBack}
+        />
         <View style={s.fromRow}>
           <BasicBadge
             title={'From'}
