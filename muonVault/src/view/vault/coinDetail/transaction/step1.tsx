@@ -9,20 +9,20 @@ import {
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
-import {CoinDetailType} from '../../../model/coin';
-import {Vault} from '../../../model/vaults';
+import {CoinDetailType} from '../../../../model/coin';
+import {Vault} from '../../../../model/vaults';
 import {
   BASE_BACKGROUND,
   BASE_BUTTON,
   CC_WHITE,
   DIMED_GRAY,
   MAIN_BLACK,
-} from '../../ColorCode';
-import BasicBadge from '../../common/basicBadge';
-import ButtonComponent from '../../common/ButtonComponent';
-import TextInputComponent from '../../common/TextInputComponent';
-import {WITHDRAW_BEFORE_EXECUTE} from '../../constantProperties';
-const convert_value_icon = require('../../../../assets/image/convert_value_icon.png');
+} from '../../../ColorCode';
+import BasicBadge from '../../../common/basicBadge';
+import ButtonComponent from '../../../common/ButtonComponent';
+import TextInputComponent from '../../../common/TextInputComponent';
+import {WITHDRAW_BEFORE_EXECUTE} from '../../../constantProperties';
+const convert_value_icon = require('../../../../../assets/image/convert_value_icon.png');
 
 type Props = {
   updateStep: Function;

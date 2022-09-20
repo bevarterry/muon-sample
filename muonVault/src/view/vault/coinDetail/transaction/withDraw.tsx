@@ -3,24 +3,24 @@ import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
-import {CoinDetailType} from '../../../model/coin';
-import {Vault} from '../../../model/vaults';
+import {CoinDetailType} from '../../../../model/coin';
+import {Vault} from '../../../../model/vaults';
 import {
   BASE_BACKGROUND,
   BASE_BUTTON,
   CC_WHITE,
   DIMED_GRAY,
   MAIN_BLACK,
-} from '../../ColorCode';
-import BasicBadge from '../../common/basicBadge';
-import ButtonComponent from '../../common/ButtonComponent';
-import TextInputComponent from '../../common/TextInputComponent';
-import Top from '../../common/top';
+} from '../../../ColorCode';
+import BasicBadge from '../../../common/basicBadge';
+import ButtonComponent from '../../../common/ButtonComponent';
+import TextInputComponent from '../../../common/TextInputComponent';
+import Top from '../../../common/top';
 import {
   WITHDRAW_BEFORE_EXECUTE,
   WITHDRAW_INPUT_AMOUNT,
   WITHDRAW_INPUT_TO_ADDRESS,
-} from '../../constantProperties';
+} from '../../../constantProperties';
 import Step0 from './step0';
 import Step1 from './step1';
 import Step2 from './step2';

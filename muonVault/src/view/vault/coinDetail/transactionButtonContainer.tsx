@@ -24,43 +24,45 @@ const TransactionButtonContainer: React.FC<React.PropsWithChildren<Props>> = ({
   onPress,
 }) => {
   return (
-    <View style={s.trasactionComponentWrapper}>
-      <TouchableOpacity
-        style={s.button}
-        activeOpacity={0.7}
-        onPress={() => onPress(DEPOSIT)}>
-        <FastImage
-          resizeMode="contain"
-          style={s.buttonIcon}
-          source={deposit_icon}
-        />
-        <Text style={s.buttonText}>Deposit</Text>
-      </TouchableOpacity>
-      <View style={{width: gap}} />
-      <TouchableOpacity
-        style={s.button}
-        activeOpacity={0.7}
-        onPress={() => onPress(WITHDRAW)}>
-        <FastImage
-          resizeMode="contain"
-          style={s.buttonIcon}
-          source={withdraw_icon}
-        />
-        <Text style={s.buttonText}>Withdraw</Text>
-      </TouchableOpacity>
-      <View style={{width: gap}} />
-      <TouchableOpacity
-        style={s.button}
-        activeOpacity={0.7}
-        onPress={() => onPress(BUY_VP)}>
-        <FastImage
-          resizeMode="contain"
-          style={s.buttonIcon}
-          source={buy_vp_icon}
-        />
-        <Text style={s.buttonText}>Buy VP</Text>
-      </TouchableOpacity>
-    </View>
+    <>
+      <View style={s.trasactionComponentWrapper}>
+        <TouchableOpacity
+          style={s.button}
+          activeOpacity={0.7}
+          onPress={() => onPress(DEPOSIT)}>
+          <FastImage
+            resizeMode="contain"
+            style={s.buttonIcon}
+            source={deposit_icon}
+          />
+          <Text style={s.buttonText}>Deposit</Text>
+        </TouchableOpacity>
+        <View style={{width: gap}} />
+        <TouchableOpacity
+          style={s.button}
+          activeOpacity={0.7}
+          onPress={() => onPress(WITHDRAW)}>
+          <FastImage
+            resizeMode="contain"
+            style={s.buttonIcon}
+            source={withdraw_icon}
+          />
+          <Text style={s.buttonText}>Withdraw</Text>
+        </TouchableOpacity>
+        <View style={{width: gap}} />
+        <TouchableOpacity
+          style={s.button}
+          activeOpacity={0.7}
+          onPress={() => onPress(BUY_VP)}>
+          <FastImage
+            resizeMode="contain"
+            style={s.buttonIcon}
+            source={buy_vp_icon}
+          />
+          <Text style={s.buttonText}>Buy VP</Text>
+        </TouchableOpacity>
+      </View>
+    </>
   );
 };
 

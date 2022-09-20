@@ -1,17 +1,27 @@
+import {BottomSheetModal, BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {useNavigation} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View, Dimensions, ScrollView} from 'react-native';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  ScrollView,
+  Button,
+} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {CoinDetailType} from '../../../model/coin';
 import {Vault} from '../../../model/vaults';
 import {BASE_BACKGROUND, DIMED_GRAY} from '../../ColorCode';
+import DepositBottomDialog from '../../common/depositBottomDialog';
 import Top from '../../common/top';
-import {WITHDRAW} from '../../constantProperties';
+import {DEPOSIT, WITHDRAW} from '../../constantProperties';
 import TransactionButtonContainer from './transactionButtonContainer';
 import TransactionHistoryContainer from './transactionHistoryContainer';
 
 const CoinDetail = (props: any) => {
+  const bottomModalRef = useRef();
   const navigation = useNavigation();
   const [coin, setCoin] = useState<CoinDetailType>({
     value: 0,
@@ -50,6 +60,7 @@ const CoinDetail = (props: any) => {
       {vault: vault, coin: coin} as never,
     );
   }
+
   return (
     <>
       <Top
@@ -80,10 +91,15 @@ const CoinDetail = (props: any) => {
         <TransactionButtonContainer
           onPress={(type: string) => {
             if (type === WITHDRAW) moveTOWithDraw();
+            else if (type === DEPOSIT) {
+              //@ts-ignore
+              bottomModalRef.current.openModal();
+            }
           }}
         />
         <TransactionHistoryContainer symbol={coin.symbol} vault={vault} />
       </ScrollView>
+      <DepositBottomDialog ref={bottomModalRef} />
     </>
   );
 };
@@ -112,5 +128,11 @@ const s = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     color: DIMED_GRAY,
+  },
+  modal: {
+    position: 'absolute',
+    zIndex: 10,
+    width: '100%',
+    height: '100%',
   },
 });

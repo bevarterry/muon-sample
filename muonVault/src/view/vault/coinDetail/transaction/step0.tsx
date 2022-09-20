@@ -8,12 +8,12 @@ import {
   CC_WHITE,
   DIMED_GRAY,
   MAIN_BLACK,
-} from '../../ColorCode';
-import BasicBadge from '../../common/basicBadge';
-import ButtonComponent from '../../common/ButtonComponent';
-import TextInputComponent from '../../common/TextInputComponent';
-import {WITHDRAW_INPUT_AMOUNT} from '../../constantProperties';
-const qr_icon = require('../../../../assets/image/qr_icon.png');
+} from '../../../ColorCode';
+import BasicBadge from '../../../common/basicBadge';
+import ButtonComponent from '../../../common/ButtonComponent';
+import TextInputComponent from '../../../common/TextInputComponent';
+import {WITHDRAW_INPUT_AMOUNT} from '../../../constantProperties';
+const qr_icon = require('../../../../../assets/image/qr_icon.png');
 
 type Props = {
   updateStep: Function;

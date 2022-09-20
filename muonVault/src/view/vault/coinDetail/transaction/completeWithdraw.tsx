@@ -2,9 +2,9 @@ import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
-import {BASE_BACKGROUND, CC_WHITE, MAIN_BLACK} from '../../ColorCode';
-import BasicBadge from '../../common/basicBadge';
-import ButtonComponent from '../../common/ButtonComponent';
+import {BASE_BACKGROUND, CC_WHITE, MAIN_BLACK} from '../../../ColorCode';
+import BasicBadge from '../../../common/basicBadge';
+import ButtonComponent from '../../../common/ButtonComponent';
 import SummaryCard from './summaryCard';
 
 type Props = {

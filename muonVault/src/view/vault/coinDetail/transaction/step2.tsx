@@ -17,13 +17,13 @@ import {
   DIMED_GRAY,
   MAIN_BLACK,
   MAIN_BORDER_COROR,
-} from '../../ColorCode';
-import BasicBadge from '../../common/basicBadge';
-import ButtonComponent from '../../common/ButtonComponent';
-import TextInputComponent from '../../common/TextInputComponent';
-import {WITHDRAW_BEFORE_EXECUTE} from '../../constantProperties';
+} from '../../../ColorCode';
+import BasicBadge from '../../../common/basicBadge';
+import ButtonComponent from '../../../common/ButtonComponent';
+import TextInputComponent from '../../../common/TextInputComponent';
+import {WITHDRAW_BEFORE_EXECUTE} from '../../../constantProperties';
 import SummaryCard from './summaryCard';
-const convert_value_icon = require('../../../../assets/image/convert_value_icon.png');
+const convert_value_icon = require('../../../../../assets/image/convert_value_icon.png');
 const {width, height} = Dimensions.get('window');
 const buttonWidth = (width - 34) / 2;
 type Props = {};
