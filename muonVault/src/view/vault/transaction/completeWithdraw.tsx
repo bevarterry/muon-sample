@@ -1,31 +1,12 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
-import {
-  Dimensions,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import FastImage from 'react-native-fast-image';
+import {StyleSheet, Text, View} from 'react-native';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
-import {
-  BASE_BACKGROUND,
-  BASE_BUTTON,
-  CC_WHITE,
-  DIMED_GRAY,
-  MAIN_BLACK,
-  MAIN_BORDER_COROR,
-} from '../../ColorCode';
+import {BASE_BACKGROUND, CC_WHITE, MAIN_BLACK} from '../../ColorCode';
 import BasicBadge from '../../common/basicBadge';
 import ButtonComponent from '../../common/ButtonComponent';
-import TextInputComponent from '../../common/TextInputComponent';
-import {WITHDRAW_BEFORE_EXECUTE} from '../../constantProperties';
 import SummaryCard from './summaryCard';
-const convert_value_icon = require('../../../../assets/image/convert_value_icon.png');
-const {width, height} = Dimensions.get('window');
-const buttonWidth = (width - 34) / 2;
+
 type Props = {
   from: string;
   to: string;
@@ -34,22 +15,21 @@ type Props = {
   serviceFee: number;
   totalAmount: number;
 };
+const CompleteWithdraw = (props: any) => {
+  const navigation = useNavigation();
 
-const CompleteTransaction = (props: any) => {
-  const [summary, setSummary] = useState<Props>({
-    from: '',
-    to: '',
-    symbol: '',
-    estimateGasFee: 0,
-    serviceFee: 0,
-    totalAmount: 0,
-  });
-  useEffect(() => {
-    if (props.route.params) {
-      setSummary(props.route.params);
-    }
-  }, []);
-
+  const badge = (title: string) => {
+    return (
+      <BasicBadge
+        title={title}
+        paddingHorizontal={12}
+        paddingVertical={4}
+        backgroundColor={MAIN_BLACK}
+        fontColor={'#ffffff'}
+        fontSize={12}
+      />
+    );
+  };
   return (
     <>
       <View style={s.wrapper}>
@@ -63,7 +43,32 @@ const CompleteTransaction = (props: any) => {
           }}>
           12.00 ETH ($18,702.20) has been transferred to the address 0x09e3…44E7
         </Text>
-        <SummaryCard />
+        <SummaryCard
+          amountComponent={
+            <>
+              {badge('Amount')}
+              <Text style={s.componentText}>12 ETH</Text>
+            </>
+          }
+          toComponent={
+            <>
+              {badge('To')}
+              <Text style={s.componentText}>1aa21111212121221</Text>
+            </>
+          }
+          fromComponent={
+            <>
+              {badge('From')}
+              <Text style={s.componentText}>Safe1</Text>
+            </>
+          }
+          totalComponent={
+            <>
+              {badge('Total')}
+              <Text style={s.componentText}>$19,723.10</Text>
+            </>
+          }
+        />
       </View>
       <View
         style={{
@@ -79,14 +84,16 @@ const CompleteTransaction = (props: any) => {
           titleColor={CC_WHITE}
           borderRadius={20}
           bodyColor={MAIN_BLACK}
-          click={() => {}}
+          click={() => {
+            navigation.goBack();
+          }}
         />
       </View>
     </>
   );
 };
 
-export default CompleteTransaction;
+export default CompleteWithdraw;
 
 const s = StyleSheet.create({
   wrapper: {
@@ -102,5 +109,9 @@ const s = StyleSheet.create({
     marginTop: 20,
     fontWeight: '700',
     fontSize: 28,
+  },
+  componentText: {
+    fontSize: 22,
+    fontWeight: '700',
   },
 });

@@ -45,7 +45,21 @@ const Step2: React.FC<React.PropsWithChildren<Props>> = ({}) => {
   };
   return (
     <>
-      <SummaryCard />
+      <SummaryCard
+        totalComponent={
+          <>
+            <BasicBadge
+              title={'Total'}
+              paddingHorizontal={12}
+              paddingVertical={4}
+              backgroundColor={MAIN_BLACK}
+              fontColor={'#ffffff'}
+              fontSize={12}
+            />
+            <Text style={s.totalValue}>$19,723.10</Text>
+          </>
+        }
+      />
       <Text
         style={{
           textAlign: 'center',
@@ -93,7 +107,7 @@ const Step2: React.FC<React.PropsWithChildren<Props>> = ({}) => {
           bodyColor={BASE_BUTTON}
           click={() => {
             //@ts-ignore
-            navigation.replace('CompleteTransaction', {
+            navigation.replace('CompleteWithdraw', {
               from: '',
               to: '',
               symbol: '',
@@ -118,5 +132,9 @@ const s = StyleSheet.create({
     borderRadius: 14,
     borderWidth: 1,
     borderColor: MAIN_BORDER_COROR,
+  },
+  totalValue: {
+    fontSize: 22,
+    fontWeight: '700',
   },
 });
