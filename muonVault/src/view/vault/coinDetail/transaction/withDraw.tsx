@@ -169,6 +169,7 @@ export default WithDraw;
 
 const s = StyleSheet.create({
   wrapper: {
+    zIndex: -1,
     paddingTop: 50 + getStatusBarHeight(),
     width: '100%',
     backgroundColor: BASE_BACKGROUND,

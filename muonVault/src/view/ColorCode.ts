@@ -10,3 +10,4 @@ export const BASE_BUTTON = '#E4E4E4';
 export const MAIN_BLACK = '#1F1F1F';
 export const DIMED_GRAY = '#A7A7A7';
 export const MAIN_BORDER_COROR = '#ECECEC';
+export const BASE_GRAY_BACKGROUND = '#F1F1F1';

@@ -403,6 +403,8 @@ PODS:
   - RNScreens (3.17.0):
     - React-Core
     - React-RCTImage
+  - RNSVG (13.2.0):
+    - React-Core
   - SDWebImage (5.11.1):
     - SDWebImage/Core (= 5.11.1)
   - SDWebImage/Core (5.11.1)
@@ -476,6 +478,7 @@ DEPENDENCIES:
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - RNSVG (from `../node_modules/react-native-svg`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -574,6 +577,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNSVG:
+    :path: "../node_modules/react-native-svg"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -629,6 +634,7 @@ SPEC CHECKSUMS:
   RNGestureHandler: 28ad20bf02257791f7f137b31beef34b9549f54b
   RNReanimated: 7faa787e8d4493fbc95fab2ad331fa7625828cfa
   RNScreens: 0df01424e9e0ed7827200d6ed1087ddd06c493f9
+  RNSVG: 07037623c36f12e41312730622d5f6b3656227ca
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
