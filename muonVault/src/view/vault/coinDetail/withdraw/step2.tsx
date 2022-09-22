@@ -23,7 +23,7 @@ import ButtonComponent from '../../../common/ButtonComponent';
 import TextInputComponent from '../../../common/TextInputComponent';
 import {WITHDRAW_BEFORE_EXECUTE} from '../../../constantProperties';
 import PilotWithdrawBottomDialog from './pilotWithdrawBottomDialog';
-import SummaryCard from './summaryCard';
+import SummaryCard from '../component/summaryCard';
 const convert_value_icon = require('../../../../../assets/image/convert_value_icon.png');
 const {width, height} = Dimensions.get('window');
 const buttonWidth = (width - 34) / 2;

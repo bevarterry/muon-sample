@@ -5,7 +5,7 @@ import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {BASE_BACKGROUND, CC_WHITE, MAIN_BLACK} from '../../../ColorCode';
 import BasicBadge from '../../../common/basicBadge';
 import ButtonComponent from '../../../common/ButtonComponent';
-import SummaryCard from './summaryCard';
+import SummaryCard from '../component/summaryCard';
 
 type Props = {
   from: string;
@@ -15,7 +15,7 @@ type Props = {
   serviceFee: number;
   totalAmount: number;
 };
-const CompleteWithdraw = (props: any) => {
+const BuyVp = (props: any) => {
   const navigation = useNavigation();
 
   const badge = (title: string) => {
@@ -93,7 +93,7 @@ const CompleteWithdraw = (props: any) => {
   );
 };
 
-export default CompleteWithdraw;
+export default BuyVp;
 
 const s = StyleSheet.create({
   wrapper: {

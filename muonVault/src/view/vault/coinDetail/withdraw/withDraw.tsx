@@ -21,7 +21,6 @@ import {
   WITHDRAW_INPUT_AMOUNT,
   WITHDRAW_INPUT_TO_ADDRESS,
 } from '../../../constantProperties';
-import PilotWithdrawBottomDialog from './pilotWithdrawBottomDialog';
 import Step0 from './step0';
 import Step1 from './step1';
 import Step2 from './step2';

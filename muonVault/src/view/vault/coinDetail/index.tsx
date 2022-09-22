@@ -14,9 +14,9 @@ import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {CoinDetailType} from '../../../model/coin';
 import {Vault} from '../../../model/vaults';
 import {BASE_BACKGROUND, DIMED_GRAY} from '../../ColorCode';
-import DepositBottomDialog from './transaction/depositBottomDialog';
+import DepositBottomDialog from './deposit/depositBottomDialog';
 import Top from '../../common/top';
-import {DEPOSIT, WITHDRAW} from '../../constantProperties';
+import {BUY_VP, DEPOSIT, WITHDRAW} from '../../constantProperties';
 import TransactionButtonContainer from './transactionButtonContainer';
 import TransactionHistoryContainer from './transactionHistoryContainer';
 
@@ -61,6 +61,10 @@ const CoinDetail = (props: any) => {
     );
   }
 
+  function moveTOBuyVP() {
+    navigation.navigate('BuyVP' as never, {vault: vault, coin: coin} as never);
+  }
+
   return (
     <>
       <Top
@@ -94,7 +98,7 @@ const CoinDetail = (props: any) => {
             else if (type === DEPOSIT) {
               //@ts-ignore
               bottomModalRef.current.openModal();
-            }
+            } else if (type === BUY_VP) moveTOBuyVP();
           }}
         />
         <TransactionHistoryContainer symbol={coin.symbol} vault={vault} />
