@@ -11,83 +11,61 @@ import {
 const {width, height} = Dimensions.get('window');
 
 type Props = {
-  title?: string;
-  fontSize?: number;
-  fontWeight?: any;
-  left?: boolean;
+  postfix?: string;
   placeHolder?: string;
-  backgroundColor?: string;
-  borderColor?: string;
-  onTouchBackButton?: Function;
   active?: boolean;
-  icon?: any;
-  paddingVertical?: number;
-  marginHorizontal?: number;
   password?: boolean;
   update: Function;
   blur?: Function;
   summit?: Function;
   leftComponent?: any;
   rightComponent?: any;
-  prooStyle?: any;
+  style?: any;
+  textContentStyle?: any;
+  initValue?: string;
+  textAlign?: 'center' | 'right' | 'left' | undefined;
 };
-const TextInputComponent: React.FC<React.PropsWithChildren<Props>> = ({
-  title,
-  backgroundColor,
+const BasicTextInput: React.FC<React.PropsWithChildren<Props>> = ({
   active,
-  icon,
-  paddingVertical,
-  marginHorizontal,
+  postfix,
+  textAlign,
   password,
   blur,
   update,
   summit,
-  fontSize,
-  fontWeight,
   placeHolder,
   leftComponent,
   rightComponent,
-  prooStyle,
+  style,
+  textContentStyle,
+  initValue,
 }) => {
   const ref_input = useRef(null);
   const [value, onChangeText] = useState('');
   const [mainColor, setMainColor] = useState('#e0e2e4');
 
+  useEffect(() => {
+    onChangeText(initValue ? initValue : '');
+  }, [initValue]);
   return (
     <>
       <View
         style={[
           {
-            paddingVertical: paddingVertical ? paddingVertical : 23,
-            marginHorizontal: marginHorizontal ? marginHorizontal : 7,
-            paddingLeft: 20,
-            paddingRight: 32,
-            borderWidth: 1,
-            backgroundColor: backgroundColor ? backgroundColor : '#f0f2f4',
-            borderRadius: 14,
-            opacity: 1,
+            display: 'flex',
             flexDirection: 'row',
-            justifyContent: 'space-between',
             alignItems: 'center',
+            justifyContent: 'center',
           },
-          {borderColor: mainColor},
-          prooStyle,
+          style,
         ]}>
         {leftComponent}
 
         <TextInput
           secureTextEntry={password ? password : false}
-          style={[
-            s.editBox,
-            {
-              width: 210,
-              maxWidth: 300,
-              fontSize: fontSize ? fontSize : 13,
-              fontWeight: fontWeight ? fontWeight : '400',
-            },
-          ]}
+          style={[textContentStyle]}
           keyboardType={'number-pad'}
-          textAlign={value ? 'right' : 'center'}
+          textAlign={textAlign ? textAlign : 'center'}
           editable
           ref={ref_input}
           numberOfLines={1}
@@ -108,6 +86,18 @@ const TextInputComponent: React.FC<React.PropsWithChildren<Props>> = ({
           placeholder={placeHolder}
           placeholderTextColor="#9C9C9C"
           value={value}></TextInput>
+        {postfix && (
+          <Text
+            style={[
+              textContentStyle,
+              {
+                marginLeft: 5,
+              },
+            ]}>
+            VP
+          </Text>
+        )}
+
         {rightComponent}
       </View>
     </>
@@ -120,4 +110,4 @@ const s = StyleSheet.create({
   },
 });
 
-export default TextInputComponent;
+export default BasicTextInput;

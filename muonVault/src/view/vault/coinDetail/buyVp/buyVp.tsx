@@ -2,10 +2,18 @@ import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
-import {BASE_BACKGROUND, CC_WHITE, MAIN_BLACK} from '../../../ColorCode';
+import {
+  BASE_BACKGROUND,
+  BASE_BUTTON,
+  CC_WHITE,
+  DIMED_GRAY,
+  MAIN_BLACK,
+} from '../../../ColorCode';
 import BasicBadge from '../../../common/basicBadge';
 import ButtonComponent from '../../../common/ButtonComponent';
 import SummaryCard from '../component/summaryCard';
+import Top from '../../../common/top';
+import InsertVpCard from './insertVpCard';
 
 type Props = {
   from: string;
@@ -17,58 +25,43 @@ type Props = {
 };
 const BuyVp = (props: any) => {
   const navigation = useNavigation();
-
-  const badge = (title: string) => {
-    return (
-      <BasicBadge
-        title={title}
-        paddingHorizontal={12}
-        paddingVertical={4}
-        backgroundColor={MAIN_BLACK}
-        fontColor={'#ffffff'}
-        fontSize={12}
-      />
-    );
+  const [vpValue, setVp] = useState('0');
+  const isActiveDoneButton = () => {
+    return vpValue !== '' && vpValue !== '0';
   };
+
   return (
     <>
       <View style={s.wrapper}>
-        <Text style={s.completeText}>Complete!</Text>
-        <Text
-          style={{
-            textAlign: 'center',
-            paddingHorizontal: 38,
-            marginTop: 24,
-            marginBottom: 30,
-          }}>
-          12.00 ETH ($18,702.20) has been transferred to the address 0x09e3…44E7
-        </Text>
-        <SummaryCard
-          amountComponent={
-            <>
-              {badge('Amount')}
-              <Text style={s.componentText}>12 ETH</Text>
-            </>
-          }
-          toComponent={
-            <>
-              {badge('To')}
-              <Text style={s.componentText}>1aa21111212121221</Text>
-            </>
-          }
-          fromComponent={
-            <>
-              {badge('From')}
-              <Text style={s.componentText}>Safe1</Text>
-            </>
-          }
-          totalComponent={
-            <>
-              {badge('Total')}
-              <Text style={s.componentText}>$19,723.10</Text>
-            </>
-          }
+        <Top
+          title={'Buy Vault Point'}
+          backgroundColor={BASE_BACKGROUND}
+          left={true}
+          onTouchBackButton={navigation.goBack}
         />
+        <View style={{marginTop: 34, marginHorizontal: 12}}>
+          <InsertVpCard
+            updateInput={(e: string) => {
+              console.log(e);
+              setVp(e);
+            }}
+          />
+        </View>
+        <View
+          style={[
+            {
+              display: 'flex',
+              alignItems: 'center',
+              width: '100%',
+              justifyContent: 'center',
+              marginTop: 24,
+            },
+          ]}>
+          <Text style={s.balanceText}>
+            Balance <Text style={{color: MAIN_BLACK}}>23.5ETH</Text>($38,528.12)
+          </Text>
+          <Text style={s.balanceText}>1 ETH = $1,642.04</Text>
+        </View>
       </View>
       <View
         style={{
@@ -78,15 +71,15 @@ const BuyVp = (props: any) => {
           bottom: 50,
         }}>
         <ButtonComponent
-          title="Done"
+          title="Next"
           width="100%"
-          borderColor={MAIN_BLACK}
-          titleColor={CC_WHITE}
+          borderColor={BASE_BUTTON}
+          titleColor={DIMED_GRAY}
           borderRadius={20}
-          bodyColor={MAIN_BLACK}
-          click={() => {
-            navigation.goBack();
-          }}
+          activeColor={isActiveDoneButton() ? MAIN_BLACK : undefined}
+          activeFontColor={isActiveDoneButton() ? CC_WHITE : undefined}
+          bodyColor={BASE_BUTTON}
+          click={() => {}}
         />
       </View>
     </>
@@ -97,13 +90,11 @@ export default BuyVp;
 
 const s = StyleSheet.create({
   wrapper: {
-    paddingTop: getStatusBarHeight(),
+    zIndex: -1,
+    paddingTop: 50 + getStatusBarHeight(),
     width: '100%',
-    height: '100%',
     backgroundColor: BASE_BACKGROUND,
-    paddingHorizontal: 13,
-    display: 'flex',
-    alignItems: 'center',
+    height: '100%',
   },
   completeText: {
     marginTop: 20,
@@ -113,5 +104,10 @@ const s = StyleSheet.create({
   componentText: {
     fontSize: 22,
     fontWeight: '700',
+  },
+  balanceText: {
+    color: DIMED_GRAY,
+    fontSize: 14,
+    fontWeight: '500',
   },
 });
