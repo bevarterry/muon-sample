@@ -18,6 +18,7 @@ import CoinDetail from './src/view/vault/coinDetail';
 import WithDraw from './src/view/vault/coinDetail/withdraw/withDraw';
 import CompleteWithdraw from './src/view/vault/coinDetail/withdraw/completeWithdraw';
 import BuyVp from './src/view/vault/coinDetail/buyVp/buyVp';
+import CompleteBuyVp from './src/view/vault/coinDetail/buyVp/completeBuyVp';
 
 const Stack = createStackNavigator();
 const baseTransitionOption = {
@@ -84,6 +85,11 @@ const App = () => {
           <Stack.Screen
             name="BuyVP"
             component={BuyVp}
+            options={baseTransitionOption}
+          />
+          <Stack.Screen
+            name="CompleteBuyVP"
+            component={CompleteBuyVp}
             options={baseTransitionOption}
           />
           <Stack.Screen

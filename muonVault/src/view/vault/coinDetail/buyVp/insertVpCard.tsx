@@ -9,11 +9,12 @@ import {
 } from '../../../ColorCode';
 import BasicTextInput from '../../../common/basicTextInput';
 const buy_vp_icon = require('../../../../../assets/image/buy_vp_icon.png');
-type Props = {updateInput: Function};
+type Props = {updateInput: Function; fucus?: Function};
 const InsertVpCard: React.FC<React.PropsWithChildren<Props>> = ({
   updateInput,
+  fucus,
 }) => {
-  const [initValue, setInitValue] = useState('0');
+  const [initValue, setInitValue] = useState(0);
   return (
     <>
       <View style={s.wrapper}>
@@ -26,14 +27,15 @@ const InsertVpCard: React.FC<React.PropsWithChildren<Props>> = ({
           source={buy_vp_icon}
         />
         <BasicTextInput
+          numberOnly={true}
           update={(e: string) => {
             if (!e) {
-              setInitValue('0');
-              updateInput('0');
+              setInitValue(0);
+              updateInput(0);
               return;
             }
 
-            updateInput(e);
+            updateInput(parseInt(e));
           }}
           blur={(e: string) => {}}
           style={{
@@ -47,6 +49,7 @@ const InsertVpCard: React.FC<React.PropsWithChildren<Props>> = ({
             borderLeftWidth: 0,
             marginTop: 10,
           }}
+          focusYn={fucus}
           initValue={initValue}
           postfix="VP"
           textContentStyle={{

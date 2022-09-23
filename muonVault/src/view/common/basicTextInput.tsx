@@ -17,12 +17,14 @@ type Props = {
   password?: boolean;
   update: Function;
   blur?: Function;
+  focusYn?: Function;
   summit?: Function;
   leftComponent?: any;
   rightComponent?: any;
   style?: any;
   textContentStyle?: any;
-  initValue?: string;
+  initValue?: string | number;
+  numberOnly?: boolean;
   textAlign?: 'center' | 'right' | 'left' | undefined;
 };
 const BasicTextInput: React.FC<React.PropsWithChildren<Props>> = ({
@@ -31,6 +33,7 @@ const BasicTextInput: React.FC<React.PropsWithChildren<Props>> = ({
   textAlign,
   password,
   blur,
+  focusYn,
   update,
   summit,
   placeHolder,
@@ -39,14 +42,25 @@ const BasicTextInput: React.FC<React.PropsWithChildren<Props>> = ({
   style,
   textContentStyle,
   initValue,
+  numberOnly,
 }) => {
   const ref_input = useRef(null);
-  const [value, onChangeText] = useState('');
+  const [value, onChangeText] = useState('0');
   const [mainColor, setMainColor] = useState('#e0e2e4');
 
-  useEffect(() => {
-    onChangeText(initValue ? initValue : '');
-  }, [initValue]);
+  function changeValue(e: string) {
+    let val = e;
+
+    if (!e) val = '0';
+
+    if (update) update(parseInt(val));
+    onChangeText(parseInt(val) + '');
+  }
+
+  function keyboardType() {
+    if (numberOnly) return 'number-pad';
+    return 'default';
+  }
   return (
     <>
       <View
@@ -64,20 +78,21 @@ const BasicTextInput: React.FC<React.PropsWithChildren<Props>> = ({
         <TextInput
           secureTextEntry={password ? password : false}
           style={[textContentStyle]}
-          keyboardType={'number-pad'}
+          keyboardType={keyboardType()}
           textAlign={textAlign ? textAlign : 'center'}
           editable
           ref={ref_input}
           numberOfLines={1}
           onEndEditing={() => {}}
           onChangeText={(text: string) => {
-            if (update) update(text);
-            onChangeText(text);
+            changeValue(text);
           }}
           onFocus={() => {
+            if (focusYn) focusYn();
             //props.focus();
           }}
           onBlur={() => {
+            console.log(2);
             if (blur) blur(value);
           }}
           onSubmitEditing={() => {
