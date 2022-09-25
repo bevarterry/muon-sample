@@ -57,7 +57,7 @@ const ValutCard: React.FC<React.PropsWithChildren<Prop>> = ({vault}) => {
       vault.ETH * ratioStore.ratioSet.ETH +
       vault.BNB * ratioStore.ratioSet.BNB +
       vault.USDC * ratioStore.ratioSet.USDC +
-      vault.MU * ratioStore.ratioSet.MU
+      vault.VP * ratioStore.ratioSet.MU
     );
   };
 
@@ -105,7 +105,7 @@ const ValutCard: React.FC<React.PropsWithChildren<Prop>> = ({vault}) => {
 
       <View style={s.cardRow}>
         <CoinTitleComponent symbol="MU" imageSource={muon_icon} />
-        {displayValue(vault.MU, ratioStore.ratioSet.MU)}
+        {displayValue(vault.VP, ratioStore.ratioSet.MU)}
       </View>
     </TouchableOpacity>
   );

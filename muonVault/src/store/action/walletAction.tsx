@@ -3,7 +3,6 @@ import {WalletSet} from '../../api/interface/userApiResponse';
 import {setWallets} from '../modules/walletReducer';
 
 export const updateWallet = (wallets: WalletSet) => {
-  console.log(wallets);
   return async (dispatch: Dispatch) => {
     return dispatch(
       setWallets({

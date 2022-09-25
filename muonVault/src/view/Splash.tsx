@@ -5,7 +5,8 @@ import {useDispatch} from 'react-redux';
 import {UserApiResponse} from '../api/interface/userApiResponse';
 import User from '../api/User';
 import {getAccessToken} from '../storage/AccessTokenStorage';
-import {updateUserInfo} from '../store/action/VaultAction';
+import {updateScAssets} from '../store/action/scAction';
+import {updateVaultsFromApi} from '../store/action/VaultAction';
 import {updateWallet} from '../store/action/walletAction';
 import {setCommonInfo} from '../store/global/state';
 import {setWallets} from '../store/modules/walletReducer';
@@ -42,10 +43,14 @@ const Splash = (props: any) => {
         //@ts-ignore
         dispatch(updateWallet(res.Wallet));
 
+        //@ts-ignore
+        dispatch(updateScAssets(res.SafeAddress));
+
+        //@ts-ignore
+        dispatch(updateVaultsFromApi());
         props.navigation.replace('Main');
       })
       .catch(e => {
-        console.log(e);
         props.navigation.replace('StepOne');
       });
   }

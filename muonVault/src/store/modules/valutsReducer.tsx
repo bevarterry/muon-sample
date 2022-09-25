@@ -7,10 +7,11 @@ const {createStandardAction} = deprecated;
 
 export const UPDATE_VALUT_SET = 'ACCOUNT/UPDATE_VALUT_SET';
 
-export const setScAssets = createStandardAction(UPDATE_VALUT_SET)<VaultList>();
+export const setVaultsStore =
+  createStandardAction(UPDATE_VALUT_SET)<VaultList>();
 
 const actions = {
-  setScAssets,
+  setVaultsStore,
 };
 
 export type VaultsAction = ActionType<typeof actions>;

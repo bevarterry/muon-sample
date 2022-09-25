@@ -1,11 +1,16 @@
 import {ActionType, createReducer, deprecated} from 'typesafe-actions';
 import produce from 'immer';
-import {ScAssets} from '../../model/scAssets';
+import {ScAssetInfo, ScAssets} from '../../model/scAssets';
 
 const {createStandardAction} = deprecated;
 
 export const UPDATE_SC_ASSET_SET = 'ACCOUNT/UPDATE_SC_ASSET_SET';
 export const UPDATE_SC_CONTRACT_ADDRESS = 'ACCOUNT/UPDATE_SC_CONTRACT_ADDRESS';
+
+export const UPDATE_ETH_SC = 'ACCOUNT/UPDATE_ETH_SC';
+export const UPDATE_BTC_SC = 'ACCOUNT/UPDATE_BTC_SC';
+export const UPDATE_BNB_SC = 'ACCOUNT/UPDATE_BNB_SC';
+export const UPDATE_USDC_SC = 'ACCOUNT/UPDATE_USDC_SC';
 
 export const setScAssets =
   createStandardAction(UPDATE_SC_ASSET_SET)<ScAssets>();
@@ -14,9 +19,18 @@ export const setScAddress = createStandardAction(
   UPDATE_SC_CONTRACT_ADDRESS,
 )<ScAssets>();
 
+export const setEthSc = createStandardAction(UPDATE_ETH_SC)<ScAssetInfo>();
+export const setBtcSc = createStandardAction(UPDATE_BTC_SC)<ScAssetInfo>();
+export const setBnbSc = createStandardAction(UPDATE_BNB_SC)<ScAssetInfo>();
+export const setUsdcSc = createStandardAction(UPDATE_USDC_SC)<ScAssetInfo>();
+
 const actions = {
   setScAssets,
   setScAddress,
+  setBtcSc,
+  setEthSc,
+  setBnbSc,
+  setUsdcSc,
 };
 
 export type ScAssetsAction = ActionType<typeof actions>;
@@ -73,17 +87,23 @@ export const ScAssetsStoreData = createReducer<ScAssets, ScAssetsAction>(
         draft.usdc = scAssets.usdc;
         draft.muon = scAssets.muon;
       }),
-    [UPDATE_SC_CONTRACT_ADDRESS]: (state, action) =>
+    [UPDATE_ETH_SC]: (state, action) =>
       produce(state, draft => {
-        return Object.assign({}, draft, {data: action.payload});
-
-        // const scAssets: ScAssets = action.payload;
-
-        // draft.bitcoin.contractAddress = scAssets.bitcoin;
-        // draft.ethereum = scAssets.ethereum;
-        // draft.binance = scAssets.binance;
-        // draft.usdc = scAssets.usdc;
-        // draft.muon = scAssets.muon;
+        const res = Object.assign({}, draft, {ethereum: action.payload});
+        return res;
+      }),
+    [UPDATE_BNB_SC]: (state, action) =>
+      produce(state, draft => {
+        return Object.assign({}, draft, {binance: action.payload});
+      }),
+    [UPDATE_USDC_SC]: (state, action) =>
+      produce(state, draft => {
+        const res = Object.assign({}, draft, {usdc: action.payload});
+        return res;
+      }),
+    [UPDATE_BTC_SC]: (state, action) =>
+      produce(state, draft => {
+        return Object.assign({}, draft, {bitcoin: action.payload});
       }),
   },
 );

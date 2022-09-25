@@ -2,7 +2,7 @@ export interface VaultList {
   vaults: Array<Vault>;
 }
 export interface Vault {
-  idx: number;
+  idx: string;
   id: string;
   name: string;
   BTC: number;

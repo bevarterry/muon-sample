@@ -32,6 +32,7 @@ const ValutCardListComponent = () => {
         showsHorizontalScrollIndicator={false}
         horizontal
         data={valutsStore.vaults}
+        keyExtractor={item => item.idx}
         decelerationRate="fast"
         snapToAlignment={'start'}
         snapToInterval={width - (paddingHorizontalLength * 2 - 8)}

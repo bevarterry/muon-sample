@@ -47,8 +47,6 @@ export const WalletStoreData = createReducer<WalletSet, VaultsAction>(
         draft.BNB = wallets.BNB;
         draft.USDC = wallets.USDC;
         draft.BTC = wallets.BTC;
-
-        console.log('store wallet', draft);
       }),
   },
 );
