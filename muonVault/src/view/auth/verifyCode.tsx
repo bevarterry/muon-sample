@@ -12,6 +12,8 @@ import {
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
+import Auth from '../../api/Auth';
+import {setCommonInfo} from '../../store/global/state';
 import {
   BASE_BACKGROUND,
   BASE_BUTTON,
@@ -23,11 +25,12 @@ import BasicTextInput from '../common/basicTextInput';
 import ButtonComponent from '../common/ButtonComponent';
 import PinCodeInput from '../common/pinCodeInput';
 import Top from '../common/top';
+import {STORED_ACCESS_TOKEN} from '../constantProperties';
 
 const VerifyCode = (props: any) => {
   const navigation = useNavigation();
   const [email, setEmail] = useState('');
-  const [verifyCode, setVerifyCode] = useState('');
+  const [pinCode, setVerifyCode] = useState('');
 
   useEffect(() => {
     if (props.route.params.email) {
@@ -36,8 +39,24 @@ const VerifyCode = (props: any) => {
   }, []);
 
   const isActiveDoneButton = () => {
-    return verifyCode !== '';
+    return pinCode.length == 6;
   };
+
+  function requestVerifyPincode() {
+    const param = {
+      pin: pinCode,
+    };
+    Auth.verifyPinCode(param)
+      .then(res => {
+        const {token} = res.data;
+
+        setCommonInfo(STORED_ACCESS_TOKEN, token);
+        navigation.navigate('Main' as never);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
 
   return (
     <>
@@ -53,6 +72,8 @@ const VerifyCode = (props: any) => {
           <Text style={s.inputTitle}>Verification code</Text>
           <View style={{marginHorizontal: 23, marginTop: 10}}>
             <PinCodeInput
+              numberOnly={true}
+              maxLength={6}
               update={(e: string) => {
                 setVerifyCode(e);
               }}
@@ -91,9 +112,7 @@ const VerifyCode = (props: any) => {
               activeColor={isActiveDoneButton() ? MAIN_BLACK : BASE_BUTTON}
               activeFontColor={isActiveDoneButton() ? CC_WHITE : DIMED_GRAY}
               bodyColor={BASE_BUTTON}
-              click={() => {
-                navigation.navigate('Main' as never);
-              }}
+              click={requestVerifyPincode}
             />
           </View>
         </View>

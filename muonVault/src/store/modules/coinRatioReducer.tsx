@@ -17,10 +17,10 @@ export type RatioStore = Ratio;
 
 const initialState: Ratio = {
   ratioSet: {
-    BTC: 1.2,
-    BNB: 1.2,
-    USDC: 1.2,
-    ETH: 1.2,
+    BTC: 19006.7,
+    BNB: 275.48,
+    USDC: 1,
+    ETH: 1328.1,
     MU: 1.0,
   },
 };

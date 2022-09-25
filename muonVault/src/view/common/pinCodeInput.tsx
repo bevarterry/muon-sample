@@ -24,6 +24,7 @@ type Props = {
   style?: any;
   textContentStyle?: any;
   initValue?: string | number;
+  maxLength?: number;
   numberOnly?: boolean;
   textAlign?: 'center' | 'right' | 'left' | undefined;
 };
@@ -42,6 +43,7 @@ const PinCodeInput: React.FC<React.PropsWithChildren<Props>> = ({
   style,
   textContentStyle,
   initValue,
+  maxLength,
   numberOnly,
 }) => {
   const ref_input = useRef(null);
@@ -49,18 +51,13 @@ const PinCodeInput: React.FC<React.PropsWithChildren<Props>> = ({
   const [mainColor, setMainColor] = useState('#e0e2e4');
 
   function changeValue(e: string) {
-    if (numberOnly) {
-      let val = e;
-
-      if (!e) val = '0';
-
-      if (update) update(parseInt(val));
-      onChangeText(parseInt(val) + '');
-    } else {
-      update(e);
-      onChangeText(e);
-    }
+    update(e);
+    onChangeText(e);
   }
+  useEffect(() => {
+    //@ts-ignore
+    ref_input.current.focus();
+  }, []);
 
   function keyboardType() {
     if (numberOnly) return 'number-pad';
@@ -68,7 +65,12 @@ const PinCodeInput: React.FC<React.PropsWithChildren<Props>> = ({
   }
   return (
     <>
-      <View
+      <TouchableOpacity
+        activeOpacity={1}
+        onPress={() => {
+          //@ts-ignore
+          ref_input.current.focus();
+        }}
         style={[
           {
             display: 'flex',
@@ -86,6 +88,7 @@ const PinCodeInput: React.FC<React.PropsWithChildren<Props>> = ({
           keyboardType={keyboardType()}
           textAlign={textAlign ? textAlign : 'center'}
           editable
+          maxLength={maxLength}
           ref={ref_input}
           numberOfLines={1}
           onEndEditing={() => {}}
@@ -119,7 +122,7 @@ const PinCodeInput: React.FC<React.PropsWithChildren<Props>> = ({
         )}
 
         {rightComponent}
-      </View>
+      </TouchableOpacity>
     </>
   );
 };
