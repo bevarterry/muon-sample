@@ -45,20 +45,22 @@ const ValutCard: React.FC<React.PropsWithChildren<Prop>> = ({vault}) => {
       <>
         <View style={s.assetValueWrapper}>
           <Text style={s.displayCoinName}>{value}</Text>
-          <Text style={s.dollarValue}>(${value * ratio})</Text>
+          <Text style={s.dollarValue}>
+            (${Number(value * ratio).toFixed(0)})
+          </Text>
         </View>
       </>
     );
   };
 
   const totalValueInDallor = () => {
-    return (
+    return Number(
       vault.BTC * ratioStore.ratioSet.BTC +
-      vault.ETH * ratioStore.ratioSet.ETH +
-      vault.BNB * ratioStore.ratioSet.BNB +
-      vault.USDC * ratioStore.ratioSet.USDC +
-      vault.VP * ratioStore.ratioSet.MU
-    );
+        vault.ETH * ratioStore.ratioSet.ETH +
+        vault.BNB * ratioStore.ratioSet.BNB +
+        vault.USDC * ratioStore.ratioSet.USDC +
+        vault.VP * ratioStore.ratioSet.MU,
+    ).toFixed(0);
   };
 
   function moveDetail() {

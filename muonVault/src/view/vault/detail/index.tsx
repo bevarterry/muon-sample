@@ -20,12 +20,13 @@ const VaultDetail = (props: any) => {
   const navigation = useNavigation();
   const [vault, setVault] = useState<Vault>({
     id: '',
+    idx: '',
     name: '',
     BTC: 0,
     BNB: 0,
     USDC: 0,
     ETH: 0,
-    MU: 0,
+    VP: 0,
     color: '#000000',
   });
 
@@ -36,13 +37,13 @@ const VaultDetail = (props: any) => {
   }, []);
 
   const totalValueInDallor = () => {
-    return (
+    return Number(
       vault.BTC * ratioStore.ratioSet.BTC +
-      vault.ETH * ratioStore.ratioSet.ETH +
-      vault.BNB * ratioStore.ratioSet.BNB +
-      vault.USDC * ratioStore.ratioSet.USDC +
-      vault.MU * ratioStore.ratioSet.MU
-    );
+        vault.ETH * ratioStore.ratioSet.ETH +
+        vault.BNB * ratioStore.ratioSet.BNB +
+        vault.USDC * ratioStore.ratioSet.USDC +
+        vault.VP * ratioStore.ratioSet.MU,
+    ).toFixed(0);
   };
 
   const coinRow = (symbol: string, icon: any, value: number, ratio: number) => {
@@ -77,7 +78,7 @@ const VaultDetail = (props: any) => {
             justifyContent: 'flex-end',
           }}>
           <Text style={s.value}>{value}</Text>
-          <Text style={s.dollarValue}>${value * ratio}</Text>
+          <Text style={s.dollarValue}>${Number(value * ratio).toFixed(0)}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -98,7 +99,7 @@ const VaultDetail = (props: any) => {
         {coinRow('ETH', eth_icon, vault.ETH, ratioStore.ratioSet.ETH)}
         {coinRow('BNB', bnb_icon, vault.BNB, ratioStore.ratioSet.BNB)}
         {coinRow('USDC', usdc_icon, vault.USDC, ratioStore.ratioSet.USDC)}
-        {coinRow('MU', muon_icon, vault.MU, ratioStore.ratioSet.MU)}
+        {coinRow('MU', muon_icon, vault.VP, ratioStore.ratioSet.MU)}
       </View>
     </>
   );
