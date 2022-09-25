@@ -48,6 +48,11 @@ const BasicTextInput: React.FC<React.PropsWithChildren<Props>> = ({
   const [value, onChangeText] = useState('');
   const [mainColor, setMainColor] = useState('#e0e2e4');
 
+  useEffect(() => {
+    //@ts-ignore
+    ref_input.current.focus();
+  }, []);
+
   function changeValue(e: string) {
     if (numberOnly) {
       let val = e;
@@ -68,7 +73,12 @@ const BasicTextInput: React.FC<React.PropsWithChildren<Props>> = ({
   }
   return (
     <>
-      <View
+      <TouchableOpacity
+        activeOpacity={1}
+        onPress={() => {
+          //@ts-ignore
+          ref_input.current.focus();
+        }}
         style={[
           {
             display: 'flex',
@@ -119,7 +129,7 @@ const BasicTextInput: React.FC<React.PropsWithChildren<Props>> = ({
         )}
 
         {rightComponent}
-      </View>
+      </TouchableOpacity>
     </>
   );
 };

@@ -1,16 +1,30 @@
 import React, {useEffect} from 'react';
 import {Image, StyleSheet, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
+import {getAccessToken} from '../storage/AccessTokenStorage';
+import {setCommonInfo} from '../store/global/state';
 import {CC_LOGHT_YELLOW, SPLASH_BACKGROUND} from './ColorCode';
+import {STORED_ACCESS_TOKEN} from './constantProperties';
 const splash_log_1 = require('../../assets/image/splash_logo_1.png');
 const splash_log_2 = require('../../assets/image/splash_logo_2.png');
 const splash_log_3 = require('../../assets/image/splash_logo_3.png');
 const Splash = (props: any) => {
   useEffect(() => {
     setTimeout(() => {
-      props.navigation.replace('StepOne');
+      accessTokenCheck();
     }, 800);
   });
+
+  async function accessTokenCheck() {
+    const accessTokenStore = await getAccessToken();
+
+    if (!accessTokenStore) return props.navigation.replace('StepOne');
+
+    console.log(':::: Splash access token : ', accessTokenStore);
+    setCommonInfo(STORED_ACCESS_TOKEN, accessTokenStore.accessToken);
+
+    props.navigation.replace('Main');
+  }
 
   return (
     <View style={s.wrapper}>

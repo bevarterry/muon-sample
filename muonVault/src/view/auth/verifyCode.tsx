@@ -13,6 +13,7 @@ import {
 import FastImage from 'react-native-fast-image';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import Auth from '../../api/Auth';
+import {setAccessToken} from '../../storage/AccessTokenStorage';
 import {setCommonInfo} from '../../store/global/state';
 import {
   BASE_BACKGROUND,
@@ -47,8 +48,10 @@ const VerifyCode = (props: any) => {
       pin: pinCode,
     };
     Auth.verifyPinCode(param)
-      .then(res => {
+      .then(async res => {
         const {token} = res.data;
+
+        await setAccessToken({accessToken: token});
 
         setCommonInfo(STORED_ACCESS_TOKEN, token);
         navigation.navigate('Main' as never);
