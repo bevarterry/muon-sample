@@ -10,8 +10,8 @@ import Top from '../common/top';
 const StepTwo = () => {
   const navigation = useNavigation();
 
-  function moveToHome() {
-    navigation.navigate('Main' as never);
+  function moveToEmailAuth() {
+    navigation.navigate('InputEmail' as never);
   }
   return (
     <>
@@ -36,7 +36,7 @@ const StepTwo = () => {
             titleColor={MAIN_BLACK}
             borderRadius={20}
             bodyColor={BASE_BUTTON}
-            click={moveToHome}
+            click={moveToEmailAuth}
           />
           <View style={{height: 10}} />
           <ButtonComponent

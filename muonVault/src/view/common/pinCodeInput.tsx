@@ -27,7 +27,7 @@ type Props = {
   numberOnly?: boolean;
   textAlign?: 'center' | 'right' | 'left' | undefined;
 };
-const BasicTextInput: React.FC<React.PropsWithChildren<Props>> = ({
+const PinCodeInput: React.FC<React.PropsWithChildren<Props>> = ({
   active,
   postfix,
   textAlign,
@@ -130,4 +130,4 @@ const s = StyleSheet.create({
   },
 });
 
-export default BasicTextInput;
+export default PinCodeInput;

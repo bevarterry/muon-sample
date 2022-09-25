@@ -19,6 +19,8 @@ import WithDraw from './src/view/vault/coinDetail/withdraw/withDraw';
 import CompleteWithdraw from './src/view/vault/coinDetail/withdraw/completeWithdraw';
 import BuyVp from './src/view/vault/coinDetail/buyVp/buyVp';
 import CompleteBuyVp from './src/view/vault/coinDetail/buyVp/completeBuyVp';
+import InputEmail from './src/view/auth/inputEmail';
+import VerifyCode from './src/view/auth/verifyCode';
 
 const Stack = createStackNavigator();
 const baseTransitionOption = {
@@ -40,6 +42,16 @@ const App = () => {
           <Stack.Screen
             name="Main"
             component={Main}
+            options={baseTransitionOption}
+          />
+          <Stack.Screen
+            name="InputEmail"
+            component={InputEmail}
+            options={baseTransitionOption}
+          />
+          <Stack.Screen
+            name="VerifyCode"
+            component={VerifyCode}
             options={baseTransitionOption}
           />
           <Stack.Screen

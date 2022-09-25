@@ -28,7 +28,6 @@ const BuyVp = (props: any) => {
   const [vpValue, setVp] = useState(0);
 
   const isActiveDoneButton = () => {
-    console.log(vpValue);
     return vpValue !== 0;
   };
 
