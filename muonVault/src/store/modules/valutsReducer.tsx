@@ -17,38 +17,7 @@ export type VaultsAction = ActionType<typeof actions>;
 export type VaultsStore = VaultList;
 
 const initialState: VaultList = {
-  vaults: [
-    {
-      id: '1',
-      name: 'SAFE1',
-      BTC: 200,
-      BNB: 200,
-      USDC: 200,
-      ETH: 200,
-      MU: 0,
-      color: '#242424',
-    },
-    {
-      id: '2',
-      name: 'SAFE2',
-      BTC: 200,
-      BNB: 200,
-      USDC: 200,
-      ETH: 200,
-      MU: 0,
-      color: '#A12626',
-    },
-    {
-      id: '3',
-      name: 'SAFE3',
-      BTC: 200,
-      BNB: 200,
-      USDC: 200,
-      ETH: 200,
-      MU: 0,
-      color: '#2E6FD1',
-    },
-  ],
+  vaults: [],
 };
 
 export const VaultsStoreData = createReducer<VaultList, VaultsAction>(

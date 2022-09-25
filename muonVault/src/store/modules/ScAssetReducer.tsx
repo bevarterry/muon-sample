@@ -5,12 +5,18 @@ import {ScAssets} from '../../model/scAssets';
 const {createStandardAction} = deprecated;
 
 export const UPDATE_SC_ASSET_SET = 'ACCOUNT/UPDATE_SC_ASSET_SET';
+export const UPDATE_SC_CONTRACT_ADDRESS = 'ACCOUNT/UPDATE_SC_CONTRACT_ADDRESS';
 
 export const setScAssets =
   createStandardAction(UPDATE_SC_ASSET_SET)<ScAssets>();
 
+export const setScAddress = createStandardAction(
+  UPDATE_SC_CONTRACT_ADDRESS,
+)<ScAssets>();
+
 const actions = {
   setScAssets,
+  setScAddress,
 };
 
 export type ScAssetsAction = ActionType<typeof actions>;
@@ -66,6 +72,18 @@ export const ScAssetsStoreData = createReducer<ScAssets, ScAssetsAction>(
         draft.binance = scAssets.binance;
         draft.usdc = scAssets.usdc;
         draft.muon = scAssets.muon;
+      }),
+    [UPDATE_SC_CONTRACT_ADDRESS]: (state, action) =>
+      produce(state, draft => {
+        return Object.assign({}, draft, {data: action.payload});
+
+        // const scAssets: ScAssets = action.payload;
+
+        // draft.bitcoin.contractAddress = scAssets.bitcoin;
+        // draft.ethereum = scAssets.ethereum;
+        // draft.binance = scAssets.binance;
+        // draft.usdc = scAssets.usdc;
+        // draft.muon = scAssets.muon;
       }),
   },
 );
