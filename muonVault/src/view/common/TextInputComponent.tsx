@@ -1,3 +1,4 @@
+import {SpringKeyboardAnimationConfig} from '@react-navigation/bottom-tabs/lib/typescript/src/types';
 import React, {useEffect, useState, useRef} from 'react';
 import {
   StyleSheet,
@@ -7,6 +8,7 @@ import {
   Dimensions,
   Text,
 } from 'react-native';
+import {Value} from 'react-native-reanimated';
 
 const {width, height} = Dimensions.get('window');
 
@@ -30,6 +32,7 @@ type Props = {
   leftComponent?: any;
   rightComponent?: any;
   prooStyle?: any;
+  propsValue: string;
 };
 const TextInputComponent: React.FC<React.PropsWithChildren<Props>> = ({
   title,
@@ -48,11 +51,15 @@ const TextInputComponent: React.FC<React.PropsWithChildren<Props>> = ({
   leftComponent,
   rightComponent,
   prooStyle,
+  propsValue,
 }) => {
   const ref_input = useRef(null);
   const [value, onChangeText] = useState('');
   const [mainColor, setMainColor] = useState('#e0e2e4');
 
+  useEffect(() => {
+    onChangeText(propsValue);
+  }, [propsValue]);
   return (
     <>
       <View

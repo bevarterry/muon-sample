@@ -1,13 +1,18 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
+import {useSelector} from 'react-redux';
+import {Vault} from '../../../../model/vaults';
+import {RootState} from '../../../../store/modules';
 import {
   BASE_BACKGROUND,
   BASE_BUTTON,
   CC_WHITE,
   DIMED_GRAY,
   MAIN_BLACK,
+  MAIN_BORDER_COROR,
 } from '../../../ColorCode';
 import BasicBadge from '../../../common/basicBadge';
 import ButtonComponent from '../../../common/ButtonComponent';
@@ -18,29 +23,56 @@ const qr_icon = require('../../../../../assets/image/qr_icon.png');
 type Props = {
   updateStep: Function;
   updateToAddress: Function;
+  selectVault: Function;
+  vault: Vault;
 };
 const Step0: React.FC<React.PropsWithChildren<Props>> = ({
   updateStep,
   updateToAddress,
+  selectVault,
+  vault,
 }) => {
+  const vaultsStore = useSelector((root: RootState) => root.vaultsStore);
   const [toAddress, setToAddress] = useState('');
-
-  const leftComponent = (
-    <View
-      style={{
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-      }}></View>
-  );
 
   const isActiveNextButton = () => {
     return toAddress !== '';
   };
 
+  const candidateVaults = () => {
+    return (
+      <View style={s.candidateVaults}>
+        {vaultsStore.vaults.map((element, index) => {
+          if (element.idx === 'NEW_CREATE') return;
+          if (element.idx === vault.idx) return;
+
+          return (
+            <TouchableOpacity
+              activeOpacity={0.7}
+              key={index}
+              style={{marginRight: 10}}
+              onPress={() => {
+                selectVault(element);
+                setToAddress(element.name);
+              }}>
+              <BasicBadge
+                title={element.name}
+                paddingHorizontal={12}
+                paddingVertical={4}
+                backgroundColor={element.color}
+                fontColor={'#ffffff'}
+                fontSize={12}
+              />
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+    );
+  };
   return (
     <>
       <TextInputComponent
+        propsValue={toAddress}
         leftComponent={
           <BasicBadge
             title={'To'}
@@ -72,7 +104,11 @@ const Step0: React.FC<React.PropsWithChildren<Props>> = ({
         active={toAddress !== ''}
         blur={(e: string) => {}}
       />
-      <View style={{width: '100%', paddingHorizontal: 20, marginTop: 30}}>
+      {!isActiveNextButton() && (
+        <View style={s.candidateVaultsWrapper}>{candidateVaults()}</View>
+      )}
+
+      <View style={{width: '100%', paddingHorizontal: 20, marginTop: 50}}>
         <ButtonComponent
           title="Next"
           width="100%"
@@ -94,3 +130,26 @@ const Step0: React.FC<React.PropsWithChildren<Props>> = ({
 };
 
 export default Step0;
+
+const s = StyleSheet.create({
+  candidateVaultsWrapper: {
+    marginTop: 10,
+    paddingHorizontal: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 1,
+  },
+  candidateVaults: {
+    paddingVertical: 23,
+    backgroundColor: CC_WHITE,
+    borderWidth: 1,
+    borderRadius: 14,
+    borderColor: MAIN_BORDER_COROR,
+    opacity: 1,
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});

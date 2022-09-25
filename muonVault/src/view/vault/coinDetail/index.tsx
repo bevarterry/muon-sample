@@ -31,12 +31,13 @@ const CoinDetail = (props: any) => {
 
   const [vault, setVault] = useState<Vault>({
     id: '',
+    idx: '',
     name: '',
     BTC: 0,
     BNB: 0,
     USDC: 0,
     ETH: 0,
-    MU: 0,
+    VP: 0,
     color: '#000000',
   });
 
@@ -90,7 +91,9 @@ const CoinDetail = (props: any) => {
         <Text style={s.coinValue}>
           {coin.value} {coin.symbol}
         </Text>
-        <Text style={s.dollarValue}>Value ${coin.value * coin.ratio}</Text>
+        <Text style={s.dollarValue}>
+          Value ${Number(coin.value * coin.ratio).toFixed(0)}
+        </Text>
 
         <TransactionButtonContainer
           onPress={(type: string) => {

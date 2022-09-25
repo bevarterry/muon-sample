@@ -38,14 +38,17 @@ const WithDraw = (props: any) => {
     symbol: '',
   });
 
+  const [selectedVault, setSelectedVault] = useState<Vault>();
+
   const [vault, setVault] = useState<Vault>({
     id: '',
+    idx: '',
     name: '',
     BTC: 0,
     BNB: 0,
     USDC: 0,
     ETH: 0,
-    MU: 0,
+    VP: 0,
     color: '#000000',
   });
 
@@ -95,6 +98,7 @@ const WithDraw = (props: any) => {
           />
           <Text style={{fontSize: 22, fontWeight: '700'}}>{vault.name}</Text>
         </View>
+
         {step !== WITHDRAW_INPUT_TO_ADDRESS && (
           <View style={s.fromRow}>
             <BasicBadge
@@ -105,7 +109,9 @@ const WithDraw = (props: any) => {
               fontColor={'#ffffff'}
               fontSize={12}
             />
-            <Text style={{fontSize: 22, fontWeight: '700'}}>{toAddress}</Text>
+            <Text style={{fontSize: 22, fontWeight: '700'}}>
+              {toAddress ? toAddress : selectedVault?.name}
+            </Text>
           </View>
         )}
         {step !== WITHDRAW_INPUT_TO_ADDRESS && step !== WITHDRAW_INPUT_AMOUNT && (
@@ -139,11 +145,15 @@ const WithDraw = (props: any) => {
 
         {step === WITHDRAW_INPUT_TO_ADDRESS && (
           <Step0
+            vault={vault}
             updateStep={(next: string) => {
               setStep(next);
             }}
             updateToAddress={(toAddress: string) => {
               setToAddress(toAddress);
+            }}
+            selectVault={(selectedVault: Vault) => {
+              setSelectedVault(selectedVault);
             }}
           />
         )}
