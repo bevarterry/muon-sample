@@ -10,6 +10,6 @@ export interface ScAssetInfo {
   symbol: string;
   displayName: string;
   contractAddress?: string;
-  totalValue?: string;
+  totalValue: number;
   ratio?: number;
 }

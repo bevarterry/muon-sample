@@ -28,6 +28,17 @@ export const VaultsStoreData = createReducer<VaultList, VaultsAction>(
       produce(state, draft => {
         const vaults: VaultList = action.payload;
         draft.vaults = vaults.vaults;
+        draft.vaults.push({
+          idx: 'NEW_CREATE',
+          id: 'NEW_CREATE',
+          name: 'CREATE A NEW SAFE',
+          BTC: 0,
+          BNB: 0,
+          USDC: 0,
+          ETH: 0,
+          VP: 0,
+          color: '',
+        });
       }),
   },
 );

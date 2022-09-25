@@ -14,6 +14,7 @@ const eth_icon = require('../../../assets/image/eth_icon.png');
 const bnb_icon = require('../../../assets/image/bnb_icon.png');
 const usdc_icon = require('../../../assets/image/usdc_icon.png');
 const muon_icon = require('../../../assets/image/muon_icon.png');
+const plus_icon = require('../../../assets/image/plus_icon.png');
 
 const {width, height} = Dimensions.get('window');
 const paddingHorizontalLength = 17;
@@ -66,56 +67,89 @@ const ValutCard: React.FC<React.PropsWithChildren<Prop>> = ({vault}) => {
   function moveDetail() {
     navigation.navigate('VaultDetail' as never, {element: vault} as never);
   }
+
   return (
-    <TouchableOpacity
-      style={s.valutCard}
-      activeOpacity={0.7}
-      onPress={moveDetail}>
-      <View style={[s.cardTitle, {backgroundColor: vault.color}]}>
-        <Text style={s.cardTitleText}>{vault.name}</Text>
-        <Text style={{fontSize: 16, fontWeight: '700', color: '#ffffff'}}>
-          ${totalValueInDallor()}
-        </Text>
-      </View>
-      <View style={s.cardRow}>
-        <CoinTitleComponent symbol="BTC" imageSource={btc_icon} />
-        {displayValue(vault.BTC, ratioStore.ratioSet.BTC)}
-      </View>
+    <>
+      {vault.id === 'NEW_CREATE' && (
+        <TouchableOpacity style={s.createButton} activeOpacity={0.7}>
+          <FastImage
+            resizeMode="contain"
+            style={{width: 28, height: 28}}
+            source={plus_icon}
+          />
+          <Text style={s.createText}>CREATE A NEW SAFE</Text>
+        </TouchableOpacity>
+      )}
+      {vault.id !== 'NEW_CREATE' && (
+        <TouchableOpacity
+          style={s.valutCard}
+          activeOpacity={0.7}
+          onPress={moveDetail}>
+          <View style={[s.cardTitle, {backgroundColor: vault.color}]}>
+            <Text style={s.cardTitleText}>{vault.name}</Text>
+            <Text style={{fontSize: 16, fontWeight: '700', color: '#ffffff'}}>
+              ${totalValueInDallor()}
+            </Text>
+          </View>
+          <View style={s.cardRow}>
+            <CoinTitleComponent symbol="BTC" imageSource={btc_icon} />
+            {displayValue(vault.BTC, ratioStore.ratioSet.BTC)}
+          </View>
 
-      {devider()}
+          {devider()}
 
-      <View style={s.cardRow}>
-        <CoinTitleComponent symbol="ETH" imageSource={eth_icon} />
-        {displayValue(vault.ETH, ratioStore.ratioSet.ETH)}
-      </View>
+          <View style={s.cardRow}>
+            <CoinTitleComponent symbol="ETH" imageSource={eth_icon} />
+            {displayValue(vault.ETH, ratioStore.ratioSet.ETH)}
+          </View>
 
-      {devider()}
+          {devider()}
 
-      <View style={s.cardRow}>
-        <CoinTitleComponent symbol="BNB" imageSource={bnb_icon} />
-        {displayValue(vault.BNB, ratioStore.ratioSet.BNB)}
-      </View>
+          <View style={s.cardRow}>
+            <CoinTitleComponent symbol="BNB" imageSource={bnb_icon} />
+            {displayValue(vault.BNB, ratioStore.ratioSet.BNB)}
+          </View>
 
-      {devider()}
+          {devider()}
 
-      <View style={s.cardRow}>
-        <CoinTitleComponent symbol="USDC" imageSource={usdc_icon} />
-        {displayValue(vault.USDC, ratioStore.ratioSet.USDC)}
-      </View>
+          <View style={s.cardRow}>
+            <CoinTitleComponent symbol="USDC" imageSource={usdc_icon} />
+            {displayValue(vault.USDC, ratioStore.ratioSet.USDC)}
+          </View>
 
-      {devider()}
+          {devider()}
 
-      <View style={s.cardRow}>
-        <CoinTitleComponent symbol="MU" imageSource={muon_icon} />
-        {displayValue(vault.VP, ratioStore.ratioSet.MU)}
-      </View>
-    </TouchableOpacity>
+          <View style={s.cardRow}>
+            <CoinTitleComponent symbol="MU" imageSource={muon_icon} />
+            {displayValue(vault.VP, ratioStore.ratioSet.MU)}
+          </View>
+        </TouchableOpacity>
+      )}
+    </>
   );
 };
 
 export default ValutCard;
 
 const s = StyleSheet.create({
+  createButton: {
+    marginRight: 8,
+    paddingVertical: 86,
+    width: width - paddingHorizontalLength * 2,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: '#E6E6E6',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  createText: {
+    fontSize: 18,
+    fontWeight: '700',
+    lineHeight: 21.5,
+    marginTop: 10,
+  },
   valutCard: {
     width: width - paddingHorizontalLength * 2,
     marginRight: 8,

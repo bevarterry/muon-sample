@@ -8,8 +8,9 @@ import {BASE_BACKGROUND, DIMED_GRAY} from '../ColorCode';
 
 const TotalAssetsComponent = () => {
   const scAssetsStore = useSelector((root: RootState) => root.scAssetsStore);
+  const ratioStore = useSelector((root: RootState) => root.ratioStore);
 
-  const displayCoinRow = (asset: ScAssetInfo) => {
+  const displayCoinRow = (asset: ScAssetInfo, ratio: number) => {
     return (
       <>
         <View style={s.assetWrapper}>
@@ -17,7 +18,9 @@ const TotalAssetsComponent = () => {
           <View style={s.assetValueWrapper}>
             <Text style={s.displayCoinName}>{asset.totalValue}</Text>
             <Text style={s.coinValue}>{asset.symbol}</Text>
-            <Text style={s.dollarValue}>($65,232,111)</Text>
+            <Text style={s.dollarValue}>
+              (${Number(asset.totalValue * ratio).toFixed(2)})
+            </Text>
           </View>
         </View>
       </>
@@ -27,11 +30,11 @@ const TotalAssetsComponent = () => {
   return (
     <>
       <View style={s.wrapper}>
-        {displayCoinRow(scAssetsStore.bitcoin)}
-        {displayCoinRow(scAssetsStore.ethereum)}
-        {displayCoinRow(scAssetsStore.binance)}
-        {displayCoinRow(scAssetsStore.usdc)}
-        {displayCoinRow(scAssetsStore.muon)}
+        {displayCoinRow(scAssetsStore.bitcoin, ratioStore.ratioSet.BTC)}
+        {displayCoinRow(scAssetsStore.ethereum, ratioStore.ratioSet.ETH)}
+        {displayCoinRow(scAssetsStore.binance, ratioStore.ratioSet.BNB)}
+        {displayCoinRow(scAssetsStore.usdc, ratioStore.ratioSet.USDC)}
+        {displayCoinRow(scAssetsStore.muon, ratioStore.ratioSet.MU)}
       </View>
     </>
   );

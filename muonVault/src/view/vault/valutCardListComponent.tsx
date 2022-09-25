@@ -38,7 +38,13 @@ const ValutCardListComponent = () => {
         snapToInterval={width - (paddingHorizontalLength * 2 - 8)}
         onScroll={onScroll}
         pagingEnabled
-        renderItem={({item}) => <ValutCard vault={item} />}
+        renderItem={({item, index}) => {
+          return (
+            <>
+              <ValutCard vault={item} />
+            </>
+          );
+        }}
       />
       <View
         style={{

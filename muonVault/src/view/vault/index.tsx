@@ -1,16 +1,31 @@
 import React from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../store/modules';
 import {BASE_BACKGROUND} from '../ColorCode';
 import TotalAssetsComponent from './totalAssetsComponent';
 import ValutCardListComponent from './valutCardListComponent';
 const top_logo = require('../../../assets/image/top_logo.png');
 const Vault = () => {
+  const scAssetsStore = useSelector((root: RootState) => root.scAssetsStore);
+  const ratioStore = useSelector((root: RootState) => root.ratioStore);
+
+  const totalValueInDallor = () => {
+    return Number(
+      scAssetsStore.bitcoin.totalValue * ratioStore.ratioSet.BTC +
+        scAssetsStore.ethereum.totalValue * ratioStore.ratioSet.ETH +
+        scAssetsStore.binance.totalValue * ratioStore.ratioSet.BNB +
+        scAssetsStore.usdc.totalValue * ratioStore.ratioSet.USDC +
+        scAssetsStore.muon.totalValue * ratioStore.ratioSet.MU,
+    ).toFixed(2);
+  };
+
   return (
     <>
       <ScrollView style={s.wrapper}>
-        <TopComponent />
-        <AssetSummaryComponent />
+        <TopComponent totalVp={12} />
+        <AssetSummaryComponent totalDollar={totalValueInDallor()} />
         <View
           style={{
             width: '100%',
@@ -28,7 +43,12 @@ const Vault = () => {
   );
 };
 
-const TopComponent = () => {
+type PropTopComponent = {
+  totalVp: number;
+};
+const TopComponent: React.FC<React.PropsWithChildren<PropTopComponent>> = ({
+  totalVp,
+}) => {
   return (
     <View style={s.topComponentWrapper}>
       <FastImage
@@ -39,12 +59,17 @@ const TopComponent = () => {
         }}
         source={top_logo}
       />
-      <Text style={{fontSize: 16, fontWeight: '700'}}>2,436 VP</Text>
+      <Text style={{fontSize: 16, fontWeight: '700'}}>{totalVp} VP</Text>
     </View>
   );
 };
 
-const AssetSummaryComponent = () => {
+type PropAssetSummary = {
+  totalDollar: string;
+};
+const AssetSummaryComponent: React.FC<
+  React.PropsWithChildren<PropAssetSummary>
+> = ({totalDollar}) => {
   return (
     <View style={s.summaryComponentWrapper}>
       <FastImage
@@ -72,7 +97,7 @@ const AssetSummaryComponent = () => {
           marginTop: 5,
           lineHeight: 28.8,
         }}>
-        $72,032,532
+        ${totalDollar}
       </Text>
     </View>
   );
