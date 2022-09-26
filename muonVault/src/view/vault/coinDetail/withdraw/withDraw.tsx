@@ -5,16 +5,8 @@ import FastImage from 'react-native-fast-image';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {CoinDetailType} from '../../../../model/coin';
 import {Vault} from '../../../../model/vaults';
-import {
-  BASE_BACKGROUND,
-  BASE_BUTTON,
-  CC_WHITE,
-  DIMED_GRAY,
-  MAIN_BLACK,
-} from '../../../ColorCode';
+import {BASE_BACKGROUND, DIMED_GRAY, MAIN_BLACK} from '../../../ColorCode';
 import BasicBadge from '../../../common/basicBadge';
-import ButtonComponent from '../../../common/ButtonComponent';
-import TextInputComponent from '../../../common/TextInputComponent';
 import Top from '../../../common/top';
 import {
   WITHDRAW_BEFORE_EXECUTE,
@@ -29,7 +21,6 @@ const WithDraw = (props: any) => {
   const [toAddress, setToAddress] = useState('');
   const [amount, setAmount] = useState('');
   const [step, setStep] = useState(WITHDRAW_INPUT_TO_ADDRESS);
-  const [showAmountInput, setShowAmountInput] = useState(false);
 
   const navigation = useNavigation();
   const [coin, setCoin] = useState<CoinDetailType>({
@@ -38,9 +29,19 @@ const WithDraw = (props: any) => {
     symbol: '',
   });
 
-  const [selectedVault, setSelectedVault] = useState<Vault>();
+  const [toVault, setToVault] = useState<Vault>({
+    id: '',
+    idx: '',
+    name: '',
+    BTC: 0,
+    BNB: 0,
+    USDC: 0,
+    ETH: 0,
+    VP: 0,
+    color: '#000000',
+  });
 
-  const [vault, setVault] = useState<Vault>({
+  const [fromVault, setFromVault] = useState<Vault>({
     id: '',
     idx: '',
     name: '',
@@ -56,7 +57,7 @@ const WithDraw = (props: any) => {
     if (props.route.params.vault) {
       const {coin, vault} = props.route.params;
 
-      setVault(vault);
+      setFromVault(vault);
       setCoin(coin);
     }
   }, []);
@@ -96,7 +97,9 @@ const WithDraw = (props: any) => {
             fontColor={'#ffffff'}
             fontSize={12}
           />
-          <Text style={{fontSize: 22, fontWeight: '700'}}>{vault.name}</Text>
+          <Text style={{fontSize: 22, fontWeight: '700'}}>
+            {fromVault.name}
+          </Text>
         </View>
 
         {step !== WITHDRAW_INPUT_TO_ADDRESS && (
@@ -110,7 +113,7 @@ const WithDraw = (props: any) => {
               fontSize={12}
             />
             <Text style={{fontSize: 22, fontWeight: '700'}}>
-              {toAddress ? toAddress : selectedVault?.name}
+              {toAddress ? toAddress : toVault?.name}
             </Text>
           </View>
         )}
@@ -126,7 +129,7 @@ const WithDraw = (props: any) => {
                 fontSize={12}
               />
               <Text style={{fontSize: 22, fontWeight: '700'}}>
-                {amount} ETH
+                {amount} {coin.symbol}
               </Text>
             </View>
             <View
@@ -145,7 +148,7 @@ const WithDraw = (props: any) => {
 
         {step === WITHDRAW_INPUT_TO_ADDRESS && (
           <Step0
-            vault={vault}
+            vault={fromVault}
             updateStep={(next: string) => {
               setStep(next);
             }}
@@ -153,13 +156,16 @@ const WithDraw = (props: any) => {
               setToAddress(toAddress);
             }}
             selectVault={(selectedVault: Vault) => {
-              setSelectedVault(selectedVault);
+              setToVault(selectedVault);
             }}
           />
         )}
 
         {step === WITHDRAW_INPUT_AMOUNT && (
           <Step1
+            coin={coin}
+            toVault={toVault}
+            fromVault={fromVault}
             updateStep={(next: string) => {
               setStep(next);
             }}

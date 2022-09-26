@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {Dimensions, FlatList, StyleSheet, Text, View} from 'react-native';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {Vault} from '../../model/vaults';
+import {addDefaultVault} from '../../store/action/VaultAction';
 import {RootState} from '../../store/modules';
 import ValutCard from './valutCard';
 
@@ -9,8 +10,10 @@ const {width, height} = Dimensions.get('window');
 const paddingHorizontalLength = 17;
 
 const ValutCardListComponent = () => {
+  const dispatch = useDispatch();
   const [page, setPage] = useState(0);
   const valutsStore = useSelector((root: RootState) => root.vaultsStore);
+  const scAssetsStore = useSelector((root: RootState) => root.scAssetsStore);
 
   const onScroll = (e: any) => {
     const newPage = Math.round(
@@ -22,6 +25,23 @@ const ValutCardListComponent = () => {
   };
 
   useEffect(() => {}, [page]);
+
+  useEffect(() => {
+    dispatch(
+      //@ts-ignore
+      addDefaultVault({
+        idx: 'DEFAULT_WALLET',
+        id: 'DEFAULT_WALLET',
+        name: 'WALLET',
+        BTC: scAssetsStore.bitcoin.totalValue,
+        BNB: scAssetsStore.binance.totalValue,
+        USDC: scAssetsStore.usdc.totalValue,
+        ETH: scAssetsStore.ethereum.totalValue,
+        VP: scAssetsStore.muon.totalValue,
+        color: '#242424',
+      }),
+    );
+  }, []);
 
   return (
     <View

@@ -2,7 +2,7 @@ import {Dispatch} from 'redux';
 import {VaultResponse} from '../../api/interface/vaultApiResponse';
 import VaultApi from '../../api/Vault';
 import {Vault, VaultList} from '../../model/vaults';
-import {setVaultsStore} from '../modules/valutsReducer';
+import {setDefaultVault, setVaultsStore} from '../modules/valutsReducer';
 export const updateVaultsFromApi = () => {
   return async (dispatch: Dispatch) => {
     VaultApi.vaults()
@@ -15,7 +15,17 @@ export const updateVaultsFromApi = () => {
   };
 };
 
-const colorSet = ['#242424', '#A12626', '#2E6FD1', '#2E6FD1', '#2E6FD1'];
+export const addDefaultVault = (totalVauueVault: Vault) => {
+  return async (dispatch: Dispatch) => {
+    dispatch(
+      setDefaultVault({
+        vaults: [totalVauueVault],
+      }),
+    );
+  };
+};
+
+const colorSet = ['#A12626', '#2E6FD1', '#2E6FD1', '#2E6FD1'];
 function mapToStore(list: Array<VaultResponse>): VaultList {
   console.log(JSON.stringify(list));
 

@@ -1,12 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {CoinDetailType} from '../../../../model/coin';
@@ -25,26 +19,25 @@ import {WITHDRAW_BEFORE_EXECUTE} from '../../../constantProperties';
 const convert_value_icon = require('../../../../../assets/image/convert_value_icon.png');
 
 type Props = {
+  coin: CoinDetailType;
+  toVault: Vault;
+  fromVault: Vault;
   updateStep: Function;
   updateAmount: Function;
 };
 const Step1: React.FC<React.PropsWithChildren<Props>> = ({
+  coin,
+  toVault,
+  fromVault,
   updateStep,
   updateAmount,
 }) => {
   const [amount, setAmount] = useState('');
-  const leftComponent = (
-    <View
-      style={{
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-      }}></View>
-  );
 
   const isActiveDoneButton = () => {
     return amount !== '';
   };
+
   return (
     <>
       <TextInputComponent
@@ -60,7 +53,7 @@ const Step1: React.FC<React.PropsWithChildren<Props>> = ({
         }
         rightComponent={
           <View style={{marginLeft: 5}}>
-            <Text style={{fontSize: 22, fontWeight: '700'}}>ETH</Text>
+            <Text style={{fontSize: 22, fontWeight: '700'}}>{coin.symbol}</Text>
           </View>
         }
         fontSize={22}

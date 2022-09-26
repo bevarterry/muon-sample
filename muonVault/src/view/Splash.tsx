@@ -44,10 +44,10 @@ const Splash = (props: any) => {
         dispatch(updateWallet(res.Wallet));
 
         //@ts-ignore
-        dispatch(updateScAssets(res.SafeAddress));
+        dispatch(updateVaultsFromApi());
 
         //@ts-ignore
-        dispatch(updateVaultsFromApi());
+        dispatch(updateScAssets(res.SafeAddress));
         props.navigation.replace('Main');
       })
       .catch(e => {

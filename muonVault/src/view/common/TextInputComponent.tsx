@@ -32,7 +32,7 @@ type Props = {
   leftComponent?: any;
   rightComponent?: any;
   prooStyle?: any;
-  propsValue: string;
+  propsValue?: string;
 };
 const TextInputComponent: React.FC<React.PropsWithChildren<Props>> = ({
   title,
@@ -58,7 +58,7 @@ const TextInputComponent: React.FC<React.PropsWithChildren<Props>> = ({
   const [mainColor, setMainColor] = useState('#e0e2e4');
 
   useEffect(() => {
-    onChangeText(propsValue);
+    if (propsValue) onChangeText(propsValue);
   }, [propsValue]);
   return (
     <>
