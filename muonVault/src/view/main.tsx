@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import {
   StatusBar,
   TouchableOpacity,
@@ -6,6 +6,7 @@ import {
   Text,
   Platform,
   StyleSheet,
+  KeyboardAvoidingView,
 } from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
@@ -17,6 +18,9 @@ import Nft from './nft';
 import Life from './life';
 import Concierge from './concierge';
 import TabIcon from './common/tabIcon';
+import GlobalModal from './globalModal';
+import {useSelector} from 'react-redux';
+import {RootState} from '~/store/modules';
 const Tab = createBottomTabNavigator();
 
 const home_icon = require('../../assets/image/home_icon.png');
@@ -26,6 +30,19 @@ const life_icon = require('../../assets/image/life_icon.png');
 const concierge_icon = require('../../assets/image/concierge_icon.png');
 
 const Main = () => {
+  let globalModalStore = useSelector(
+    (root: RootState) => root.globalModalStore,
+  );
+  const bottomModalRef = useRef();
+
+  useEffect(() => {
+    console.log(11111, globalModalStore);
+    if (globalModalStore.open) {
+      //@ts-ignore
+      bottomModalRef.current.openModal();
+    }
+  }, [globalModalStore]);
+
   // 탭 메뉴 함수
   function TabOption({state, descriptors, navigation, props}: any) {
     return (
@@ -102,27 +119,32 @@ const Main = () => {
         barStyle="dark-content"
         translucent={true}
       />
-      <View
-        style={{
-          width: '100%',
-          backgroundColor: BASE_BACKGROUND,
-          height: getStatusBarHeight(),
-        }}
-      />
-      <Tab.Navigator
-        screenOptions={{
-          tabBarHideOnKeyboard: true,
-          headerShown: false,
-        }}
-        tabBar={tabProps => {
-          return <TabOption {...{...tabProps}} />;
-        }}>
-        <Tab.Screen component={Home} name="Home" />
-        <Tab.Screen component={Vault} name="Vault" />
-        <Tab.Screen component={Nft} name="Nft" />
-        <Tab.Screen component={Life} name="Life" />
-        <Tab.Screen component={Concierge} name="Concierge" />
-      </Tab.Navigator>
+      <KeyboardAvoidingView behavior="padding">
+        <View style={s.allWrapper}>
+          <Tab.Navigator
+            sceneContainerStyle={{width: '100%', height: '100%'}}
+            screenOptions={{
+              tabBarHideOnKeyboard: true,
+              headerShown: false,
+            }}
+            tabBar={tabProps => {
+              return <TabOption {...{...tabProps}} />;
+            }}>
+            <Tab.Screen component={Home} name="Home" />
+            <Tab.Screen component={Vault} name="Vault" />
+            <Tab.Screen component={Nft} name="Nft" />
+            <Tab.Screen component={Life} name="Life" />
+            <Tab.Screen component={Concierge} name="Concierge" />
+          </Tab.Navigator>
+
+          <GlobalModal
+            //@ts-ignore
+            ref={bottomModalRef}
+            content={globalModalStore.content}
+            height={globalModalStore.height}
+          />
+        </View>
+      </KeyboardAvoidingView>
       {/* <GlobalLoading action={globalLoadingStateStore.state} /> */}
     </>
   );
@@ -132,7 +154,8 @@ export default Main;
 
 const s = StyleSheet.create({
   wrapper: {
-    zIndex: 1,
+    position: 'absolute',
+    bottom: 0,
     backgroundColor: BASE_BACKGROUND,
     flexDirection: 'row',
     paddingHorizontal: 22,
@@ -143,5 +166,12 @@ const s = StyleSheet.create({
   tabOptionWrapper: {
     width: '20%',
     height: 60,
+  },
+  allWrapper: {
+    zIndex: -1,
+    paddingTop: getStatusBarHeight(),
+    width: '100%',
+    backgroundColor: BASE_BACKGROUND,
+    height: '100%',
   },
 });

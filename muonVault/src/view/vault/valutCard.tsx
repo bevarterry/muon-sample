@@ -3,11 +3,13 @@ import React, {useEffect} from 'react';
 import {Dimensions, StyleSheet, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {setGlobalModalState} from '~/store/modules/globalModalReducer';
 import {Vault} from '../../model/vaults';
 import {RootState} from '../../store/modules';
 import {DIMED_GRAY, MAIN_BORDER_COROR} from '../ColorCode';
 import CoinTitleComponent from '../common/coinTitleComponent';
+import CreateNewSafeModalComponent from './createNewSafeModalComponent';
 
 const btc_icon = require('../../../assets/image/btc_icon.png');
 const eth_icon = require('../../../assets/image/eth_icon.png');
@@ -23,6 +25,7 @@ type Prop = {
   vault: Vault;
 };
 const ValutCard: React.FC<React.PropsWithChildren<Prop>> = ({vault}) => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
 
   const ratioStore = useSelector((root: RootState) => root.ratioStore);
@@ -68,10 +71,22 @@ const ValutCard: React.FC<React.PropsWithChildren<Prop>> = ({vault}) => {
     navigation.navigate('VaultDetail' as never, {element: vault} as never);
   }
 
+  function openCreateSafeModal() {
+    dispatch(
+      setGlobalModalState({
+        open: true,
+        content: <CreateNewSafeModalComponent />,
+        height: 370,
+      }),
+    );
+  }
   return (
     <>
       {vault.id === 'NEW_CREATE' && (
-        <TouchableOpacity style={s.createButton} activeOpacity={0.7}>
+        <TouchableOpacity
+          style={s.createButton}
+          activeOpacity={0.7}
+          onPress={openCreateSafeModal}>
           <FastImage
             resizeMode="contain"
             style={{width: 28, height: 28}}

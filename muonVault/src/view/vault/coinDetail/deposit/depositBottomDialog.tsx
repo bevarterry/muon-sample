@@ -5,8 +5,6 @@ import {
   BottomSheetModalProvider,
 } from '@gorhom/bottom-sheet';
 import React, {
-  useState,
-  useEffect,
   useRef,
   useMemo,
   useCallback,
@@ -17,24 +15,18 @@ import {
   View,
   Text,
   StyleSheet,
-  Button,
-  Animated,
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 import {
-  Extrapolate,
-  interpolate,
-  useAnimatedStyle,
-} from 'react-native-reanimated';
-import {
   BASE_BUTTON,
   BASE_GRAY_BACKGROUND,
   CC_WHITE,
   MAIN_BLACK,
-} from '../../../ColorCode';
-import ButtonComponent from '../../../common/ButtonComponent';
+} from '~/view/ColorCode';
+
+import ButtonComponent from '@view/common/ButtonComponent';
 const {width, height} = Dimensions.get('window');
 const buttonWidth = (width - 30) / 2;
 

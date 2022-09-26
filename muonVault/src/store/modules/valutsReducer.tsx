@@ -46,6 +46,7 @@ export const VaultsStoreData = createReducer<VaultList, VaultsAction>(
           color: '',
         });
       }),
+
     [UPDATE_VALUT_DEFAULT]: (state, action) =>
       produce(state, draft => {
         const vaults: VaultList = action.payload;
@@ -60,8 +61,8 @@ export const VaultsStoreData = createReducer<VaultList, VaultsAction>(
         const defaultIndex = draft.vaults.findIndex(
           v => v.idx === 'DEFAULT_WALLET',
         );
-        console.log(defaultIndex);
-        draft.vaults.splice(defaultIndex, 1);
+
+        if (defaultIndex !== -1) draft.vaults.splice(defaultIndex, 1);
 
         draft.vaults.forEach(v => {
           console.log('[v ]', JSON.stringify(v));

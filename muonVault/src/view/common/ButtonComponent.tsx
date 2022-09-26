@@ -20,6 +20,7 @@ type Props = {
   borderRadius: number;
   activeColor?: string;
   activeFontColor?: string;
+  fontSize?: number;
 };
 const ButtonComponent: React.FC<React.PropsWithChildren<Props>> = ({
   title,
@@ -33,6 +34,7 @@ const ButtonComponent: React.FC<React.PropsWithChildren<Props>> = ({
   paddingVertical,
   activeFontColor,
   borderRadius,
+  fontSize,
 }) => {
   return (
     <TouchableOpacity
@@ -54,7 +56,7 @@ const ButtonComponent: React.FC<React.PropsWithChildren<Props>> = ({
           <Text
             allowFontScaling={false}
             style={{
-              fontSize: 16,
+              fontSize: fontSize ? fontSize : 16,
               color: activeFontColor ? activeFontColor : titleColor,
               fontWeight: 'bold',
             }}>

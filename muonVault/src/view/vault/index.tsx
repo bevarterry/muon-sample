@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useRef} from 'react';
+import {useEffect} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../store/modules';
 import {BASE_BACKGROUND} from '../ColorCode';
+import AddNewVaultModal from '../globalModal';
 import TotalAssetsComponent from './totalAssetsComponent';
 import ValutCardListComponent from './valutCardListComponent';
 const top_logo = require('../../../assets/image/top_logo.png');

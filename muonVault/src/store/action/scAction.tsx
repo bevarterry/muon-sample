@@ -17,7 +17,7 @@ export const updateScAssets = (wallets: SafeAddressSet) => {
           symbol: 'ETH',
           displayName: 'Ethereum',
           contractAddress: wallets.ETH,
-          totalValue: 2.2,
+          totalValue: 100,
         },
         binance: {
           symbol: 'BNB',
@@ -39,23 +39,5 @@ export const updateScAssets = (wallets: SafeAddressSet) => {
         },
       }),
     );
-
-    // dispatch(
-    //   setDefaultVault({
-    //     vaults: [
-    //       {
-    //         idx: 'DEFAULT_WALLET',
-    //         id: 'DEFAULT_WALLET',
-    //         name: 'WALLET',
-    //         BTC: 0,
-    //         BNB: 3.2,
-    //         USDC: 0,
-    //         ETH: 2.2,
-    //         VP: 2000,
-    //         color: '',
-    //       },
-    //     ],
-    //   }),
-    // );
   };
 };
