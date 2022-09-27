@@ -32,10 +32,14 @@ const Step1: React.FC<React.PropsWithChildren<Props>> = ({
   updateStep,
   updateAmount,
 }) => {
-  const [amount, setAmount] = useState('');
+  const [amount, setAmount] = useState('0');
 
   const isActiveDoneButton = () => {
-    return amount !== '';
+    return amount !== '0';
+  };
+
+  const isExcessBalance = () => {
+    return Number(amount)! > Number(coin.value);
   };
 
   return (
@@ -89,7 +93,7 @@ const Step1: React.FC<React.PropsWithChildren<Props>> = ({
               source={convert_value_icon}
             />
           </TouchableOpacity>
-          <Text>$19,702.20</Text>
+          <Text>${(coin.ratio * Number(amount)).toFixed(2)}</Text>
         </View>
       </View>
       <View
@@ -103,9 +107,18 @@ const Step1: React.FC<React.PropsWithChildren<Props>> = ({
           },
         ]}>
         <Text style={s.balanceText}>
-          Balance <Text style={{color: MAIN_BLACK}}>23.5ETH</Text>($38,528.12)
+          Balance{' '}
+          <Text style={{color: MAIN_BLACK}}>
+            {coin.value} {coin.symbol}
+          </Text>
+          (${(coin.value * coin.ratio).toFixed(2)})
         </Text>
-        <Text style={s.balanceText}>1 ETH = $1,642.04</Text>
+        <Text style={s.balanceText}>
+          1 {coin.symbol} = ${coin.ratio}
+        </Text>
+        {isExcessBalance() && (
+          <Text style={[s.balanceText, {color: 'red'}]}>Excess balance</Text>
+        )}
       </View>
       <View style={{width: '100%', paddingHorizontal: 20, marginTop: 30}}>
         <ButtonComponent
@@ -114,11 +127,15 @@ const Step1: React.FC<React.PropsWithChildren<Props>> = ({
           borderColor={BASE_BUTTON}
           titleColor={DIMED_GRAY}
           borderRadius={20}
-          activeColor={isActiveDoneButton() ? MAIN_BLACK : undefined}
-          activeFontColor={isActiveDoneButton() ? CC_WHITE : undefined}
+          activeColor={
+            isActiveDoneButton() && !isExcessBalance() ? MAIN_BLACK : undefined
+          }
+          activeFontColor={
+            isActiveDoneButton() && !isExcessBalance() ? CC_WHITE : undefined
+          }
           bodyColor={BASE_BUTTON}
           click={() => {
-            if (isActiveDoneButton()) {
+            if (isActiveDoneButton() && !isExcessBalance()) {
               updateStep(WITHDRAW_BEFORE_EXECUTE);
             }
           }}
