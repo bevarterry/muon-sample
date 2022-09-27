@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1077148311750",
+    "project_id": "muon-vault",
+    "storage_bucket": "muon-vault.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1077148311750:android:52efe9ab3963eea79237c7",
+        "android_client_info": {
+          "package_name": "com.muonvault"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1077148311750-rq82i35s85oif1494ki1qul93ul1ic7d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9ruKGQpnERINm32UreJl9OKXLGsJsfAk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1077148311750-rq82i35s85oif1494ki1qul93ul1ic7d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
