@@ -18,7 +18,7 @@ const paddingHorizontalLength = 27;
 
 const GuideCardListComponent = () => {
   const [page, setPage] = useState(0);
-  const components = [{id: '0'}, {id: '1'}];
+  const components = [{id: '0'}, {id: '1'}, {id: '2'}, {id: '3'}];
 
   const onScroll = (e: any) => {
     const newPage = Math.round(
