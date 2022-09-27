@@ -27,8 +27,6 @@ export const addDefaultVault = (totalVauueVault: Vault) => {
 
 const colorSet = ['#A12626', '#2E6FD1', '#2E6FD1', '#2E6FD1'];
 function mapToStore(list: Array<VaultResponse>): VaultList {
-  console.log(JSON.stringify(list));
-
   const result: VaultList = {vaults: []};
   const mappingVault: Array<Vault> = [];
 
@@ -45,8 +43,6 @@ function mapToStore(list: Array<VaultResponse>): VaultList {
       color: colorSet[i],
     });
   }
-
-  console.log(JSON.stringify(mappingVault));
 
   result.vaults = mappingVault;
 

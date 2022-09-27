@@ -75,7 +75,19 @@ const ValutCard: React.FC<React.PropsWithChildren<Prop>> = ({vault}) => {
     dispatch(
       setGlobalModalState({
         open: true,
-        content: <CreateNewSafeModalComponent />,
+        content: (
+          <CreateNewSafeModalComponent
+            closeModal={() => {
+              dispatch(
+                setGlobalModalState({
+                  open: false,
+                  content: <CreateNewSafeModalComponent />,
+                  height: 370,
+                }),
+              );
+            }}
+          />
+        ),
         height: 370,
       }),
     );

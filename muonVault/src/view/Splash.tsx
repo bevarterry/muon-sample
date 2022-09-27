@@ -29,7 +29,6 @@ const Splash = (props: any) => {
 
     if (!accessTokenStore) return props.navigation.replace('StepOne');
 
-    console.log(':::: Splash access token : ', accessTokenStore);
     setCommonInfo(STORED_ACCESS_TOKEN, accessTokenStore.accessToken);
 
     updateUserInfo();

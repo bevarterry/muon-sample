@@ -18,7 +18,13 @@ import {
 import BasicTextInput from '../common/basicTextInput';
 import ButtonComponent from '../common/ButtonComponent';
 
-const CreateNewSafeModalComponent = () => {
+type Props = {
+  closeModal?: Function;
+};
+
+const CreateNewSafeModalComponent: React.FC<React.PropsWithChildren<Props>> = ({
+  closeModal,
+}) => {
   const [safeName, setSafeName] = useState('');
 
   const isActiveDoneButton = () => {
@@ -75,7 +81,10 @@ const CreateNewSafeModalComponent = () => {
             click={() => {}}
           />
         </View>
-        <TouchableOpacity onPress={() => {}}>
+        <TouchableOpacity
+          onPress={() => {
+            if (closeModal) closeModal();
+          }}>
           <Text style={s.close}>Cancel</Text>
         </TouchableOpacity>
       </View>

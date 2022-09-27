@@ -100,7 +100,6 @@ const PinCodeInput: React.FC<React.PropsWithChildren<Props>> = ({
             //props.focus();
           }}
           onBlur={() => {
-            console.log(2);
             if (blur) blur(value);
           }}
           onSubmitEditing={() => {

@@ -45,6 +45,7 @@ export const VaultsStoreData = createReducer<VaultList, VaultsAction>(
           VP: 0,
           color: '',
         });
+        console.log(':::: vallts : ', JSON.stringify(draft));
       }),
 
     [UPDATE_VALUT_DEFAULT]: (state, action) =>
@@ -65,8 +66,6 @@ export const VaultsStoreData = createReducer<VaultList, VaultsAction>(
         if (defaultIndex !== -1) draft.vaults.splice(defaultIndex, 1);
 
         draft.vaults.forEach(v => {
-          console.log('[v ]', JSON.stringify(v));
-
           sumBnb += Number(v.BNB);
           sumBtc += Number(v.BTC);
           sumUsdc += Number(v.USDC);
@@ -79,7 +78,7 @@ export const VaultsStoreData = createReducer<VaultList, VaultsAction>(
         vault.BNB = vault.BNB - sumBnb;
         vault.USDC = vault.USDC - sumUsdc;
         vault.VP = vault.VP - sumVp;
-        console.log('[add default ]', JSON.stringify(vault), sumEth, sumVp);
+
         draft.vaults = vaults.vaults.concat(draft.vaults);
       }),
   },

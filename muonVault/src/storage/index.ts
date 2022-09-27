@@ -11,7 +11,7 @@ export function getItem<T>(key: string): Promise<T | undefined> {
         resolve(undefined);
         return;
       }
-      console.log('get item', key, JSON.parse(result));
+      //console.log('get item', key, JSON.parse(result));
       resolve(JSON.parse(result));
     });
   });
@@ -19,12 +19,12 @@ export function getItem<T>(key: string): Promise<T | undefined> {
 
 export function setItem<T>(key: string, value: T): Promise<boolean> {
   return new Promise((resolve, reject) => {
-    AsyncStorage.setItem(key, JSON.stringify(value), (err) => {
+    AsyncStorage.setItem(key, JSON.stringify(value), err => {
       if (err) {
         reject(err);
         return;
       }
-      console.log('set item', key, JSON.stringify(value));
+      //console.log('set item', key, JSON.stringify(value));
       resolve(true);
     });
   });

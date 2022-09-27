@@ -53,9 +53,7 @@ const DepositBottomDialog = forwardRef((props: any, ref) => {
     bottomSheetModalRef.current?.close();
   }, []);
 
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log('handleSheetChanges', index);
-  }, []);
+  const handleSheetChanges = useCallback((index: number) => {}, []);
   const renderBackdrop = useCallback(
     (props: any) => (
       <BottomSheetBackdrop

@@ -36,10 +36,12 @@ const Main = () => {
   const bottomModalRef = useRef();
 
   useEffect(() => {
-    console.log(11111, globalModalStore);
     if (globalModalStore.open) {
       //@ts-ignore
       bottomModalRef.current.openModal();
+    } else {
+      //@ts-ignore
+      bottomModalRef.current.closeModal();
     }
   }, [globalModalStore]);
 
