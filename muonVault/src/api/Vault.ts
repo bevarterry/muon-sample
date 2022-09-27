@@ -46,4 +46,29 @@ export default {
         });
     });
   },
+
+  patchVault(param: {
+    symbol: string;
+    fromVaultIdx: string;
+    toVaultIdx: string;
+    value: number;
+  }): Promise<Array<VaultResponse>> {
+    return new Promise((resolve, reject) => {
+      Send({
+        url: '/vault',
+        method: 'patch',
+        headers: {
+          'content-type': 'application/x-www-form-urlencoded',
+          Authorization: getCommonInfo(STORED_ACCESS_TOKEN),
+        },
+        data: qs.stringify(param),
+      })
+        .then(response => {
+          resolve(response.data.data.vaults);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
+  },
 };

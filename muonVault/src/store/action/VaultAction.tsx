@@ -15,6 +15,12 @@ export const updateVaultsFromApi = () => {
   };
 };
 
+export const updateVaults = (vaults: Array<VaultResponse>) => {
+  return async (dispatch: Dispatch) => {
+    dispatch(setVaultsStore(mapToStore(vaults)));
+  };
+};
+
 export const addDefaultVault = (totalAssets: TotalAssets) => {
   return async (dispatch: Dispatch) => {
     dispatch(
@@ -23,6 +29,21 @@ export const addDefaultVault = (totalAssets: TotalAssets) => {
         vaults: [],
       }),
     );
+  };
+};
+
+export const patchVault = (param: {
+  symbol: string;
+  fromVaultIdx: string;
+  toVaultIdx: string;
+  value: number;
+}) => {
+  return async (dispatch: Dispatch) => {
+    VaultApi.patchVault(param)
+      .then(res => {
+        dispatch(setVaultsStore(mapToStore(res)));
+      })
+      .catch(e => {});
   };
 };
 

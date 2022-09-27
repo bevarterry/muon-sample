@@ -11,6 +11,9 @@ import {
 import ButtonComponent from '../../../common/ButtonComponent';
 import {CoinDetailType} from '~/model/coin';
 import {Vault} from '~/model/vaults';
+import VaultApi from '../../../../api/Vault';
+import {useDispatch} from 'react-redux';
+import {updateVaults} from '~/store/action/VaultAction';
 
 const {width, height} = Dimensions.get('window');
 const buttonWidth = (width - 34) / 2;
@@ -25,8 +28,33 @@ type Props = {
 };
 const SendToVault: React.FC<React.PropsWithChildren<Props>> = ({prop}) => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
-  function requestVaultUpdate() {}
+  function requestVaultUpdate() {
+    const param = {
+      symbol: prop.coin.symbol,
+      fromVaultIdx: prop.fromVault.idx,
+      toVaultIdx: prop.toVault.idx,
+      value: prop.amount,
+    };
+
+    VaultApi.patchVault(param)
+      .then(response => {
+        //@ts-ignore
+        dispatch(updateVaults(response));
+
+        //@ts-ignore
+        navigation.replace('CompleteWithdraw', {
+          from: '',
+          to: '',
+          symbol: '',
+          estimateGasFee: 0,
+          serviceFee: 0,
+          totalAmount: 0,
+        });
+      })
+      .catch(e => {});
+  }
   return (
     <>
       <View
@@ -47,17 +75,7 @@ const SendToVault: React.FC<React.PropsWithChildren<Props>> = ({prop}) => {
           paddingVertical={21}
           borderRadius={16}
           bodyColor={MAIN_BLACK}
-          click={() => {
-            //@ts-ignore
-            navigation.replace('CompleteWithdraw', {
-              from: '',
-              to: '',
-              symbol: '',
-              estimateGasFee: 0,
-              serviceFee: 0,
-              totalAmount: 0,
-            });
-          }}
+          click={requestVaultUpdate}
         />
         <View style={{width: 10}} />
         <ButtonComponent
