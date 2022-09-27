@@ -1,5 +1,5 @@
 import {NavigationContainer} from '@react-navigation/native';
-import React, {type PropsWithChildren} from 'react';
+import React, {useEffect, type PropsWithChildren} from 'react';
 import {navigationRef} from './src/view/RootNavigation';
 import {ActivityIndicator, useColorScheme} from 'react-native';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
@@ -21,6 +21,9 @@ import BuyVp from './src/view/vault/coinDetail/buyVp/buyVp';
 import CompleteBuyVp from './src/view/vault/coinDetail/buyVp/completeBuyVp';
 import InputEmail from './src/view/auth/inputEmail';
 import VerifyCode from './src/view/auth/verifyCode';
+import messaging from '@react-native-firebase/messaging';
+import {setCommonInfo} from '~/store/global/state';
+import {STORED_FCM_TOKEN} from '~/view/constantProperties';
 
 const Stack = createStackNavigator();
 const baseTransitionOption = {
@@ -30,6 +33,27 @@ const modalPresentOption = {
   ...TransitionPresets.ModalSlideFromBottomIOS,
 };
 const App = () => {
+  async function requestUserPermissionForFCM() {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+    if (enabled) {
+      const token = await messaging().getToken();
+
+      console.log('fcm token:', token);
+      console.log('Authorization status:', authStatus);
+      setCommonInfo(STORED_FCM_TOKEN, token);
+    } else {
+      console.log('fcm auth fail');
+    }
+  }
+
+  useEffect(() => {
+    requestUserPermissionForFCM();
+  }, []);
+
   return (
     <Provider store={store}>
       <NavigationContainer

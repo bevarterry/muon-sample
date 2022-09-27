@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1077148311750-gbvo5a8l5vr2mvvotupfdjb0ihhj70qa.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1077148311750-gbvo5a8l5vr2mvvotupfdjb0ihhj70qa</string>
+	<key>API_KEY</key>
+	<string>AIzaSyASI_PrFxR7vi1T4HSLHb378mTFgCBkBok</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1077148311750</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>org.reactjs.native.example.muonVault</string>
+	<key>PROJECT_ID</key>
+	<string>muon-vault</string>
+	<key>STORAGE_BUCKET</key>
+	<string>muon-vault.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1077148311750:ios:710cdc23992c5e189237c7</string>
+</dict>
+</plist>
