@@ -1,12 +1,16 @@
 import {Dispatch} from 'redux';
+import {getBalanceBnb} from '~/bc/VaultBinanceApi';
 import {SafeAddressSet, WalletSet} from '../../api/interface/userApiResponse';
 import {setScAssets} from '../modules/ScAssetReducer';
 import {setDefaultVault, setTotalAssets} from '../modules/valutsReducer';
 
-export const updateScAssets = (wallets: SafeAddressSet) => {
+export const updateScAssets = (
+  SafeAddressSet: SafeAddressSet,
+  walletSet: WalletSet,
+) => {
   return async (dispatch: Dispatch) => {
     const bitcoin = 0;
-    const binance = 0;
+    const binance = await getBalanceBnb(walletSet.BNB.PRIVATE);
     const ethereum = 100;
     const usdc = 0;
     const muon = 2000;
@@ -15,7 +19,7 @@ export const updateScAssets = (wallets: SafeAddressSet) => {
       setTotalAssets({
         vaults: [],
         totalAssets: {
-          binance: binance,
+          binance: Number(binance),
           bitcoin: bitcoin,
           ethereum: ethereum,
           usdc: usdc,
@@ -28,22 +32,22 @@ export const updateScAssets = (wallets: SafeAddressSet) => {
         bitcoin: {
           symbol: 'BTC',
           displayName: 'Bitcoin',
-          contractAddress: wallets.BTC,
+          contractAddress: SafeAddressSet.BTC,
         },
         ethereum: {
           symbol: 'ETH',
           displayName: 'Ethereum',
-          contractAddress: wallets.ETH,
+          contractAddress: SafeAddressSet.ETH,
         },
         binance: {
           symbol: 'BNB',
           displayName: 'Binance',
-          contractAddress: wallets.BNB,
+          contractAddress: SafeAddressSet.BNB,
         },
         usdc: {
           symbol: 'USDC',
           displayName: 'USDC',
-          contractAddress: wallets.USDC,
+          contractAddress: SafeAddressSet.USDC,
         },
         muon: {
           symbol: 'MU',

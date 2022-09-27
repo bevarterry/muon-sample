@@ -2,6 +2,7 @@ import {ActionType, createReducer, deprecated} from 'typesafe-actions';
 import produce from 'immer';
 import {ScAssets} from '../../model/scAssets';
 import {TotalAssets, Vault, VaultList} from '../../model/vaults';
+import {DEFAULT_WALLET, NEW_CREATE} from '~/view/constantProperties';
 
 const {createStandardAction} = deprecated;
 
@@ -59,8 +60,8 @@ function generateDefaultVault(vaults: Array<Vault>, totalAssets: TotalAssets) {
 
   const defaultVault = [
     {
-      idx: 'DEFAULT_WALLET',
-      id: 'DEFAULT_WALLET',
+      idx: DEFAULT_WALLET,
+      id: DEFAULT_WALLET,
       name: 'Wallet (main)',
       BTC: totalAssets.bitcoin - sumBtc,
       BNB: totalAssets.binance - sumBnb,
@@ -72,8 +73,8 @@ function generateDefaultVault(vaults: Array<Vault>, totalAssets: TotalAssets) {
   ];
 
   return defaultVault.concat(vaults).concat({
-    idx: 'NEW_CREATE',
-    id: 'NEW_CREATE',
+    idx: NEW_CREATE,
+    id: NEW_CREATE,
     name: 'CREATE A NEW SAFE',
     BTC: 0,
     BNB: 0,
@@ -96,15 +97,20 @@ export const VaultsStoreData = createReducer<VaultList, VaultsAction>(
         const vaults: VaultList = action.payload;
         if (!vaults.totalAssets) return;
 
-        const defaultIndex = vaults.vaults.findIndex(
-          v => v.idx === 'DEFAULT_WALLET',
+        const defaultWalletIndex = draft.vaults.findIndex(
+          v => v.idx === DEFAULT_WALLET,
         );
+        if (defaultWalletIndex !== -1)
+          draft.vaults.splice(defaultWalletIndex, 1);
 
-        if (defaultIndex !== -1) vaults.vaults.splice(defaultIndex, 1);
+        const createNewIndex = draft.vaults.findIndex(
+          v => v.idx === NEW_CREATE,
+        );
+        if (createNewIndex !== -1) draft.vaults.splice(createNewIndex, 1);
 
         generateDefaultVault(vaults.vaults, vaults.totalAssets);
 
-        draft.vaults = generateDefaultVault(vaults.vaults, vaults.totalAssets);
+        draft.vaults = generateDefaultVault(draft.vaults, vaults.totalAssets);
         draft.totalAssets = {
           binance: vaults.totalAssets.binance,
           bitcoin: vaults.totalAssets.bitcoin,
