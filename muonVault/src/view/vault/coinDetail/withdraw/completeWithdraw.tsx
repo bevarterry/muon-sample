@@ -2,21 +2,42 @@ import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
+import {useSelector} from 'react-redux';
+import {CoinDetailType} from '~/model/coin';
 import {BASE_BACKGROUND, CC_WHITE, MAIN_BLACK} from '../../../ColorCode';
 import BasicBadge from '../../../common/basicBadge';
 import ButtonComponent from '../../../common/ButtonComponent';
 import SummaryCard from '../component/summaryCard';
 
-type Props = {
+export interface CompleteWithdrawProps {
   from: string;
   to: string;
-  symbol: string;
   estimateGasFee: number;
   serviceFee: number;
-  totalAmount: number;
-};
+  coin: CoinDetailType;
+  amount: number;
+}
+
 const CompleteWithdraw = (props: any) => {
-  const navigation = useNavigation();
+  const navigation: any = useNavigation();
+  const [item, setItems] = useState<CompleteWithdrawProps>({
+    from: '',
+    to: '',
+    amount: 0,
+    estimateGasFee: 0,
+    serviceFee: 0,
+    coin: {
+      value: 0,
+      symbol: '',
+      ratio: 0,
+    },
+  });
+
+  useEffect(() => {
+    if (props.route.params.from) {
+      setItems(props.route.params);
+    }
+  }, []);
 
   const badge = (title: string) => {
     return (
@@ -41,31 +62,38 @@ const CompleteWithdraw = (props: any) => {
             marginTop: 24,
             marginBottom: 30,
           }}>
-          12.00 ETH ($18,702.20) has been transferred to the address 0x09e3…44E7
+          {item.amount} {item.coin.symbol} ($
+          {Number(item.amount * item.coin.ratio).toFixed(0)}) has been
+          transferred to the {item.to}
         </Text>
+
         <SummaryCard
           amountComponent={
             <>
               {badge('Amount')}
-              <Text style={s.componentText}>12 ETH</Text>
+              <Text style={s.componentText}>
+                {item.amount} {item.coin.symbol}
+              </Text>
             </>
           }
           toComponent={
             <>
               {badge('To')}
-              <Text style={s.componentText}>1aa21111212121221</Text>
+              <Text style={s.componentText}>{item.to}</Text>
             </>
           }
           fromComponent={
             <>
               {badge('From')}
-              <Text style={s.componentText}>Safe1</Text>
+              <Text style={s.componentText}>{item.from}</Text>
             </>
           }
           totalComponent={
             <>
               {badge('Total')}
-              <Text style={s.componentText}>$19,723.10</Text>
+              <Text style={s.componentText}>
+                ${Number(item.amount * item.coin.ratio).toFixed(0)}
+              </Text>
             </>
           }
         />
@@ -85,6 +113,8 @@ const CompleteWithdraw = (props: any) => {
           borderRadius={20}
           bodyColor={MAIN_BLACK}
           click={() => {
+            navigation.pop(1);
+            navigation.pop(2);
             navigation.goBack();
           }}
         />

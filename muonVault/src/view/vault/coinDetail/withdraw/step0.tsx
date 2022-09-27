@@ -17,7 +17,11 @@ import {
 import BasicBadge from '../../../common/basicBadge';
 import ButtonComponent from '../../../common/ButtonComponent';
 import TextInputComponent from '../../../common/TextInputComponent';
-import {WITHDRAW_INPUT_AMOUNT} from '../../../constantProperties';
+import {
+  DEFAULT_WALLET,
+  NEW_CREATE,
+  WITHDRAW_INPUT_AMOUNT,
+} from '../../../constantProperties';
 const qr_icon = require('../../../../../assets/image/qr_icon.png');
 
 type Props = {
@@ -40,12 +44,14 @@ const Step0: React.FC<React.PropsWithChildren<Props>> = ({
   };
 
   const candidateVaults = () => {
+    if (vaultsStore.vaults.length < 2) return <></>;
     return (
       <View style={s.candidateVaults}>
         <Text style={{fontSize: 12, fontWeight: '700'}}>Quick Select</Text>
         <View>
           {vaultsStore.vaults.map((element, index) => {
-            if (element.idx === 'NEW_CREATE') return;
+            if (element.idx === NEW_CREATE) return;
+            if (element.idx === DEFAULT_WALLET) return;
             if (element.idx === vault.idx) return;
 
             return (

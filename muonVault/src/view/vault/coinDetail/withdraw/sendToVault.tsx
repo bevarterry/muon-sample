@@ -14,6 +14,7 @@ import {Vault} from '~/model/vaults';
 import VaultApi from '../../../../api/Vault';
 import {useDispatch} from 'react-redux';
 import {updateVaults} from '~/store/action/VaultAction';
+import {CompleteWithdrawProps} from './completeWithdraw';
 
 const {width, height} = Dimensions.get('window');
 const buttonWidth = (width - 34) / 2;
@@ -43,15 +44,16 @@ const SendToVault: React.FC<React.PropsWithChildren<Props>> = ({prop}) => {
         //@ts-ignore
         dispatch(updateVaults(response));
 
-        //@ts-ignore
-        navigation.replace('CompleteWithdraw', {
-          from: '',
-          to: '',
-          symbol: '',
+        const props: CompleteWithdrawProps = {
+          from: prop.fromVault.name,
+          to: prop.toAddress ? prop.toAddress : prop.toVault.name,
           estimateGasFee: 0,
           serviceFee: 0,
-          totalAmount: 0,
-        });
+          coin: prop.coin,
+          amount: prop.amount,
+        };
+        //@ts-ignore
+        navigation.replace('CompleteWithdraw', props);
       })
       .catch(e => {});
   }

@@ -51,6 +51,7 @@ const SummaryCard: React.FC<React.PropsWithChildren<Props>> = ({
         {amountComponent && (
           <View style={[s.row, {height: 60}]}>{amountComponent}</View>
         )}
+
         <View style={[s.row, {marginTop: 40}]}>
           <Text style={s.title}>Estimated Gas Fee</Text>
           <Text style={s.value}>$20.90</Text>
@@ -62,6 +63,7 @@ const SummaryCard: React.FC<React.PropsWithChildren<Props>> = ({
           <Text style={s.title}>Service Fee</Text>
           <Text style={s.value}>{17}Valut Points</Text>
         </View>
+
         <View style={{width: '100%', borderWidth: 1, marginVertical: 31}} />
 
         <View style={[s.row]}>{totalComponent}</View>
