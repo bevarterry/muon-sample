@@ -27,105 +27,124 @@ import {
 } from '~/view/ColorCode';
 
 import ButtonComponent from '@view/common/ButtonComponent';
+import {useSelector} from 'react-redux';
+import {RootState} from '~/store/modules';
+import {CoinDetailType} from '~/model/coin';
 const {width, height} = Dimensions.get('window');
 const buttonWidth = (width - 30) / 2;
 
-const DepositBottomDialog = forwardRef((props: any, ref) => {
-  const address = '1YoURbEATcoiN99MYWaLLetiDaDdRess72';
+type Props = {
+  coin: CoinDetailType;
+};
 
-  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+const DepositBottomDialog: React.FC<React.PropsWithChildren<Props>> =
+  forwardRef(({coin}, ref) => {
+    const scAssetsStore = useSelector((root: RootState) => root.scAssetsStore);
 
-  // variables
-  const snapPoints = useMemo(() => [467], []);
+    const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
-  useImperativeHandle(ref, () => ({
-    openModal() {
-      handlePresentModalPress();
-    },
-  }));
+    // variables
+    const snapPoints = useMemo(() => [467], []);
 
-  // callbacks
-  const handlePresentModalPress = useCallback(() => {
-    bottomSheetModalRef.current?.present();
-  }, []);
+    const getDepositAddressBySymbol = () => {
+      if (coin.symbol === 'BTC') return scAssetsStore.bitcoin.contractAddress;
+      else if (coin.symbol === 'BNB')
+        return scAssetsStore.binance.contractAddress;
+      else if (coin.symbol === 'ETH')
+        return scAssetsStore.ethereum.contractAddress;
+      else if (coin.symbol === 'USDC')
+        return scAssetsStore.usdc.contractAddress;
 
-  const handlePresentModalClose = useCallback(() => {
-    bottomSheetModalRef.current?.close();
-  }, []);
+      return 'It is not address';
+    };
+    useImperativeHandle(ref, () => ({
+      openModal() {
+        handlePresentModalPress();
+      },
+    }));
 
-  const handleSheetChanges = useCallback((index: number) => {}, []);
-  const renderBackdrop = useCallback(
-    (props: any) => (
-      <BottomSheetBackdrop
-        {...props}
-        pressBehavior="close"
-        disappearsOnIndex={-1}
-        appearsOnIndex={0}
-        opacity={0.3}
-      />
-    ),
-    [],
-  );
-  // renders
-  return (
-    <BottomSheetModalProvider>
-      <BottomSheetModal
-        handleIndicatorStyle={{backgroundColor: CC_WHITE}}
-        style={{zIndex: 1}}
-        backgroundStyle={{borderRadius: 40}}
-        ref={bottomSheetModalRef}
-        index={0}
-        snapPoints={snapPoints}
-        backdropComponent={renderBackdrop}
-        onChange={handleSheetChanges}>
-        <View style={s.contentContainer}>
-          <Text style={s.title}>Deposit ETH</Text>
-          <View style={{height: 44}} />
-          <QRCode value={address} size={128} />
-          <Text style={s.address}>{address}</Text>
+    // callbacks
+    const handlePresentModalPress = useCallback(() => {
+      bottomSheetModalRef.current?.present();
+    }, []);
 
-          <View
-            style={{
-              marginTop: 30,
-              width: '100%',
-              display: 'flex',
-              justifyContent: 'center',
-              flexDirection: 'row',
-              paddingHorizontal: 0,
-            }}>
-            <ButtonComponent
-              title="Copy"
-              width={buttonWidth}
-              borderColor={BASE_GRAY_BACKGROUND}
-              titleColor={MAIN_BLACK}
-              paddingVertical={21}
-              borderRadius={16}
-              bodyColor={BASE_GRAY_BACKGROUND}
-              click={() => {}}
-            />
-            <View style={{width: 10}} />
-            <ButtonComponent
-              title="Share"
-              width={buttonWidth}
-              borderColor={BASE_GRAY_BACKGROUND}
-              titleColor={MAIN_BLACK}
-              paddingVertical={21}
-              borderRadius={16}
-              bodyColor={BASE_GRAY_BACKGROUND}
-              click={() => {}}
-            />
+    const handlePresentModalClose = useCallback(() => {
+      bottomSheetModalRef.current?.close();
+    }, []);
+
+    const handleSheetChanges = useCallback((index: number) => {}, []);
+    const renderBackdrop = useCallback(
+      (props: any) => (
+        <BottomSheetBackdrop
+          {...props}
+          pressBehavior="close"
+          disappearsOnIndex={-1}
+          appearsOnIndex={0}
+          opacity={0.3}
+        />
+      ),
+      [],
+    );
+    // renders
+    return (
+      <BottomSheetModalProvider>
+        <BottomSheetModal
+          handleIndicatorStyle={{backgroundColor: CC_WHITE}}
+          style={{zIndex: 1}}
+          backgroundStyle={{borderRadius: 40}}
+          ref={bottomSheetModalRef}
+          index={0}
+          snapPoints={snapPoints}
+          backdropComponent={renderBackdrop}
+          onChange={handleSheetChanges}>
+          <View style={s.contentContainer}>
+            <Text style={s.title}>Deposit ETH</Text>
+            <View style={{height: 44}} />
+            <QRCode value={getDepositAddressBySymbol()} size={128} />
+            <Text style={s.address}>{getDepositAddressBySymbol()}</Text>
+
+            <View
+              style={{
+                marginTop: 30,
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                flexDirection: 'row',
+                paddingHorizontal: 0,
+              }}>
+              <ButtonComponent
+                title="Copy"
+                width={buttonWidth}
+                borderColor={BASE_GRAY_BACKGROUND}
+                titleColor={MAIN_BLACK}
+                paddingVertical={21}
+                borderRadius={16}
+                bodyColor={BASE_GRAY_BACKGROUND}
+                click={() => {}}
+              />
+              <View style={{width: 10}} />
+              <ButtonComponent
+                title="Share"
+                width={buttonWidth}
+                borderColor={BASE_GRAY_BACKGROUND}
+                titleColor={MAIN_BLACK}
+                paddingVertical={21}
+                borderRadius={16}
+                bodyColor={BASE_GRAY_BACKGROUND}
+                click={() => {}}
+              />
+            </View>
+            <TouchableOpacity
+              onPress={() => {
+                handlePresentModalClose();
+              }}>
+              <Text style={s.close}>Close</Text>
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity
-            onPress={() => {
-              handlePresentModalClose();
-            }}>
-            <Text style={s.close}>Close</Text>
-          </TouchableOpacity>
-        </View>
-      </BottomSheetModal>
-    </BottomSheetModalProvider>
-  );
-});
+        </BottomSheetModal>
+      </BottomSheetModalProvider>
+    );
+  });
 
 export default DepositBottomDialog;
 

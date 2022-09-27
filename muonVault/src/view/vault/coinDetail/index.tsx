@@ -106,7 +106,12 @@ const CoinDetail = (props: any) => {
         />
         <TransactionHistoryContainer symbol={coin.symbol} vault={vault} />
       </ScrollView>
-      <DepositBottomDialog ref={bottomModalRef} />
+
+      <DepositBottomDialog
+        //@ts-ignore
+        ref={bottomModalRef}
+        coin={coin}
+      />
     </>
   );
 };
