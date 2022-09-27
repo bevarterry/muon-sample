@@ -42,30 +42,35 @@ const Step0: React.FC<React.PropsWithChildren<Props>> = ({
   const candidateVaults = () => {
     return (
       <View style={s.candidateVaults}>
-        {vaultsStore.vaults.map((element, index) => {
-          if (element.idx === 'NEW_CREATE') return;
-          if (element.idx === vault.idx) return;
+        <Text style={{fontSize: 12, fontWeight: '700'}}>Quick Select</Text>
+        <View>
+          {vaultsStore.vaults.map((element, index) => {
+            if (element.idx === 'NEW_CREATE') return;
+            if (element.idx === vault.idx) return;
 
-          return (
-            <TouchableOpacity
-              activeOpacity={0.7}
-              key={index}
-              style={{marginRight: 10}}
-              onPress={() => {
-                selectVault(element);
-                setToAddress(element.name);
-              }}>
-              <BasicBadge
-                title={element.name}
-                paddingHorizontal={12}
-                paddingVertical={4}
-                backgroundColor={element.color}
-                fontColor={'#ffffff'}
-                fontSize={12}
-              />
-            </TouchableOpacity>
-          );
-        })}
+            return (
+              <TouchableOpacity
+                activeOpacity={0.7}
+                key={index}
+                style={{marginRight: 10}}
+                onPress={() => {
+                  selectVault(element);
+                  setToAddress(element.name);
+                }}>
+                <BasicBadge
+                  borderRadius={8}
+                  title={element.name}
+                  borderWidth={1}
+                  paddingHorizontal={25}
+                  paddingVertical={10}
+                  backgroundColor={CC_WHITE}
+                  fontColor={'#161616'}
+                  fontSize={12}
+                />
+              </TouchableOpacity>
+            );
+          })}
+        </View>
       </View>
     );
   };
@@ -108,7 +113,7 @@ const Step0: React.FC<React.PropsWithChildren<Props>> = ({
         <View style={s.candidateVaultsWrapper}>{candidateVaults()}</View>
       )}
 
-      <View style={{width: '100%', paddingHorizontal: 20, marginTop: 50}}>
+      <View style={{width: '100%', paddingHorizontal: 20, marginTop: 20}}>
         <ButtonComponent
           title="Next"
           width="100%"
@@ -133,7 +138,6 @@ export default Step0;
 
 const s = StyleSheet.create({
   candidateVaultsWrapper: {
-    marginTop: 10,
     paddingHorizontal: 10,
     flexDirection: 'row',
     alignItems: 'center',
@@ -142,14 +146,13 @@ const s = StyleSheet.create({
   },
   candidateVaults: {
     paddingVertical: 23,
-    backgroundColor: CC_WHITE,
-    borderWidth: 1,
     borderRadius: 14,
-    borderColor: MAIN_BORDER_COROR,
     opacity: 1,
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    paddingRight: 10,
+    paddingLeft: 20,
   },
 });
