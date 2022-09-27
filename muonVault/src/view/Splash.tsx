@@ -22,12 +22,13 @@ const Splash = (props: any) => {
     setTimeout(() => {
       accessTokenCheck();
     }, 800);
-  });
+  }, []);
 
   async function accessTokenCheck() {
     const accessTokenStore = await getAccessToken();
-
-    if (!accessTokenStore) return props.navigation.replace('StepOne');
+    console.log('[access token] ', accessTokenStore?.accessToken);
+    if (!accessTokenStore?.accessToken)
+      return props.navigation.replace('StepOne');
 
     setCommonInfo(STORED_ACCESS_TOKEN, accessTokenStore.accessToken);
 

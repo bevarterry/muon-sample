@@ -4,7 +4,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import ButtonComponent from '../common/ButtonComponent';
 import {BASE_BACKGROUND, BASE_BUTTON, MAIN_BLACK} from '../ColorCode';
-const onboard_center_image = require('../../../assets/image/onboard_center_image.png');
+const onboard_center_image = require('../../../assets/image/step2_img.png');
 import Top from '../common/top';
 
 const StepTwo = () => {
@@ -71,8 +71,8 @@ const s = StyleSheet.create({
     lineHeight: 28.8,
   },
   centerImage: {
-    width: 240,
-    height: 240,
+    width: 300,
+    height: 220,
     marginTop: 54,
     marginBottom: 100,
   },

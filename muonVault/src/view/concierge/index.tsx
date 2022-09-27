@@ -10,12 +10,24 @@ import {
   MAIN_BLACK,
 } from '../ColorCode';
 import ButtonComponent from '@view/common/ButtonComponent';
-
+import {setCommonInfo} from '~/store/global/state';
+import {STORED_ACCESS_TOKEN} from '../constantProperties';
+import {useNavigation} from '@react-navigation/native';
+import {getAccessToken, setAccessToken} from '~/storage/AccessTokenStorage';
 const {width, height} = Dimensions.get('window');
 
 const nft_page = require('../../../assets/image/nft_page.png');
 
-const Concierge = () => {
+const Concierge = (props: any) => {
+  const navigation = useNavigation();
+
+  async function signout() {
+    await setAccessToken({accessToken: ''});
+    setCommonInfo(STORED_ACCESS_TOKEN, '');
+
+    props.navigation.replace('Splash');
+  }
+
   return (
     <>
       <TopComponent />
@@ -68,7 +80,7 @@ const Concierge = () => {
           titleColor={MAIN_BLACK}
           borderRadius={20}
           bodyColor={CC_WHITE}
-          click={() => {}}
+          click={signout}
         />
         <View style={{height: 10}} />
       </View>

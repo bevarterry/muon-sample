@@ -9,9 +9,16 @@ import {
   ScrollView,
   Button,
   KeyboardAvoidingView,
+  Alert,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
+import {useDispatch} from 'react-redux';
+import {UserApiResponse} from '~/api/interface/userApiResponse';
+import User from '~/api/User';
+import {updateScAssets} from '~/store/action/scAction';
+import {updateVaultsFromApi} from '~/store/action/VaultAction';
+import {updateWallet} from '~/store/action/walletAction';
 import Auth from '../../api/Auth';
 import {setAccessToken} from '../../storage/AccessTokenStorage';
 import {setCommonInfo} from '../../store/global/state';
@@ -30,6 +37,8 @@ import {STORED_ACCESS_TOKEN} from '../constantProperties';
 
 const VerifyCode = (props: any) => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
   const [email, setEmail] = useState('');
   const [pinCode, setVerifyCode] = useState('');
 
@@ -54,10 +63,31 @@ const VerifyCode = (props: any) => {
         await setAccessToken({accessToken: token});
 
         setCommonInfo(STORED_ACCESS_TOKEN, token);
-        navigation.navigate('Main' as never);
+
+        updateUserInfo();
       })
       .catch(e => {
         console.log(e);
+      });
+  }
+
+  function updateUserInfo() {
+    User.info()
+      .then(e => {
+        const res: UserApiResponse = e;
+
+        //@ts-ignore
+        dispatch(updateWallet(res.Wallet));
+
+        //@ts-ignore
+        dispatch(updateVaultsFromApi());
+
+        //@ts-ignore
+        dispatch(updateScAssets(res.SafeAddress, res.Wallet, res.VP));
+        props.navigation.replace('Main');
+      })
+      .catch(e => {
+        Alert.alert('인증은 정상적이나, 데이터로드에 오류발생');
       });
   }
 
