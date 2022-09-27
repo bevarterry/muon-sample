@@ -38,7 +38,7 @@ const ButtonComponent: React.FC<React.PropsWithChildren<Props>> = ({
 }) => {
   return (
     <TouchableOpacity
-      activeOpacity={0.9}
+      activeOpacity={0.8}
       onPress={() => {
         click();
       }}
