@@ -8,18 +8,23 @@ import {BASE_BACKGROUND, DIMED_GRAY} from '../ColorCode';
 
 const TotalAssetsComponent = () => {
   const scAssetsStore = useSelector((root: RootState) => root.scAssetsStore);
+  const vaultStore = useSelector((root: RootState) => root.vaultsStore);
   const ratioStore = useSelector((root: RootState) => root.ratioStore);
 
-  const displayCoinRow = (asset: ScAssetInfo, ratio: number) => {
+  const displayCoinRow = (
+    asset: ScAssetInfo,
+    totalValue: number,
+    ratio: number,
+  ) => {
     return (
       <>
         <View style={s.assetWrapper}>
           <Text style={s.displayCoinName}>{asset.displayName}</Text>
           <View style={s.assetValueWrapper}>
-            <Text style={s.displayCoinName}>{asset.totalValue}</Text>
+            <Text style={s.displayCoinName}>{totalValue}</Text>
             <Text style={s.coinValue}>{asset.symbol}</Text>
             <Text style={s.dollarValue}>
-              (${Number(asset.totalValue * ratio).toFixed(2)})
+              (${Number(totalValue * ratio).toFixed(2)})
             </Text>
           </View>
         </View>
@@ -30,11 +35,31 @@ const TotalAssetsComponent = () => {
   return (
     <>
       <View style={s.wrapper}>
-        {displayCoinRow(scAssetsStore.bitcoin, ratioStore.ratioSet.BTC)}
-        {displayCoinRow(scAssetsStore.ethereum, ratioStore.ratioSet.ETH)}
-        {displayCoinRow(scAssetsStore.binance, ratioStore.ratioSet.BNB)}
-        {displayCoinRow(scAssetsStore.usdc, ratioStore.ratioSet.USDC)}
-        {displayCoinRow(scAssetsStore.muon, ratioStore.ratioSet.MU)}
+        {displayCoinRow(
+          scAssetsStore.bitcoin,
+          vaultStore.totalAssets.bitcoin,
+          ratioStore.ratioSet.BTC,
+        )}
+        {displayCoinRow(
+          scAssetsStore.ethereum,
+          vaultStore.totalAssets.ethereum,
+          ratioStore.ratioSet.ETH,
+        )}
+        {displayCoinRow(
+          scAssetsStore.binance,
+          vaultStore.totalAssets.binance,
+          ratioStore.ratioSet.BNB,
+        )}
+        {displayCoinRow(
+          scAssetsStore.usdc,
+          vaultStore.totalAssets.usdc,
+          ratioStore.ratioSet.USDC,
+        )}
+        {displayCoinRow(
+          scAssetsStore.muon,
+          vaultStore.totalAssets.muon,
+          ratioStore.ratioSet.MU,
+        )}
       </View>
     </>
   );

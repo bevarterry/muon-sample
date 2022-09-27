@@ -23,4 +23,27 @@ export default {
         });
     });
   },
+
+  createNewVault(vaultName: string): Promise<Array<VaultResponse>> {
+    return new Promise((resolve, reject) => {
+      const param = {
+        name: vaultName,
+      };
+      Send({
+        url: '/vault',
+        method: 'post',
+        headers: {
+          'content-type': 'application/x-www-form-urlencoded',
+          Authorization: getCommonInfo(STORED_ACCESS_TOKEN),
+        },
+        data: qs.stringify(param),
+      })
+        .then(response => {
+          resolve(response.data.data.vaults);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
+  },
 };

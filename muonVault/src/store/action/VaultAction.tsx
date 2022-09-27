@@ -1,7 +1,7 @@
 import {Dispatch} from 'redux';
 import {VaultResponse} from '../../api/interface/vaultApiResponse';
 import VaultApi from '../../api/Vault';
-import {Vault, VaultList} from '../../model/vaults';
+import {TotalAssets, Vault, VaultList} from '../../model/vaults';
 import {setDefaultVault, setVaultsStore} from '../modules/valutsReducer';
 export const updateVaultsFromApi = () => {
   return async (dispatch: Dispatch) => {
@@ -15,19 +15,32 @@ export const updateVaultsFromApi = () => {
   };
 };
 
-export const addDefaultVault = (totalVauueVault: Vault) => {
+export const addDefaultVault = (totalAssets: TotalAssets) => {
   return async (dispatch: Dispatch) => {
     dispatch(
       setDefaultVault({
-        vaults: [totalVauueVault],
+        totalAssets: totalAssets,
+        vaults: [],
       }),
     );
   };
 };
 
+export function createNewVault(name: string) {
+  return async (dispatch: Dispatch) => {
+    const responseVaultLisst = await VaultApi.createNewVault(name);
+
+    dispatch(setVaultsStore(mapToStore(responseVaultLisst)));
+    return true;
+  };
+}
+
 const colorSet = ['#A12626', '#2E6FD1', '#2E6FD1', '#2E6FD1'];
 function mapToStore(list: Array<VaultResponse>): VaultList {
-  const result: VaultList = {vaults: []};
+  const result: VaultList = {
+    vaults: [],
+    totalAssets: {bitcoin: 0, binance: 0, ethereum: 0, usdc: 0, muon: 0},
+  };
   const mappingVault: Array<Vault> = [];
 
   for (const i in list) {

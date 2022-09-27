@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import {useDispatch} from 'react-redux';
+import {createNewVault} from '~/store/action/VaultAction';
 import {
   BASE_BACKGROUND,
   BASE_BUTTON,
@@ -25,12 +27,18 @@ type Props = {
 const CreateNewSafeModalComponent: React.FC<React.PropsWithChildren<Props>> = ({
   closeModal,
 }) => {
+  const dispatch = useDispatch();
   const [safeName, setSafeName] = useState('');
 
   const isActiveDoneButton = () => {
     return safeName !== '';
   };
 
+  function requestSaveNewSafeAPI() {
+    //@ts-ignore
+    dispatch(createNewVault(safeName));
+    if (closeModal) closeModal();
+  }
   return (
     <>
       <View style={s.contentContainer}>
@@ -78,7 +86,7 @@ const CreateNewSafeModalComponent: React.FC<React.PropsWithChildren<Props>> = ({
             activeColor={isActiveDoneButton() ? MAIN_BLACK : BASE_BUTTON}
             activeFontColor={isActiveDoneButton() ? CC_WHITE : DIMED_GRAY}
             bodyColor={BASE_BUTTON}
-            click={() => {}}
+            click={requestSaveNewSafeAPI}
           />
         </View>
         <TouchableOpacity

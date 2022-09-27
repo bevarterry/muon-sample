@@ -30,15 +30,11 @@ const ValutCardListComponent = () => {
     dispatch(
       //@ts-ignore
       addDefaultVault({
-        idx: 'DEFAULT_WALLET',
-        id: 'DEFAULT_WALLET',
-        name: 'WALLET',
-        BTC: scAssetsStore.bitcoin.totalValue,
-        BNB: scAssetsStore.binance.totalValue,
-        USDC: scAssetsStore.usdc.totalValue,
-        ETH: scAssetsStore.ethereum.totalValue,
-        VP: scAssetsStore.muon.totalValue,
-        color: '#242424',
+        bitcoin: scAssetsStore.bitcoin.totalValue,
+        binanace: scAssetsStore.binance.totalValue,
+        usdc: scAssetsStore.usdc.totalValue,
+        ethereum: scAssetsStore.ethereum.totalValue,
+        muon: scAssetsStore.muon.totalValue,
       }),
     );
   }, []);

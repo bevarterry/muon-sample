@@ -1,5 +1,6 @@
 export interface VaultList {
   vaults: Array<Vault>;
+  totalAssets: TotalAssets;
 }
 export interface Vault {
   idx: string;
@@ -11,4 +12,12 @@ export interface Vault {
   ETH: number;
   VP: number;
   color: string;
+}
+
+export interface TotalAssets {
+  bitcoin: number;
+  ethereum: number;
+  binance: number;
+  usdc: number;
+  muon: number;
 }

@@ -11,15 +11,18 @@ import ValutCardListComponent from './valutCardListComponent';
 const top_logo = require('../../../assets/image/top_logo.png');
 const Vault = () => {
   const scAssetsStore = useSelector((root: RootState) => root.scAssetsStore);
+  const vaultsStore = useSelector((root: RootState) => root.vaultsStore);
   const ratioStore = useSelector((root: RootState) => root.ratioStore);
 
   const totalValueInDallor = () => {
+    if (!vaultsStore.totalAssets) return Number(0).toFixed(2);
+
     return Number(
-      scAssetsStore.bitcoin.totalValue * ratioStore.ratioSet.BTC +
-        scAssetsStore.ethereum.totalValue * ratioStore.ratioSet.ETH +
-        scAssetsStore.binance.totalValue * ratioStore.ratioSet.BNB +
-        scAssetsStore.usdc.totalValue * ratioStore.ratioSet.USDC +
-        scAssetsStore.muon.totalValue * ratioStore.ratioSet.MU,
+      vaultsStore.totalAssets.bitcoin * ratioStore.ratioSet.BTC +
+        vaultsStore.totalAssets.ethereum * ratioStore.ratioSet.ETH +
+        vaultsStore.totalAssets.binance * ratioStore.ratioSet.BNB +
+        vaultsStore.totalAssets.usdc * ratioStore.ratioSet.USDC +
+        vaultsStore.totalAssets.muon * ratioStore.ratioSet.MU,
     ).toFixed(2);
   };
 
