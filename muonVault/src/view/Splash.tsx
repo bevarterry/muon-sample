@@ -8,10 +8,10 @@ import {getAccessToken} from '../storage/AccessTokenStorage';
 import {updateScAssets} from '../store/action/scAction';
 import {updateVaultsFromApi} from '../store/action/VaultAction';
 import {updateWallet} from '../store/action/walletAction';
-import {setCommonInfo} from '../store/global/state';
+import {getCommonInfo, setCommonInfo} from '../store/global/state';
 import {setWallets} from '../store/modules/walletReducer';
 import {CC_LOGHT_YELLOW, SPLASH_BACKGROUND} from './ColorCode';
-import {STORED_ACCESS_TOKEN} from './constantProperties';
+import {STORED_ACCESS_TOKEN, STORED_FCM_TOKEN} from './constantProperties';
 const splash_log_1 = require('../../assets/image/splash_logo_1.png');
 const splash_log_2 = require('../../assets/image/splash_logo_2.png');
 const splash_log_3 = require('../../assets/image/splash_logo_3.png');
@@ -33,6 +33,8 @@ const Splash = (props: any) => {
     setCommonInfo(STORED_ACCESS_TOKEN, accessTokenStore.accessToken);
 
     updateUserInfo();
+
+    updateFcmToken();
   }
 
   function updateUserInfo() {
@@ -54,6 +56,11 @@ const Splash = (props: any) => {
         props.navigation.replace('StepOne');
       });
   }
+
+  function updateFcmToken() {
+    User.updateFcm({fcmToken: getCommonInfo(STORED_FCM_TOKEN)});
+  }
+
   return (
     <View style={s.wrapper}>
       <View style={{display: 'flex', alignItems: 'center'}}>

@@ -21,7 +21,7 @@ import {updateVaultsFromApi} from '~/store/action/VaultAction';
 import {updateWallet} from '~/store/action/walletAction';
 import Auth from '../../api/Auth';
 import {setAccessToken} from '../../storage/AccessTokenStorage';
-import {setCommonInfo} from '../../store/global/state';
+import {getCommonInfo, setCommonInfo} from '../../store/global/state';
 import {
   BASE_BACKGROUND,
   BASE_BUTTON,
@@ -33,7 +33,7 @@ import BasicTextInput from '../common/basicTextInput';
 import ButtonComponent from '../common/ButtonComponent';
 import PinCodeInput from '../common/pinCodeInput';
 import Top from '../common/top';
-import {STORED_ACCESS_TOKEN} from '../constantProperties';
+import {STORED_ACCESS_TOKEN, STORED_FCM_TOKEN} from '../constantProperties';
 
 const VerifyCode = (props: any) => {
   const navigation = useNavigation();
@@ -65,10 +65,16 @@ const VerifyCode = (props: any) => {
         setCommonInfo(STORED_ACCESS_TOKEN, token);
 
         updateUserInfo();
+
+        updateFcmToken();
       })
       .catch(e => {
         console.log(e);
       });
+  }
+
+  function updateFcmToken() {
+    User.updateFcm({fcmToken: getCommonInfo(STORED_FCM_TOKEN)});
   }
 
   function updateUserInfo() {
