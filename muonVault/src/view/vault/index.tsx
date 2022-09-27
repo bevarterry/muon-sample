@@ -5,10 +5,10 @@ import FastImage from 'react-native-fast-image';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../store/modules';
 import {BASE_BACKGROUND} from '../ColorCode';
-import AddNewVaultModal from '../globalModal';
+import TopComponent from '@view/common/topComponent';
 import TotalAssetsComponent from './totalAssetsComponent';
 import ValutCardListComponent from './valutCardListComponent';
-const top_logo = require('../../../assets/image/top_logo.png');
+
 const Vault = () => {
   const scAssetsStore = useSelector((root: RootState) => root.scAssetsStore);
   const vaultsStore = useSelector((root: RootState) => root.vaultsStore);
@@ -45,27 +45,6 @@ const Vault = () => {
         <ValutCardListComponent />
       </ScrollView>
     </>
-  );
-};
-
-type PropTopComponent = {
-  totalVp: number;
-};
-const TopComponent: React.FC<React.PropsWithChildren<PropTopComponent>> = ({
-  totalVp,
-}) => {
-  return (
-    <View style={s.topComponentWrapper}>
-      <FastImage
-        resizeMode="contain"
-        style={{
-          width: 101,
-          height: 20,
-        }}
-        source={top_logo}
-      />
-      <Text style={{fontSize: 16, fontWeight: '700'}}>{totalVp} VP</Text>
-    </View>
   );
 };
 
@@ -115,15 +94,6 @@ const s = StyleSheet.create({
     width: '100%',
     height: '100%',
     backgroundColor: BASE_BACKGROUND,
-  },
-  topComponentWrapper: {
-    width: '100%',
-    height: 45,
-    alignItems: 'center',
-    paddingHorizontal: 25,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
   },
   summaryComponentWrapper: {
     width: '100%',

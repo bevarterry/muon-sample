@@ -1,10 +1,17 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-
+import {Dimensions, StyleSheet, Text, View} from 'react-native';
+import TopComponent from '@view/common/topComponent';
+import {BASE_BACKGROUND} from '../ColorCode';
+import GuideCardListComponent from './guideCardListComponent';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
+const {width, height} = Dimensions.get('window');
 const Home = () => {
   return (
     <>
-      <View style={s.wrapper}></View>
+      <TopComponent totalVp={12} />
+      <View style={s.wrapper}>
+        <GuideCardListComponent />
+      </View>
     </>
   );
 };
@@ -14,6 +21,8 @@ export default Home;
 const s = StyleSheet.create({
   wrapper: {
     width: '100%',
-    height: '100%',
+    height: height,
+    backgroundColor: BASE_BACKGROUND,
+    paddingTop: 24,
   },
 });
