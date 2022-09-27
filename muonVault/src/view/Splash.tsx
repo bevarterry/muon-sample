@@ -46,7 +46,7 @@ const Splash = (props: any) => {
         dispatch(updateVaultsFromApi());
 
         //@ts-ignore
-        dispatch(updateScAssets(res.SafeAddress, res.Wallet));
+        dispatch(updateScAssets(res.SafeAddress, res.Wallet, res.VP));
         props.navigation.replace('Main');
       })
       .catch(e => {

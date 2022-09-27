@@ -11,7 +11,7 @@ const life_page = require('../../../assets/image/life_page.png');
 const Life = () => {
   return (
     <>
-      <TopComponent totalVp={12} />
+      <TopComponent />
       <View style={s.wrapper}>
         <NotReadyComponent
           icon={life_page}

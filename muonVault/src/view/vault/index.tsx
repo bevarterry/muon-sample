@@ -29,7 +29,7 @@ const Vault = () => {
   return (
     <>
       <ScrollView style={s.wrapper}>
-        <TopComponent totalVp={12} />
+        <TopComponent />
         <AssetSummaryComponent totalDollar={totalValueInDallor()} />
         <View
           style={{

@@ -18,7 +18,7 @@ const nft_page = require('../../../assets/image/nft_page.png');
 const Concierge = () => {
   return (
     <>
-      <TopComponent totalVp={12} />
+      <TopComponent />
       <View style={s.wrapper}>
         <ButtonComponent
           title="View My Insurance"

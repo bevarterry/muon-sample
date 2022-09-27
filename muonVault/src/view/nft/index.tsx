@@ -11,7 +11,7 @@ const nft_page = require('../../../assets/image/nft_page.png');
 const Nft = () => {
   return (
     <>
-      <TopComponent totalVp={12} />
+      <TopComponent />
       <View style={s.wrapper}>
         <NotReadyComponent
           icon={nft_page}

@@ -8,7 +8,7 @@ const {width, height} = Dimensions.get('window');
 const Home = () => {
   return (
     <>
-      <TopComponent totalVp={12} />
+      <TopComponent />
       <View style={s.wrapper}>
         <GuideCardListComponent />
       </View>

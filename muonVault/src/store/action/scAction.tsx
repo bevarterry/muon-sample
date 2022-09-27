@@ -7,13 +7,14 @@ import {setDefaultVault, setTotalAssets} from '../modules/valutsReducer';
 export const updateScAssets = (
   SafeAddressSet: SafeAddressSet,
   walletSet: WalletSet,
+  totalMuon: string,
 ) => {
   return async (dispatch: Dispatch) => {
     const bitcoin = 0;
     const binance = await getBalanceBnb(walletSet.BNB.PRIVATE);
     const ethereum = 100;
     const usdc = 0;
-    const muon = 2000;
+    const muon = Number(totalMuon);
 
     dispatch(
       setTotalAssets({
