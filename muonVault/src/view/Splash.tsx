@@ -55,7 +55,10 @@ const Splash = (props: any) => {
   }
   return (
     <View style={s.wrapper}>
-      <FastImage resizeMode="contain" style={s.logo1} source={splash_log_1} />
+      <View style={{display: 'flex', alignItems: 'center'}}>
+        <FastImage resizeMode="contain" style={s.logo1} source={splash_log_1} />
+        <FastImage resizeMode="contain" style={s.logo2} source={splash_log_2} />
+      </View>
       <FastImage resizeMode="contain" style={s.logo3} source={splash_log_3} />
     </View>
   );
@@ -72,9 +75,13 @@ const s = StyleSheet.create({
     backgroundColor: SPLASH_BACKGROUND,
   },
   logo1: {
-    width: 220,
-    height: 40,
-    marginBottom: 200,
+    width: 196,
+    height: 34,
+    marginBottom: 5,
+  },
+  logo2: {
+    width: 189,
+    height: 19,
   },
   logo3: {
     width: 122,

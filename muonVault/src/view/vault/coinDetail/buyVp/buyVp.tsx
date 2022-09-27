@@ -59,7 +59,7 @@ const BuyVp = (props: any) => {
               },
             ]}>
             <Text style={s.balanceText}>
-              Balance <Text style={{color: MAIN_BLACK}}>23.5ETH</Text>
+              Balance <Text style={{color: MAIN_BLACK}}>23.5 </Text>
               ($38,528.12)
             </Text>
             <Text style={s.balanceText}>1 ETH = $1,642.04</Text>

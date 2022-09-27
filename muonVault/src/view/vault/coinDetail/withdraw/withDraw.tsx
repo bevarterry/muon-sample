@@ -15,7 +15,8 @@ import {
 } from '../../../constantProperties';
 import Step0 from './step0';
 import Step1 from './step1';
-import Step2 from './step2';
+import SendToAddress from './sendToAddress';
+import SendToVault from './sendToVault';
 
 const WithDraw = (props: any) => {
   const [toAddress, setToAddress] = useState('');
@@ -140,7 +141,9 @@ const WithDraw = (props: any) => {
                 justifyContent: 'flex-end',
                 paddingRight: 30,
               }}>
-              <Text style={s.dollarAmount}>($19.702.20)</Text>
+              <Text style={s.dollarAmount}>
+                (${(Number(amount) * coin.ratio).toFixed(2)})
+              </Text>
             </View>
             <View style={{height: 13}} />
           </>
@@ -175,7 +178,28 @@ const WithDraw = (props: any) => {
           />
         )}
 
-        {step === WITHDRAW_BEFORE_EXECUTE && <Step2 />}
+        {step === WITHDRAW_BEFORE_EXECUTE && toAddress !== '' && (
+          <SendToAddress
+            prop={{
+              coin: coin,
+              amount: Number(amount),
+              fromVault: fromVault,
+              toVault: toVault,
+              toAddress: toAddress,
+            }}
+          />
+        )}
+        {step === WITHDRAW_BEFORE_EXECUTE && toAddress === '' && (
+          <SendToVault
+            prop={{
+              coin: coin,
+              amount: Number(amount),
+              fromVault: fromVault,
+              toVault: toVault,
+              toAddress: toAddress,
+            }}
+          />
+        )}
       </View>
     </>
   );

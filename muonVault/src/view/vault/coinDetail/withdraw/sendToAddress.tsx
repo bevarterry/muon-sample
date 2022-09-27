@@ -8,8 +8,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import FastImage from 'react-native-fast-image';
-import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {
   BASE_BACKGROUND,
   BASE_BUTTON,
@@ -20,23 +18,26 @@ import {
 } from '../../../ColorCode';
 import BasicBadge from '../../../common/basicBadge';
 import ButtonComponent from '../../../common/ButtonComponent';
-import TextInputComponent from '../../../common/TextInputComponent';
-import {WITHDRAW_BEFORE_EXECUTE} from '../../../constantProperties';
 import PilotWithdrawBottomDialog from './pilotWithdrawBottomDialog';
 import SummaryCard from '../component/summaryCard';
-const convert_value_icon = require('../../../../../assets/image/convert_value_icon.png');
+import {CoinDetailType} from '~/model/coin';
+import {Vault} from '~/model/vaults';
+
 const {width, height} = Dimensions.get('window');
 const buttonWidth = (width - 34) / 2;
-type Props = {};
-const Step2: React.FC<React.PropsWithChildren<Props>> = ({}) => {
+type Props = {
+  prop: {
+    coin: CoinDetailType;
+    amount: number;
+    fromVault: Vault;
+    toVault: Vault;
+    toAddress: string;
+  };
+};
+const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({prop}) => {
   const pilotWithdrawModalRef = useRef();
   const navigation = useNavigation();
 
-  const [amount, setAmount] = useState('');
-
-  const isActiveDoneButton = () => {
-    return amount !== '';
-  };
   return (
     <>
       <SummaryCard
@@ -68,9 +69,12 @@ const Step2: React.FC<React.PropsWithChildren<Props>> = ({}) => {
         withdraw”. Please check with the receiving end before full withdrawal.
         Gas fee will apply to the pilot withdraw.
       </Text>
+
       <View
         style={{
           marginTop: 30,
+          position: 'absolute',
+          bottom: 43,
           width: '100%',
           display: 'flex',
           flexDirection: 'row',
@@ -83,8 +87,6 @@ const Step2: React.FC<React.PropsWithChildren<Props>> = ({}) => {
           titleColor={CC_WHITE}
           paddingVertical={21}
           borderRadius={16}
-          activeColor={isActiveDoneButton() ? MAIN_BLACK : undefined}
-          activeFontColor={isActiveDoneButton() ? CC_WHITE : undefined}
           bodyColor={MAIN_BLACK}
           click={() => {
             //@ts-ignore
@@ -99,8 +101,6 @@ const Step2: React.FC<React.PropsWithChildren<Props>> = ({}) => {
           titleColor={MAIN_BLACK}
           paddingVertical={21}
           borderRadius={16}
-          activeColor={isActiveDoneButton() ? MAIN_BLACK : undefined}
-          activeFontColor={isActiveDoneButton() ? CC_WHITE : undefined}
           bodyColor={BASE_BUTTON}
           click={() => {
             //@ts-ignore
@@ -120,7 +120,7 @@ const Step2: React.FC<React.PropsWithChildren<Props>> = ({}) => {
   );
 };
 
-export default Step2;
+export default SendToAddress;
 
 const s = StyleSheet.create({
   withdrawSummary: {
