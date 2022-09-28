@@ -48,7 +48,7 @@ const SummaryCard: React.FC<React.PropsWithChildren<Props>> = ({
           <Text style={s.value}>$20.90</Text>
         </View>
         <View style={s.row}>
-          <Text style={s.subTitle}>Likeyly in {'<'} 30 seconds</Text>
+          <Text style={s.subTitle}>Likely in {'<'} 30 seconds</Text>
         </View>
         <View style={[s.row, {marginTop: 11}]}>
           <Text style={s.title}>Service Fee</Text>

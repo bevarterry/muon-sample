@@ -81,7 +81,7 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({prop}) => {
           paddingHorizontal: 12,
         }}>
         <ButtonComponent
-          title="Pilot withdraw"
+          title="Send $1"
           width={buttonWidth}
           borderColor={BASE_BUTTON}
           titleColor={CC_WHITE}
@@ -95,7 +95,7 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({prop}) => {
         />
         <View style={{width: 10}} />
         <ButtonComponent
-          title="Full withdraw"
+          title="Send All"
           width={buttonWidth}
           borderColor={BASE_BUTTON}
           titleColor={MAIN_BLACK}

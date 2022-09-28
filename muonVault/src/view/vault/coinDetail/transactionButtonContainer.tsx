@@ -59,7 +59,7 @@ const TransactionButtonContainer: React.FC<React.PropsWithChildren<Props>> = ({
             style={s.buttonIcon}
             source={buy_vp_icon}
           />
-          <Text style={s.buttonText}>Buy VP</Text>
+          <Text style={s.buttonText}>Buy MU:P</Text>
         </TouchableOpacity>
       </View>
     </>

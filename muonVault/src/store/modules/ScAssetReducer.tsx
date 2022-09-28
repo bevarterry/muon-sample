@@ -62,8 +62,8 @@ const initialState: ScAssets = {
     ratio: 0,
   },
   muon: {
-    symbol: 'VP',
-    displayName: 'Muon',
+    symbol: 'MU:P',
+    displayName: 'MU:P',
     contractAddress: '',
     ratio: 0,
   },

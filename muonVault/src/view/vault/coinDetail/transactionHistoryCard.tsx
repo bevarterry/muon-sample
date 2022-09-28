@@ -35,7 +35,7 @@ const TransactionHistoryCard: React.FC<React.PropsWithChildren<Props>> = ({
 
   const displayPurposeText = (purpose: string) => {
     if (purpose === WITHDRAW) return 'Withdraw';
-    if (purpose === BUY_VP) return 'Buy VP';
+    if (purpose === BUY_VP) return 'Buy MU:P';
 
     return 'Deposit';
   };

@@ -62,7 +62,7 @@ const CompleteBuyVp = (props: any) => {
       <KeyboardAvoidingView behavior="padding">
         <View style={s.wrapper}>
           <Top
-            title={'Buy Vault Point'}
+            title={'Buy Vault MU:Point'}
             backgroundColor={BASE_BACKGROUND}
             left={true}
             onTouchBackButton={navigation.goBack}
@@ -79,7 +79,7 @@ const CompleteBuyVp = (props: any) => {
                 marginTop: 12,
               },
             ]}>
-            <Text style={s.summaryText}>Buy 1000 Vault Points using</Text>
+            <Text style={s.summaryText}>Buy 1000 MU:Points using</Text>
             <Text style={s.summaryText}>0.6 ETH ($1,000)</Text>
 
             <View style={{width: '100%', marginTop: 96}}>
@@ -103,12 +103,7 @@ const CompleteBuyVp = (props: any) => {
             </View>
 
             <View style={{width: '100%'}}>
-              {coinRow(
-                'Vault Point',
-                buy_vp_icon,
-                1000,
-                ratioStore.ratioSet.USDC,
-              )}
+              {coinRow('MU:Point', buy_vp_icon, 1000, ratioStore.ratioSet.USDC)}
             </View>
           </View>
 

@@ -29,7 +29,7 @@ const GuideCard: React.FC<React.PropsWithChildren<Prop>> = ({id}) => {
           icon={home_card_2_img}
           title={'Safe and Easy' + '\n' + 'for all'}
           subText={
-            'In MU:Vault’s patented security system, your crypto assets are virtually unhackable, and unphishable. '
+            'In MU:Vault’s patented security system, your crypto assets are virtually unhackable, unphishable, and unbreakable.'
           }
         />
       )}
@@ -37,9 +37,7 @@ const GuideCard: React.FC<React.PropsWithChildren<Prop>> = ({id}) => {
         <TwiceComponent
           icon={home_card_3_img}
           title={'Designed to ' + '\n' + 'Minimize Human' + '\n' + 'Error'}
-          subText={
-            'Deposit and withdraw crypto without confusion and mistakes.'
-          }
+          subText={'Deposit and withdraw crypto without confusion or mistakes.'}
         />
       )}
       {id === '3' && (
@@ -84,8 +82,8 @@ const firstComponent = () => {
           lineHeight: 20.07,
         }}>
         With Choi’s MU:onoff, you are free to navigate the crypto world without
-        confusing tech, irritating steps, or mixed with hidden fees! Choi’s
-        MU:onoff offers the only choice you need.
+        confusing tech, irritating steps, or hidden fees! Choi’s MU:onoff offers
+        the only choice you need.
       </Text>
     </View>
   );

@@ -36,7 +36,7 @@ const BuyVp = (props: any) => {
       <KeyboardAvoidingView behavior="padding">
         <View style={s.wrapper}>
           <Top
-            title={'Buy Vault Point'}
+            title={'Buy Vault MU:Point'}
             backgroundColor={BASE_BACKGROUND}
             left={true}
             onTouchBackButton={navigation.goBack}

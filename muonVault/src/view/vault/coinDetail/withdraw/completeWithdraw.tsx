@@ -55,7 +55,7 @@ const CompleteWithdraw = (props: any) => {
     <>
       <View style={s.wrapper}>
         <Text style={s.completeText}>Complete!</Text>
-        <Text
+        {/* <Text
           style={{
             textAlign: 'center',
             paddingHorizontal: 38,
@@ -65,7 +65,7 @@ const CompleteWithdraw = (props: any) => {
           {item.amount} {item.coin.symbol} ($
           {Number(item.amount * item.coin.ratio).toFixed(0)}) has been
           transferred to the {item.to}
-        </Text>
+        </Text> */}
 
         <SummaryCard
           amountComponent={

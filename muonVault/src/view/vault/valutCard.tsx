@@ -104,7 +104,7 @@ const ValutCard: React.FC<React.PropsWithChildren<Prop>> = ({vault}) => {
             style={{width: 28, height: 28}}
             source={plus_icon}
           />
-          <Text style={s.createText}>CREATE A NEW SAFE</Text>
+          <Text style={s.createText}>Create New Safe</Text>
         </TouchableOpacity>
       )}
       {vault.id !== 'NEW_CREATE' && (

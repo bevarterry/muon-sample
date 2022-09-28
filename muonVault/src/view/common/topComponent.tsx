@@ -24,7 +24,7 @@ const TopComponent: React.FC<
         source={top_logo}
       />
       <Text style={{fontSize: 16, fontWeight: '700'}}>
-        {vaultStore.totalAssets.muon} VP
+        {vaultStore.totalAssets.muon} MU:P
       </Text>
     </View>
   );

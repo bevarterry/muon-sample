@@ -7,6 +7,7 @@ import {
   KeyboardAvoidingView,
   Alert,
   Dimensions,
+  ScrollView,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
@@ -53,52 +54,60 @@ const MyInsurance = (props: any) => {
 
   return (
     <>
-      <KeyboardAvoidingView behavior="padding">
-        <View style={s.wrapper}>
-          <Top
-            title={'View My Insurance'}
-            backgroundColor={BASE_BACKGROUND}
-            left={true}
-            onTouchBackButton={navigation.goBack}
-          />
-          <FastImage resizeMode="cover" style={s.graph} source={graph_1} />
+      <ScrollView contentContainerStyle={s.wrapper}>
+        <Top
+          title={'View My Insurance'}
+          backgroundColor={BASE_BACKGROUND}
+          left={true}
+          onTouchBackButton={navigation.goBack}
+        />
+        <FastImage resizeMode="cover" style={s.graph} source={graph_1} />
 
-          <Text style={s.title}>Edit My Insurance</Text>
-          <Text style={s.subTitle}>
-            55% of your cryptocurrency is covered by insurance. Protect more of
-            your assets against certain types of hacking and accidents.
-          </Text>
-          <View
-            style={{
-              width: '100%',
-              paddingHorizontal: 22,
-              position: 'absolute',
-              bottom: 43,
-            }}>
-            <ButtonComponent
-              title="Add $200,000 to Protection"
-              subTitle="(+10 MU:Points/m)"
-              width="100%"
-              borderColor={MAIN_BLACK}
-              titleColor={CC_WHITE}
-              borderRadius={20}
-              bodyColor={MAIN_BLACK}
-              click={moveToNext}
-            />
-            <View style={{height: 10}} />
-            <ButtonComponent
-              title="Subtract $200,000 from Protection"
-              subTitle="(-10 MU:Points/m)"
-              width="100%"
-              borderColor={BASE_BUTTON}
-              titleColor={MAIN_BLACK}
-              borderRadius={20}
-              bodyColor={BASE_BUTTON}
-              click={() => {}}
-            />
-          </View>
+        <Text style={s.title}>Edit My Insurance</Text>
+        <Text style={s.subTitle}>
+          55% of your cryptocurrency is covered by insurance. Protect more of
+          your assets against certain types of hacking and accidents.
+        </Text>
+        <View
+          style={{
+            marginTop: 50,
+            width: '100%',
+            paddingHorizontal: 22,
+          }}>
+          <ButtonComponent
+            title="Protect All"
+            width="100%"
+            paddingVertical={25}
+            borderColor={MAIN_BLACK}
+            titleColor={CC_WHITE}
+            borderRadius={20}
+            bodyColor={MAIN_BLACK}
+            click={moveToNext}
+          />
+          <View style={{height: 10}} />
+          <ButtonComponent
+            title="Add $200,000 to Protection"
+            subTitle="(+10 MU:Points/m)"
+            width="100%"
+            borderColor={MAIN_BLACK}
+            titleColor={CC_WHITE}
+            borderRadius={20}
+            bodyColor={MAIN_BLACK}
+            click={moveToNext}
+          />
+          <View style={{height: 10}} />
+          <ButtonComponent
+            title="Subtract $200,000 from Protection"
+            subTitle="(-10 MU:Points/m)"
+            width="100%"
+            borderColor={BASE_BUTTON}
+            titleColor={MAIN_BLACK}
+            borderRadius={20}
+            bodyColor={BASE_BUTTON}
+            click={() => {}}
+          />
         </View>
-      </KeyboardAvoidingView>
+      </ScrollView>
     </>
   );
 };
@@ -112,6 +121,7 @@ const s = StyleSheet.create({
     width: '100%',
     backgroundColor: BASE_BACKGROUND,
     height: '100%',
+    paddingBottom: 100,
     display: 'flex',
     alignItems: 'center',
   },

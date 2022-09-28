@@ -51,7 +51,7 @@ const InsertVpCard: React.FC<React.PropsWithChildren<Props>> = ({
           }}
           focusYn={fucus}
           initValue={initValue}
-          postfix="VP"
+          postfix="MU:P"
           textContentStyle={{
             fontSize: 22,
             fontWeight: '700',
@@ -59,7 +59,7 @@ const InsertVpCard: React.FC<React.PropsWithChildren<Props>> = ({
         />
         <View style={[s.row]}>
           <Text style={s.value}>
-            {17}Maximum {'67,231'}VP
+            {17}Maximum {'67,231'}MU:P
           </Text>
         </View>
       </View>

@@ -52,10 +52,13 @@ const MyInsuranceConfirm = (props: any) => {
 
           <View style={s.summary}>
             <View style={[s.row, {marginTop: 35}]}>
-              <Text style={s.title}>Insured Cryptocurrency</Text>
+              <Text style={s.title}>Change</Text>
+              <Text style={s.value}>+$200,000</Text>
+            </View>
+            <View style={[s.row, {marginTop: 5}]}>
+              <Text style={s.title}>Insured Crypto</Text>
               <Text style={s.value}>$400,000</Text>
             </View>
-
             <View style={[s.row, {marginTop: 29}]}>
               <Text style={s.title}>Add</Text>
               <Text style={s.value}>+ $200,000</Text>
@@ -73,7 +76,7 @@ const MyInsuranceConfirm = (props: any) => {
                 fontSize={12}
               />
               <Text style={{fontSize: 22, fontWeight: '700', color: '#000000'}}>
-                +10 MU:Points/mm
+                +10 MU:Points/m
               </Text>
             </View>
 
@@ -83,13 +86,13 @@ const MyInsuranceConfirm = (props: any) => {
                 Balance:
               </Text>
               <Text style={{fontSize: 12, fontWeight: '500', color: '#000000'}}>
-                123,013VP
+                123,013 MU:P
               </Text>
             </View>
             <View style={[s.endSummary]}>
               <Text
                 style={{fontSize: 12, fontWeight: '500', color: DIMED_GRAY}}>
-                15 Vault:Points will be charged on
+                15 MU:Points will be charged on
               </Text>
               <Text style={{fontSize: 12, fontWeight: '500', color: '#000000'}}>
                 Feb 1st. 20
@@ -98,7 +101,7 @@ const MyInsuranceConfirm = (props: any) => {
             <View style={[s.endSummary]}>
               <Text
                 style={{fontSize: 12, fontWeight: '500', color: DIMED_GRAY}}>
-                Vault:Points will be charged starting
+                MU:Points will be charged starting
               </Text>
               <Text style={{fontSize: 12, fontWeight: '500', color: '#000000'}}>
                 March 1st.

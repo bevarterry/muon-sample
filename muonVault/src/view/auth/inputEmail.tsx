@@ -57,7 +57,7 @@ const InputEmail = (props: any) => {
       <KeyboardAvoidingView behavior="padding">
         <View style={s.wrapper}>
           <Top
-            title={'Veification Email'}
+            title={'Verification Email'}
             backgroundColor={BASE_BACKGROUND}
             left={true}
             onTouchBackButton={navigation.goBack}
