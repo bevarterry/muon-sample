@@ -121,7 +121,7 @@ const Main = () => {
         barStyle="dark-content"
         translucent={true}
       />
-      <KeyboardAvoidingView behavior="padding">
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? "padding": "height"}>
         <View style={s.allWrapper}>
           <Tab.Navigator
             sceneContainerStyle={{width: '100%', height: '100%'}}
