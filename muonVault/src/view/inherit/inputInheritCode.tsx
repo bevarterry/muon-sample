@@ -6,6 +6,7 @@ import {
   View,
   KeyboardAvoidingView,
   Alert,
+  Platform,
 } from 'react-native';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import Auth from '../../api/Auth';
@@ -49,7 +50,7 @@ const InputInheritCode = (props: any) => {
 
   return (
     <>
-      <KeyboardAvoidingView behavior="padding">
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? "padding": "height"}>
         <View style={s.wrapper}>
           <Top
             title={'Inherit MU:Vault'}

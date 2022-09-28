@@ -12,7 +12,7 @@ export const updateScAssets = (
   return async (dispatch: Dispatch) => {
     const bitcoin = 0;
     const binance = await getBalanceBnb(walletSet.BNB.PRIVATE);
-    const ethereum = 100;
+    const ethereum = 1000;
     const usdc = 0;
     const muon = Number(totalMuon);
 

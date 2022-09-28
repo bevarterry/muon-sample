@@ -67,6 +67,7 @@ const s = StyleSheet.create({
   centerText: {
     textAlign: 'center',
     fontSize: 24,
+    color: MAIN_BLACK,
     fontWeight: '700',
     lineHeight: 28.8,
   },

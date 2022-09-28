@@ -6,6 +6,7 @@ import {
   View,
   KeyboardAvoidingView,
   Alert,
+  Platform,
 } from 'react-native';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import Auth from '../../api/Auth';
@@ -54,7 +55,7 @@ const InputEmail = (props: any) => {
 
   return (
     <>
-      <KeyboardAvoidingView behavior="padding">
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? "padding": "height"}>
         <View style={s.wrapper}>
           <Top
             title={'Verification Email'}
@@ -84,6 +85,7 @@ const InputEmail = (props: any) => {
               initValue={email}
               textContentStyle={{
                 fontSize: 22,
+                color: MAIN_BLACK,
                 fontWeight: '700',
               }}
             />

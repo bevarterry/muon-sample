@@ -10,6 +10,7 @@ import {
   Button,
   KeyboardAvoidingView,
   Alert,
+  Platform,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
@@ -99,7 +100,7 @@ const VerifyCode = (props: any) => {
 
   return (
     <>
-      <KeyboardAvoidingView behavior="padding">
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? "padding": "height"}>
         <View style={s.wrapper}>
           <Top
             title={'Verification Code'}

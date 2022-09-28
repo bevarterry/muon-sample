@@ -3,7 +3,7 @@ import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {useSelector} from 'react-redux';
 import {RootState} from '~/store/modules';
-import {BASE_BACKGROUND} from '../ColorCode';
+import {BASE_BACKGROUND, MAIN_BLACK} from '../ColorCode';
 
 const top_logo = require('../../../assets/image/top_logo.png');
 
@@ -23,7 +23,7 @@ const TopComponent: React.FC<
         }}
         source={top_logo}
       />
-      <Text style={{fontSize: 16, fontWeight: '700'}}>
+      <Text style={{fontSize: 16, fontWeight: '700', color: MAIN_BLACK}}>
         {vaultStore.totalAssets.muon} MU:P
       </Text>
     </View>

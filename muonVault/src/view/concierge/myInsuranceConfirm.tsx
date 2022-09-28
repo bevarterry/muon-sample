@@ -7,6 +7,7 @@ import {
   KeyboardAvoidingView,
   Alert,
   Dimensions,
+  Platform,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
@@ -40,7 +41,7 @@ const MyInsuranceConfirm = (props: any) => {
 
   return (
     <>
-      <KeyboardAvoidingView behavior="padding">
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? "padding": "height"}>
         <View style={s.wrapper}>
           <Top
             title={props.route.params.title}

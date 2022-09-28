@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
+import { MAIN_BLACK } from '../ColorCode';
 const top_back_btn = require('../../../assets/image/top_back_btn.png');
 type Props = {
   title: string;
@@ -65,6 +66,7 @@ const s = StyleSheet.create({
   title: {
     fontSize: 16,
     fontWeight: '700',
+    color: MAIN_BLACK,
     lineHeight: 32,
   },
   buttonWrapper: {

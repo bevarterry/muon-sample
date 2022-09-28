@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
-import {KeyboardAvoidingView, StyleSheet, Text, View} from 'react-native';
+import {KeyboardAvoidingView, Platform, StyleSheet, Text, View} from 'react-native';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {
   BASE_BACKGROUND,
@@ -59,7 +59,7 @@ const CompleteBuyVp = (props: any) => {
   };
   return (
     <>
-      <KeyboardAvoidingView behavior="padding">
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? "padding": "height"}>
         <View style={s.wrapper}>
           <Top
             title={'Buy Vault MU:Point'}
