@@ -102,7 +102,7 @@ const VerifyCode = (props: any) => {
       <KeyboardAvoidingView behavior="padding">
         <View style={s.wrapper}>
           <Top
-            title={'Veification Code'}
+            title={'Verification Code'}
             backgroundColor={BASE_BACKGROUND}
             left={true}
             onTouchBackButton={navigation.goBack}
