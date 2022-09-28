@@ -13,6 +13,11 @@ const StepTwo = () => {
   function moveToEmailAuth() {
     navigation.navigate('InputEmail' as never);
   }
+
+  function moveToInheritAuth() {
+    navigation.navigate('Inherit' as never);
+  }
+
   return (
     <>
       <Top
@@ -46,7 +51,7 @@ const StepTwo = () => {
             titleColor={MAIN_BLACK}
             borderRadius={20}
             bodyColor={BASE_BUTTON}
-            click={() => {}}
+            click={moveToInheritAuth}
           />
         </View>
       </View>

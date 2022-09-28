@@ -24,6 +24,7 @@ import VerifyCode from './src/view/auth/verifyCode';
 import messaging from '@react-native-firebase/messaging';
 import {setCommonInfo} from '~/store/global/state';
 import {STORED_FCM_TOKEN} from '~/view/constantProperties';
+import InputInheritCode from '~/view/inherit/inputInheritCode';
 
 const Stack = createStackNavigator();
 const baseTransitionOption = {
@@ -101,6 +102,11 @@ const App = () => {
           <Stack.Screen
             name="StepTwo"
             component={StepTwo}
+            options={baseTransitionOption}
+          />
+          <Stack.Screen
+            name="Inherit"
+            component={InputInheritCode}
             options={baseTransitionOption}
           />
           <Stack.Screen
