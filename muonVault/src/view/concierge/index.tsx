@@ -28,6 +28,9 @@ const Concierge = (props: any) => {
     props.navigation.replace('Splash');
   }
 
+  function moveToMyInsurance() {
+    navigation.navigate('MyInsurance' as never);
+  }
   return (
     <>
       <TopComponent />
@@ -39,7 +42,7 @@ const Concierge = (props: any) => {
           titleColor={MAIN_BLACK}
           borderRadius={20}
           bodyColor={CC_WHITE}
-          click={() => {}}
+          click={moveToMyInsurance}
         />
         <View style={{height: 10}} />
         <ButtonComponent

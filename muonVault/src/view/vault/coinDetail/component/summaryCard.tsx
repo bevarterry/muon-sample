@@ -1,4 +1,3 @@
-import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {
   Dimensions,
@@ -8,8 +7,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import FastImage from 'react-native-fast-image';
-import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {
   BASE_BACKGROUND,
   BASE_BUTTON,
@@ -18,13 +15,7 @@ import {
   MAIN_BLACK,
   MAIN_BORDER_COROR,
 } from '../../../ColorCode';
-import BasicBadge from '../../../common/basicBadge';
-import ButtonComponent from '../../../common/ButtonComponent';
-import TextInputComponent from '../../../common/TextInputComponent';
-import {WITHDRAW_BEFORE_EXECUTE} from '../../../constantProperties';
-const convert_value_icon = require('../../../../assets/image/convert_value_icon.png');
-const {width, height} = Dimensions.get('window');
-const buttonWidth = (width - 34) / 2;
+
 type Props = {
   fromComponent?: React.ReactNode;
   toComponent?: React.ReactNode;

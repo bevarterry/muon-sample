@@ -7,9 +7,11 @@ import {
   Dimensions,
   Image,
 } from 'react-native';
+import {MAIN_BLACK} from '../ColorCode';
 
 type Props = {
   title: string;
+  subTitle?: string;
   borderColor?: string;
   bodyColor?: string;
   marginTop?: string;
@@ -24,6 +26,7 @@ type Props = {
 };
 const ButtonComponent: React.FC<React.PropsWithChildren<Props>> = ({
   title,
+  subTitle,
   titleColor,
   borderColor,
   bodyColor,
@@ -62,6 +65,16 @@ const ButtonComponent: React.FC<React.PropsWithChildren<Props>> = ({
             }}>
             {title}
           </Text>
+          {subTitle && (
+            <Text
+              style={{
+                fontSize: 14,
+                color: activeFontColor ? activeFontColor : titleColor,
+                fontWeight: '500',
+              }}>
+              {subTitle}
+            </Text>
+          )}
         </View>
       </View>
     </TouchableOpacity>

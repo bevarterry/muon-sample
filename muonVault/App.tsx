@@ -25,6 +25,9 @@ import messaging from '@react-native-firebase/messaging';
 import {setCommonInfo} from '~/store/global/state';
 import {STORED_FCM_TOKEN} from '~/view/constantProperties';
 import InputInheritCode from '~/view/inherit/inputInheritCode';
+import MyInsurance from '~/view/concierge/myInsurance';
+import MyInsuranceConfirm from '~/view/concierge/myInsuranceConfirm';
+import MyInsuranceComplete from '~/view/concierge/myInsuranceComplete';
 
 const Stack = createStackNavigator();
 const baseTransitionOption = {
@@ -139,6 +142,22 @@ const App = () => {
             component={CompleteWithdraw}
             options={baseTransitionOption}
           />
+          <Stack.Screen
+            name="MyInsurance"
+            component={MyInsurance}
+            options={baseTransitionOption}
+          />
+          <Stack.Screen
+            name="MyInsuranceConfirm"
+            component={MyInsuranceConfirm}
+            options={baseTransitionOption}
+          />
+          <Stack.Screen
+            name="MyInsuranceComplete"
+            component={MyInsuranceComplete}
+            options={baseTransitionOption}
+          />
+
           {/*
         <Stack.Screen name="Character" component={Character} options={{...TransitionPresets.ModalSlideFromBottomIOS, 
           title: 'Select Character',
