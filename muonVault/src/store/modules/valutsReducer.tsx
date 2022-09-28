@@ -75,7 +75,7 @@ function generateDefaultVault(vaults: Array<Vault>, totalAssets: TotalAssets) {
   return defaultVault.concat(vaults).concat({
     idx: NEW_CREATE,
     id: NEW_CREATE,
-    name: 'CREATE A NEW SAFE',
+    name: 'Create New Safe',
     BTC: 0,
     BNB: 0,
     USDC: 0,
