@@ -15,6 +15,7 @@ import VaultApi from '../../../../api/Vault';
 import {useDispatch} from 'react-redux';
 import {updateVaults} from '~/store/action/VaultAction';
 import {CompleteWithdrawProps} from './completeWithdraw';
+import { setGlobalLoadingState } from '~/store/modules/GlobalLoadingReducer';
 
 const {width, height} = Dimensions.get('window');
 const buttonWidth = (width - 34) / 2;
@@ -28,20 +29,21 @@ type Props = {
   };
 };
 const SendToVault: React.FC<React.PropsWithChildren<Props>> = ({prop}) => {
-  const navigation = useNavigation();
-  const dispatch = useDispatch();
+  const navigation: any = useNavigation();
+  const dispatch: any = useDispatch();
 
   function requestVaultUpdate() {
+    
     const param = {
       symbol: prop.coin.symbol,
       fromVaultIdx: prop.fromVault.idx,
       toVaultIdx: prop.toVault.idx,
       value: prop.amount,
     };
-
+    
     VaultApi.patchVault(param)
       .then(response => {
-        //@ts-ignore
+        
         dispatch(updateVaults(response));
 
         const props: CompleteWithdrawProps = {
@@ -52,8 +54,12 @@ const SendToVault: React.FC<React.PropsWithChildren<Props>> = ({prop}) => {
           coin: prop.coin,
           amount: prop.amount,
         };
-        //@ts-ignore
-        navigation.replace('CompleteWithdraw', props);
+        
+        setTimeout(() => {
+          dispatch(setGlobalLoadingState(false));  
+          navigation.replace('CompleteWithdraw', props);      
+        }, 2000);
+        
       })
       .catch(e => {});
   }
@@ -77,7 +83,13 @@ const SendToVault: React.FC<React.PropsWithChildren<Props>> = ({prop}) => {
           paddingVertical={21}
           borderRadius={16}
           bodyColor={MAIN_BLACK}
-          click={requestVaultUpdate}
+          click={() => {
+            dispatch(setGlobalLoadingState(true));  
+            requestVaultUpdate();
+
+            
+            
+          }}
         />
         <View style={{width: 10}} />
         <ButtonComponent

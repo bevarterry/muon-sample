@@ -69,15 +69,7 @@ const MyInsuranceComplete = (props: any) => {
     <>
       <View style={s.wrapper}>
         <Text style={s.completeText}>Complete!</Text>
-        <Text
-          style={{
-            textAlign: 'center',
-            marginTop: 24,
-            marginBottom: 30,
-          }}>
-          12.00 ETH ($18,702.20) has been transferred to{'\n'} the address
-          0x09e3…44E7
-        </Text>
+
         <View style={s.withdrawSummary}>
           <View style={[s.row, {marginTop: 35}]}>
             <Text style={s.title}>Insured Cryptocurrency</Text>
@@ -170,6 +162,7 @@ const s = StyleSheet.create({
     marginTop: 20,
     fontWeight: '700',
     fontSize: 28,
+    marginBottom: 20
   },
   componentText: {
     fontSize: 22,

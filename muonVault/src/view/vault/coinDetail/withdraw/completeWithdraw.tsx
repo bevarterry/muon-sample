@@ -68,6 +68,8 @@ const CompleteWithdraw = (props: any) => {
         </Text> */}
 
         <SummaryCard
+          serviceFee={item.serviceFee}
+          estimateGasFee={item.estimateGasFee}
           amountComponent={
             <>
               {badge('Amount')}
@@ -114,7 +116,6 @@ const CompleteWithdraw = (props: any) => {
           bodyColor={MAIN_BLACK}
           click={() => {
             navigation.pop(1);
-            navigation.pop(2);
             navigation.goBack();
           }}
         />
@@ -139,6 +140,7 @@ const s = StyleSheet.create({
     marginTop: 20,
     fontWeight: '700',
     fontSize: 28,
+    marginBottom: 20
   },
   componentText: {
     fontSize: 22,

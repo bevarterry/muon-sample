@@ -11,7 +11,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import StepOne from './src/view/onboard/StepOne';
 import StepTwo from './src/view/onboard/StepTwo';
 import Main from './src/view/main';
-import {Provider} from 'react-redux';
+import {Provider, useSelector} from 'react-redux';
 import store from './src/store';
 import VaultDetail from './src/view/vault/detail';
 import CoinDetail from './src/view/vault/coinDetail';
@@ -28,6 +28,9 @@ import InputInheritCode from '~/view/inherit/inputInheritCode';
 import MyInsurance from '~/view/concierge/myInsurance';
 import MyInsuranceConfirm from '~/view/concierge/myInsuranceConfirm';
 import MyInsuranceComplete from '~/view/concierge/myInsuranceComplete';
+import InputPhone from '~/view/auth/inputPhone';
+import GlobalLoading from '~/view/common/GlobalLoading';
+import { RootState } from '~/store/modules';
 
 const Stack = createStackNavigator();
 const baseTransitionOption = {
@@ -59,6 +62,7 @@ const App = () => {
   }, []);
 
   return (
+    <>
     <Provider store={store}>
       <NavigationContainer
         ref={navigationRef}
@@ -75,6 +79,11 @@ const App = () => {
           <Stack.Screen
             name="InputEmail"
             component={InputEmail}
+            options={baseTransitionOption}
+          />
+          <Stack.Screen
+            name="InputPhone"
+            component={InputPhone}
             options={baseTransitionOption}
           />
           <Stack.Screen
@@ -164,8 +173,11 @@ const App = () => {
           headerShown: true }}
           /> */}
         </Stack.Navigator>
+        
       </NavigationContainer>
+      
     </Provider>
+    </>
   );
 };
 

@@ -8,11 +8,7 @@ const onboard_center_image = require('../../../assets/image/step1_img.png');
 import Top from '../common/top';
 
 const StepOne = () => {
-  const navigation = useNavigation();
-
-  function moveToCreate() {
-    navigation.navigate('MyWalletWeb' as never);
-  }
+  const navigation: any = useNavigation();
 
   function moveToStep2() {
     navigation.navigate('StepTwo' as never);

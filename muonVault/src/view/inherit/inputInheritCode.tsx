@@ -70,7 +70,7 @@ const InputInheritCode = (props: any) => {
               }}
               blur={(e: string) => {}}
               style={{
-                paddingVertical: 16,
+                paddingVertical: Platform.OS === 'ios' ? 16: 5,
                 width: '100%',
                 borderTopWidth: 0,
                 borderBottomWidth: 3,

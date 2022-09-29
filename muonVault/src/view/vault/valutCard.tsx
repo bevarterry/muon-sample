@@ -76,6 +76,7 @@ const ValutCard: React.FC<React.PropsWithChildren<Prop>> = ({vault}) => {
       setGlobalModalState({
         open: true,
         content: (
+          
           <CreateNewSafeModalComponent
             closeModal={() => {
               dispatch(

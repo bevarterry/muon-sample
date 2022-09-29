@@ -56,7 +56,7 @@ export default BasicBadge;
 const s = StyleSheet.create({
   wrapper: {
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   title: {

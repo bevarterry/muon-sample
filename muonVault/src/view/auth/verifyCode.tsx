@@ -5,14 +5,10 @@ import {
   StyleSheet,
   Text,
   View,
-  Dimensions,
-  ScrollView,
-  Button,
   KeyboardAvoidingView,
   Alert,
   Platform,
 } from 'react-native';
-import FastImage from 'react-native-fast-image';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {useDispatch} from 'react-redux';
 import {UserApiResponse} from '~/api/interface/userApiResponse';
@@ -30,7 +26,6 @@ import {
   DIMED_GRAY,
   MAIN_BLACK,
 } from '../ColorCode';
-import BasicTextInput from '../common/basicTextInput';
 import ButtonComponent from '../common/ButtonComponent';
 import PinCodeInput from '../common/pinCodeInput';
 import Top from '../common/top';
@@ -40,15 +35,9 @@ const VerifyCode = (props: any) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  const [email, setEmail] = useState('');
+  
   const [pinCode, setVerifyCode] = useState('');
-
-  useEffect(() => {
-    if (props.route.params.email) {
-      setEmail(props.route.params.email);
-    }
-  }, []);
-
+  
   const isActiveDoneButton = () => {
     return pinCode.length == 6;
   };
@@ -70,7 +59,7 @@ const VerifyCode = (props: any) => {
         updateFcmToken();
       })
       .catch(e => {
-        console.log(e);
+        Alert.alert('인증코드 검증에 실패했습니다. 인증코드를 다시 확인해주세요.');
       });
   }
 
@@ -91,6 +80,9 @@ const VerifyCode = (props: any) => {
 
         //@ts-ignore
         dispatch(updateScAssets(res.SafeAddress, res.Wallet, res.VP));
+
+        props.navigation.pop(1);
+        props.navigation.pop(2);
         props.navigation.replace('Main');
       })
       .catch(e => {
@@ -108,7 +100,7 @@ const VerifyCode = (props: any) => {
             left={true}
             onTouchBackButton={navigation.goBack}
           />
-          <Text style={s.title}>Please enter code sent to {email}</Text>
+          <Text style={s.title}>Please enter code sent to {props.route.params.email}</Text>
           <Text style={s.inputTitle}>Verification code</Text>
           <View style={{marginHorizontal: 23, marginTop: 10}}>
             <PinCodeInput
@@ -119,7 +111,31 @@ const VerifyCode = (props: any) => {
               }}
               blur={(e: string) => {}}
               style={{
-                paddingVertical: 16,
+                paddingVertical: Platform.OS === 'ios' ? 16: 5,
+                width: '100%',
+                borderTopWidth: 0,
+                borderBottomWidth: 3,
+                borderColor: MAIN_BLACK,
+                borderRightWidth: 0,
+                borderRadius: 0,
+                borderLeftWidth: 0,
+                marginTop: 10,
+              }}
+              textContentStyle={{
+                fontSize: 22,
+                color: '#000000',
+                fontWeight: '700',
+              }}
+            />
+                        {/* <BasicTextInput
+                        numberOnly={true}
+                        maxLength={6}
+              update={(e: string) => {
+                setVerifyCode(e);
+              }}
+              blur={(e: string) => {}}
+              style={{
+                paddingVertical: Platform.OS === 'ios' ? 16: 5,
                 width: '100%',
                 borderTopWidth: 0,
                 borderBottomWidth: 3,
@@ -132,10 +148,12 @@ const VerifyCode = (props: any) => {
               initValue={email}
               textContentStyle={{
                 fontSize: 22,
+                color: MAIN_BLACK,
                 fontWeight: '700',
               }}
-            />
+            /> */}
           </View>
+          
           <View
             style={{
               width: '100%',

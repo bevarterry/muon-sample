@@ -21,6 +21,7 @@ import TabIcon from './common/tabIcon';
 import GlobalModal from './globalModal';
 import {useSelector} from 'react-redux';
 import {RootState} from '~/store/modules';
+import GlobalLoading from './common/GlobalLoading';
 const Tab = createBottomTabNavigator();
 
 const home_icon = require('../../assets/image/home_icon.png');
@@ -30,6 +31,9 @@ const life_icon = require('../../assets/image/life_icon.png');
 const concierge_icon = require('../../assets/image/concierge_icon.png');
 
 const Main = () => {
+  const globalLoadingStateStore = useSelector(
+    (root: RootState) => root.globalLoadingState,
+  );
   let globalModalStore = useSelector(
     (root: RootState) => root.globalModalStore,
   );
@@ -121,7 +125,7 @@ const Main = () => {
         barStyle="dark-content"
         translucent={true}
       />
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? "padding": "height"}>
+      
         <View style={s.allWrapper}>
           <Tab.Navigator
             sceneContainerStyle={{width: '100%', height: '100%'}}
@@ -138,16 +142,16 @@ const Main = () => {
             <Tab.Screen component={Life} name="Life" />
             <Tab.Screen component={Concierge} name="Concierge" />
           </Tab.Navigator>
-
-          <GlobalModal
-            //@ts-ignore
-            ref={bottomModalRef}
-            content={globalModalStore.content}
-            height={globalModalStore.height}
-          />
         </View>
-      </KeyboardAvoidingView>
-      {/* <GlobalLoading action={globalLoadingStateStore.state} /> */}
+        
+      
+      <GlobalModal
+        //@ts-ignore
+        ref={bottomModalRef}
+        content={globalModalStore.content}
+        height={globalModalStore.height}
+      />
+      <GlobalLoading action={globalLoadingStateStore.state} />
     </>
   );
 };
@@ -172,6 +176,7 @@ const s = StyleSheet.create({
   allWrapper: {
     zIndex: -1,
     paddingTop: getStatusBarHeight(),
+    paddingBottom: Platform.OS==='ios' ? 0: 15,
     width: '100%',
     backgroundColor: BASE_BACKGROUND,
     height: '100%',

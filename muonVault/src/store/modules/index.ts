@@ -1,5 +1,6 @@
 import {combineReducers} from 'redux';
 import {CoinRatioStoreData} from './coinRatioReducer';
+import { GlobalLoadingState } from './GlobalLoadingReducer';
 import {GlobalModalStoreData} from './globalModalReducer';
 import {DepositModalStoreData} from './modalReducer';
 import {ScAssetsStoreData} from './ScAssetReducer';
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   depositModalStore: DepositModalStoreData,
   walletStore: WalletStoreData,
   globalModalStore: GlobalModalStoreData,
+  globalLoadingState: GlobalLoadingState,
 });
 
 export default rootReducer;

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {useSelector} from 'react-redux';
 import {Vault} from '../../../../model/vaults';
@@ -48,7 +48,7 @@ const Step0: React.FC<React.PropsWithChildren<Props>> = ({
     return (
       <View style={s.candidateVaults}>
         <Text style={{fontSize: 12, fontWeight: '700'}}>Quick Select</Text>
-        <View>
+        <ScrollView horizontal style={{marginLeft: 10}} showsHorizontalScrollIndicator={false}>
           {vaultsStore.vaults.map((element, index) => {
             if (element.idx === NEW_CREATE) return;
             if (element.idx === DEFAULT_WALLET) return;
@@ -76,7 +76,7 @@ const Step0: React.FC<React.PropsWithChildren<Props>> = ({
               </TouchableOpacity>
             );
           })}
-        </View>
+        </ScrollView>
       </View>
     );
   };

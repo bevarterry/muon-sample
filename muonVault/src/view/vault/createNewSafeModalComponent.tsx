@@ -1,6 +1,8 @@
 import React, {useRef, useState} from 'react';
 import {useEffect} from 'react';
 import {
+  KeyboardAvoidingView,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -35,12 +37,15 @@ const CreateNewSafeModalComponent: React.FC<React.PropsWithChildren<Props>> = ({
   };
 
   function requestSaveNewSafeAPI() {
+
+    if(!isActiveDoneButton()) return ;
     //@ts-ignore
     dispatch(createNewVault(safeName));
     if (closeModal) closeModal();
   }
   return (
     <>
+    
       <View style={s.contentContainer}>
         <Text style={s.title}>Create a new SAFE</Text>
 
@@ -58,7 +63,7 @@ const CreateNewSafeModalComponent: React.FC<React.PropsWithChildren<Props>> = ({
             }}
             blur={(e: string) => {}}
             style={{
-              paddingVertical: 16,
+              paddingVertical: Platform.OS === 'ios' ? 16: 5,
               width: '100%',
               borderTopWidth: 0,
               borderBottomWidth: 3,
@@ -71,9 +76,11 @@ const CreateNewSafeModalComponent: React.FC<React.PropsWithChildren<Props>> = ({
             initValue={safeName}
             textContentStyle={{
               fontSize: 22,
+              color: '#000000',
               fontWeight: '700',
             }}
           />
+          
           <View style={{height: 33}} />
           <ButtonComponent
             title="Create"
@@ -89,13 +96,16 @@ const CreateNewSafeModalComponent: React.FC<React.PropsWithChildren<Props>> = ({
             click={requestSaveNewSafeAPI}
           />
         </View>
+        
         <TouchableOpacity
           onPress={() => {
             if (closeModal) closeModal();
           }}>
           <Text style={s.close}>Cancel</Text>
         </TouchableOpacity>
+        
       </View>
+      
     </>
   );
 };
