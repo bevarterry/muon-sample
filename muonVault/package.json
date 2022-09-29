@@ -9,7 +9,7 @@
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "build:ios": "react-native bundle --entry-file='index.js' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios'",
-    "build-android-production": "cd ./android && ENVFILE=.env.production ./gradlew assembleRelease && cd ../"
+    "build:android": "cd ./android && ENVFILE=.env.production ./gradlew assembleRelease && cd ../"
   },
   "dependencies": {
     "@ethersproject/shims": "^5.5.0",
