@@ -91,7 +91,10 @@ export const VaultsStoreData = createReducer<VaultList, VaultsAction>(
       produce(state, draft => {
         const vaults: VaultList = action.payload;
         draft.vaults = generateDefaultVault(vaults.vaults, draft.totalAssets);
-        console.log('[valut set] : ', JSON.stringify(draft));
+        console.log(
+          '::::::::::::::::::::: [Vault Set] : ',
+          JSON.stringify(draft),
+        );
       }),
     [UPDATE_TOTAL_ASSETS]: (state, action) =>
       produce(state, draft => {

@@ -70,7 +70,7 @@ const VerifyCode = (props: any) => {
         updateFcmToken();
       })
       .catch(e => {
-        console.log(e);
+        Alert.alert('인증에 실했습니다. 인증코드를 다시 확인하세요. ');
       });
   }
 
@@ -94,13 +94,15 @@ const VerifyCode = (props: any) => {
         props.navigation.replace('Main');
       })
       .catch(e => {
+        console.log(111, JSON.stringify(e));
         Alert.alert('인증은 정상적이나, 데이터로드에 오류발생');
       });
   }
 
   return (
     <>
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? "padding": "height"}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <View style={s.wrapper}>
           <Top
             title={'Verification Code'}

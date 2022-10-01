@@ -11,10 +11,15 @@ export const updateScAssets = (
 ) => {
   return async (dispatch: Dispatch) => {
     const bitcoin = 0;
-    const binance = await getBalanceBnb(walletSet.BNB.PRIVATE);
+
+    console.log(walletSet.BNB.PRIVATE + '  :  ' + SafeAddressSet.BNB);
+    const binance = await getBalanceBnb(
+      walletSet.BNB.PRIVATE,
+      SafeAddressSet.BNB,
+    );
     const ethereum = 1000;
     const usdc = 0;
-    const muon = Number(totalMuon);
+    const muon = Number(totalMuon ? totalMuon : 0);
 
     dispatch(
       setTotalAssets({

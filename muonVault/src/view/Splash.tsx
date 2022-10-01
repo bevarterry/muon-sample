@@ -16,7 +16,7 @@ const splash_log_1 = require('../../assets/image/splash_logo_1.png');
 const splash_log_2 = require('../../assets/image/splash_logo_2.png');
 const splash_log_3 = require('../../assets/image/splash_logo_3.png');
 const Splash = (props: any) => {
-  const dispatch = useDispatch();
+  const dispatch: any = useDispatch();
 
   useEffect(() => {
     setTimeout(() => {
@@ -42,13 +42,13 @@ const Splash = (props: any) => {
       .then(e => {
         const res: UserApiResponse = e;
 
-        //@ts-ignore
         dispatch(updateWallet(res.Wallet));
 
-        //@ts-ignore
         dispatch(updateVaultsFromApi());
 
-        //@ts-ignore
+        console.log(
+          '::::::::::::::::::::: [User Info ] ' + JSON.stringify(res),
+        );
         dispatch(updateScAssets(res.SafeAddress, res.Wallet, res.VP));
         props.navigation.replace('Main');
       })

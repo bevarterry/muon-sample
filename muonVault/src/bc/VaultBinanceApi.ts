@@ -9,22 +9,22 @@ const predefine = {
   node_host_bsc_testnet: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
 };
 
+const gasPrice = '10';
+const gasLimit = 1000000;
+
 let provider = new ethers.providers.JsonRpcProvider(
   predefine.node_host_bsc_testnet,
 );
 
 const MU_VAULT_CONTRACT = '0x70068D8B45F04056C896C6E44A4b5E0Fb02c7d67';
 
-const getBalanceBnb = async (privateKey: string) => {
+const getBalanceBnb = async (privateKey: string, contractAddress: string) => {
   const wallet = new ethers.Wallet(privateKey);
-  // const wallet = new ethers.Wallet(
-  //   '1a619a0cc6e2c3592c641366a8b4e34c49301eebde395f4d4b634bae5fa466dd',
-  // );
 
   const signer = wallet.connect(provider);
 
-  let contract = new ethers.Contract(
-    MU_VAULT_CONTRACT,
+  let contract = await new ethers.Contract(
+    contractAddress,
     muVaultConfig.abi,
     signer,
   );
@@ -32,8 +32,40 @@ const getBalanceBnb = async (privateKey: string) => {
   const balance = await contract.getBalance({
     from: wallet.address,
   });
-  console.log('bnb', balance);
+
   return ethers.utils.formatEther(balance);
+};
+
+const requestWithdrawExceptionHandling = async (
+  from: string,
+  to: string,
+  value: string,
+  privateKey: string,
+  contractAddress: string,
+) => {
+  const wallet = new ethers.Wallet(privateKey);
+  const signer = wallet.connect(provider);
+
+  let contract = new ethers.Contract(
+    contractAddress,
+    muVaultConfig.abi,
+    signer,
+  );
+
+  let receipt;
+  try {
+    receipt = await contract.requestWithdraw({
+      from: from,
+      to: to,
+      value: ethers.utils.parseUnits(value, 'gwei'),
+      gasLimit: gasLimit,
+      gasPrice: ethers.utils.parseUnits(gasPrice, 'gwei'),
+    });
+    console.log(JSON.stringify(receipt));
+  } catch (err) {
+    console.error(JSON.stringify(err));
+  }
+  return receipt;
 };
 
 // astore
