@@ -25,7 +25,6 @@ const TransactionHistoryContainer: React.FC<React.PropsWithChildren<Props>> = ({
   useEffect(() => {
     VaultApi.history(vault.idx, symbol)
       .then(res => {
-        console.log(res);
         historiesMap(res);
       })
       .catch(e => {

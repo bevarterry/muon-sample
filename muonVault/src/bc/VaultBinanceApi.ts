@@ -35,9 +35,7 @@ const getBalanceBnb = async (privateKey: string, contractAddress: string) => {
 
   return ethers.utils.formatEther(balance);
 };
-
-const requestWithdrawExceptionHandling = async (
-  from: string,
+const requestBnbWithdrawConfirm = async (
   to: string,
   value: string,
   privateKey: string,
@@ -55,7 +53,7 @@ const requestWithdrawExceptionHandling = async (
   let receipt;
   try {
     receipt = await contract.requestWithdraw({
-      from: from,
+      from: wallet.address,
       to: to,
       value: ethers.utils.parseUnits(value, 'gwei'),
       gasLimit: gasLimit,
@@ -203,4 +201,4 @@ const requestWithdrawExceptionHandling = async (
 //     return ethers.utils.formatEther(value);
 // }
 
-export {getBalanceBnb};
+export {getBalanceBnb, requestBnbWithdrawConfirm};

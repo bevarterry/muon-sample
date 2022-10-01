@@ -3,6 +3,8 @@ export interface CoinDetailType {
   value: number;
   symbol: string;
   ratio: number;
+  privateKey: string;
+  contractAddress: string;
 }
 export interface TxHistory {
   to: string;

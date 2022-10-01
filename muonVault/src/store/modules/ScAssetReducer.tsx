@@ -1,6 +1,18 @@
 import {ActionType, createReducer, deprecated} from 'typesafe-actions';
 import produce from 'immer';
 import {ScAssetInfo, ScAssets} from '../../model/scAssets';
+import {
+  BNB_DISPLAY_SYMBOL,
+  BNB_SYMBOL,
+  BTC_DISPLAY_SYMBOL,
+  BTC_SYMBOL,
+  ETH_DISPLAY_SYMBOL,
+  ETH_SYMBOL,
+  MU_DISPLAY_SYMBOL,
+  MU_SYMBOL,
+  USDC_DISPLAY_SYMBOL,
+  USDC_SYMBOL,
+} from '~/view/constantProperties';
 
 const {createStandardAction} = deprecated;
 
@@ -38,32 +50,32 @@ export type ScAssetsStore = ScAssets;
 
 const initialState: ScAssets = {
   bitcoin: {
-    symbol: 'BTC',
-    displayName: 'Bitcoin',
+    symbol: BTC_SYMBOL,
+    displayName: BTC_DISPLAY_SYMBOL,
     contractAddress: '',
     ratio: 0,
   },
   ethereum: {
-    symbol: 'ETH',
-    displayName: 'Ethereum',
+    symbol: ETH_SYMBOL,
+    displayName: ETH_DISPLAY_SYMBOL,
     contractAddress: '',
     ratio: 0,
   },
   binance: {
-    symbol: 'BNB',
-    displayName: 'Binance',
+    symbol: BNB_SYMBOL,
+    displayName: BNB_DISPLAY_SYMBOL,
     contractAddress: '',
     ratio: 0,
   },
   usdc: {
-    symbol: 'USDC',
-    displayName: 'USDC',
+    symbol: USDC_SYMBOL,
+    displayName: USDC_DISPLAY_SYMBOL,
     contractAddress: '',
     ratio: 0,
   },
   muon: {
-    symbol: 'MU:P',
-    displayName: 'MU:P',
+    symbol: MU_SYMBOL,
+    displayName: MU_DISPLAY_SYMBOL,
     contractAddress: '',
     ratio: 0,
   },

@@ -26,7 +26,6 @@ export default {
   },
 
   history(vaultId: string, symbol: string): Promise<Array<VaultResponse>> {
-    console.log(vaultId, symbol);
     return new Promise((resolve, reject) => {
       Send({
         url: `/bc/vault/${vaultId}/history?symbol=${symbol}`,
@@ -37,7 +36,7 @@ export default {
         },
       })
         .then(response => {
-          console.log(response.data.data.histories);
+          //console.log(response.data.data.histories);
           resolve(response.data.data.histories);
         })
         .catch(err => {

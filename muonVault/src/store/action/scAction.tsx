@@ -1,6 +1,7 @@
 import {Dispatch} from 'redux';
-import {getBalanceBnb} from '~/bc/VaultBinanceApi';
-import {getBalanceEther} from '~/bc/VaultEtherApi';
+import {getBalanceBnb, requestBnbWithdrawConfirm} from '~/bc/VaultBinanceApi';
+import {getBalanceEther, requestEtherWithdrawConfirm} from '~/bc/VaultEtherApi';
+import {ETH_SYMBOL} from '~/view/constantProperties';
 import {SafeAddressSet, WalletSet} from '../../api/interface/userApiResponse';
 import {setScAssets} from '../modules/ScAssetReducer';
 import {setDefaultVault, setTotalAssets} from '../modules/valutsReducer';
@@ -79,3 +80,32 @@ export const updateScAssets = (
     );
   };
 };
+
+// export const requestWithdrawConfirmFromVaultAsset = (
+//   toAddress: string,
+//   value: string,
+//   privateKey: string,
+//   contractAddress: string,
+//   symbol: string,
+// ) => {
+//   return async (dispatch: Dispatch) => {
+//     let res;
+//     if (symbol === ETH_SYMBOL) {
+//       res = await requestEtherWithdrawConfirm(
+//         toAddress,
+//         value,
+//         privateKey,
+//         contractAddress,
+//       );
+//     } else if (symbol === ETH_SYMBOL) {
+//       res = await requestBnbWithdrawConfirm(
+//         toAddress,
+//         value,
+//         privateKey,
+//         contractAddress,
+//       );
+//     }
+
+//     console.log(JSON.stringify(res));
+//   };
+// };

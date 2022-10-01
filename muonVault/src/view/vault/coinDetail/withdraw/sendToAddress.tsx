@@ -22,21 +22,65 @@ import PilotWithdrawBottomDialog from './pilotWithdrawBottomDialog';
 import SummaryCard from '../component/summaryCard';
 import {CoinDetailType} from '~/model/coin';
 import {Vault} from '~/model/vaults';
+import {useSelector} from 'react-redux';
+import {RootState} from '~/store/modules';
+import {requestEtherWithdrawConfirm} from '~/bc/VaultEtherApi';
+import {BNB_SYMBOL, ETH_SYMBOL} from '~/view/constantProperties';
+import {requestBnbWithdrawConfirm} from '~/bc/VaultBinanceApi';
 
 const {width, height} = Dimensions.get('window');
 const buttonWidth = (width - 34) / 2;
 type Props = {
-  prop: {
+  props: {
     coin: CoinDetailType;
-    amount: number;
+    amount: string;
     fromVault: Vault;
-    toVault: Vault;
     toAddress: string;
   };
 };
-const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({prop}) => {
+const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
   const pilotWithdrawModalRef = useRef();
-  const navigation = useNavigation();
+  const navigation: any = useNavigation();
+
+  async function sendAll() {
+    try {
+      const response = await requestWithdrawConfirm();
+
+      console.log(JSON.stringify(response));
+
+      // navigation.replace('CompleteWithdraw', {
+      //   from: '',
+      //   to: '',
+      //   symbol: '',
+      //   estimateGasFee: 0,
+      //   serviceFee: 0,
+      //   totalAmount: 0,
+      // });
+    } catch (error) {
+      console.log(JSON.stringify(error));
+    }
+  }
+
+  async function requestWithdrawConfirm() {
+    let res;
+
+    if (props.coin.symbol === ETH_SYMBOL) {
+      res = await requestEtherWithdrawConfirm(
+        props.toAddress,
+        props.amount,
+        props.coin.privateKey,
+        props.coin.contractAddress,
+      );
+    } else if (props.coin.symbol === BNB_SYMBOL) {
+      res = await requestBnbWithdrawConfirm(
+        props.toAddress,
+        props.amount,
+        props.coin.privateKey,
+        props.coin.contractAddress,
+      );
+    }
+    return res;
+  }
 
   return (
     <>
@@ -104,17 +148,7 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({prop}) => {
           paddingVertical={21}
           borderRadius={16}
           bodyColor={BASE_BUTTON}
-          click={() => {
-            //@ts-ignore
-            navigation.replace('CompleteWithdraw', {
-              from: '',
-              to: '',
-              symbol: '',
-              estimateGasFee: 0,
-              serviceFee: 0,
-              totalAmount: 0,
-            });
-          }}
+          click={sendAll}
         />
       </View>
       <PilotWithdrawBottomDialog ref={pilotWithdrawModalRef} />

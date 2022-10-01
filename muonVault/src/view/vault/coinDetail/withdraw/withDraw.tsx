@@ -35,6 +35,8 @@ const WithDraw = (props: any) => {
     value: 0,
     ratio: 0,
     symbol: '',
+    privateKey: '',
+    contractAddress: '',
   });
 
   const [toVault, setToVault] = useState<Vault>({
@@ -65,6 +67,7 @@ const WithDraw = (props: any) => {
     if (props.route.params.vault) {
       const {coin, vault} = props.route.params;
 
+      console.log(coin);
       setFromVault(vault);
       setCoin(coin);
     }
@@ -186,11 +189,10 @@ const WithDraw = (props: any) => {
 
         {step === WITHDRAW_BEFORE_EXECUTE && toAddress !== '' && (
           <SendToAddress
-            prop={{
+            props={{
               coin: coin,
-              amount: Number(amount),
+              amount: amount,
               fromVault: fromVault,
-              toVault: toVault,
               toAddress: toAddress,
             }}
           />

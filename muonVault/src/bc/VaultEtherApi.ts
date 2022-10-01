@@ -45,8 +45,7 @@ const getBalanceEther = async (privateKey: string, contractAddress: string) => {
   return ethers.utils.formatEther(balance);
 };
 
-const requestWithdrawExceptionHandling = async (
-  from: string,
+const requestEtherWithdrawConfirm = async (
   to: string,
   value: string,
   privateKey: string,
@@ -61,15 +60,30 @@ const requestWithdrawExceptionHandling = async (
     signer,
   );
 
+  console.log(value);
+  console.log(ethers.utils.parseUnits(value, 'gwei'));
+
   let receipt;
   try {
-    receipt = await contract.requestWithdraw({
-      from: from,
-      to: to,
-      value: ethers.utils.parseUnits(value, 'gwei'),
-      gasLimit: gasLimit,
-      gasPrice: ethers.utils.parseUnits(gasPrice, 'gwei'),
-    });
+    // receipt = await contract.requestAndConfirmWithdraw({
+    //   from: wallet.address,
+    //   to: to,
+    //   value: ,
+    //   gasLimit: gasLimit,
+    //   gasPrice: ethers.utils.parseUnits(gasPrice, 'gwei'),
+    // });
+
+    const receipt = await contract.requestAndConfirmWithdraw(
+      wallet.address,
+      to,
+      ethers.utils.parseEther(value),
+      {
+        from: wallet.address,
+        gasLimit: gasLimit,
+        gasPrice: ethers.utils.parseUnits(gasPrice, 'gwei'),
+      },
+    );
+
     console.log(JSON.stringify(receipt));
   } catch (err) {
     console.error(JSON.stringify(err));
@@ -142,7 +156,7 @@ const requestWithdrawExceptionHandling = async (
 //     return receipt;
 //   };
 
-// // 판매 등록
+// 판매 등록
 // const registerSale = async (privateKey: string, address: string, id: number, price: string) => {
 //     const wallet = new ethers.Wallet(privateKey);
 //     const signer = wallet.connect(provider);
@@ -212,4 +226,4 @@ const requestWithdrawExceptionHandling = async (
 //     return ethers.utils.formatEther(value);
 // }
 
-export {getBalanceEther};
+export {getBalanceEther, requestEtherWithdrawConfirm};

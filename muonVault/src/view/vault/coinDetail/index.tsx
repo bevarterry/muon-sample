@@ -27,6 +27,8 @@ const CoinDetail = (props: any) => {
     value: 0,
     ratio: 0,
     symbol: '',
+    privateKey: '',
+    contractAddress: '',
   });
 
   const [vault, setVault] = useState<Vault>({
@@ -43,7 +45,8 @@ const CoinDetail = (props: any) => {
 
   useEffect(() => {
     if (props.route.params.vault) {
-      const {value, symbol, ratio, icon, vault} = props.route.params;
+      const {value, symbol, ratio, icon, vault, privateKey, contractAddress} =
+        props.route.params;
 
       setVault(vault);
       setCoin({
@@ -51,6 +54,8 @@ const CoinDetail = (props: any) => {
         ratio: ratio,
         icon: icon,
         symbol: symbol,
+        contractAddress: contractAddress,
+        privateKey: privateKey,
       });
     }
   }, [props.route.params.vault]);

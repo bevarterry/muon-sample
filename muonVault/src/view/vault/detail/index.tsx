@@ -16,6 +16,8 @@ const usdc_icon = require('../../../../assets/image/usdc_icon.png');
 const muon_icon = require('../../../../assets/image/muon_icon.png');
 
 const VaultDetail = (props: any) => {
+  const scAssetsStore = useSelector((root: RootState) => root.scAssetsStore);
+  const walletStore = useSelector((root: RootState) => root.walletStore);
   const vaultStore = useSelector((root: RootState) => root.vaultsStore);
   const ratioStore = useSelector((root: RootState) => root.ratioStore);
   const navigation = useNavigation();
@@ -55,12 +57,20 @@ const VaultDetail = (props: any) => {
     ).toFixed(0);
   };
 
-  const coinRow = (symbol: string, icon: any, value: number, ratio: number) => {
+  const coinRow = (
+    symbol: string,
+    icon: any,
+    value: number,
+    ratio: number,
+    privateKey: string,
+    contractAddress: string,
+  ) => {
     return (
       <TouchableOpacity
         style={s.coinRow}
         activeOpacity={0.7}
         onPress={() => {
+          console.log(contractAddress);
           navigation.navigate(
             'CoinDetail' as never,
             {
@@ -69,6 +79,8 @@ const VaultDetail = (props: any) => {
               ratio: ratio,
               icon: icon,
               vault: vault,
+              privateKey: privateKey,
+              contractAddress: contractAddress,
             } as never,
           );
         }}>
@@ -104,11 +116,46 @@ const VaultDetail = (props: any) => {
       <View style={s.wrapper}>
         <Text style={s.title}>Total Value</Text>
         <Text style={s.totalValueDollar}>${totalValueInDallor()}</Text>
-        {coinRow('BTC', btc_icon, vault.BTC, ratioStore.ratioSet.BTC)}
-        {coinRow('ETH', eth_icon, vault.ETH, ratioStore.ratioSet.ETH)}
-        {coinRow('BNB', bnb_icon, vault.BNB, ratioStore.ratioSet.BNB)}
-        {coinRow('USDC', usdc_icon, vault.USDC, ratioStore.ratioSet.USDC)}
-        {coinRow('MU', muon_icon, vault.VP, ratioStore.ratioSet.MU)}
+        {coinRow(
+          'BTC',
+          btc_icon,
+          vault.BTC,
+          ratioStore.ratioSet.BTC,
+          walletStore.BTC.privateKey,
+          scAssetsStore.bitcoin.contractAddress,
+        )}
+        {coinRow(
+          'ETH',
+          eth_icon,
+          vault.ETH,
+          ratioStore.ratioSet.ETH,
+          walletStore.ETH.privateKey,
+          scAssetsStore.ethereum.contractAddress,
+        )}
+        {coinRow(
+          'BNB',
+          bnb_icon,
+          vault.BNB,
+          ratioStore.ratioSet.BNB,
+          walletStore.BNB.privateKey,
+          scAssetsStore.binance.contractAddress,
+        )}
+        {coinRow(
+          'USDC',
+          usdc_icon,
+          vault.USDC,
+          ratioStore.ratioSet.USDC,
+          walletStore.USDC.privateKey,
+          scAssetsStore.usdc.contractAddress,
+        )}
+        {coinRow(
+          'MU',
+          muon_icon,
+          vault.VP,
+          ratioStore.ratioSet.MU,
+          '',
+          scAssetsStore.muon.contractAddress,
+        )}
       </View>
     </>
   );
