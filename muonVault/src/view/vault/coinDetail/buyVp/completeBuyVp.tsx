@@ -43,6 +43,8 @@ const CompleteBuyVp = (props: any) => {
     value: 0,
     ratio: 0,
     symbol: '',
+    privateKey: '',
+    contractAddress: ''
   });
 
   useEffect(() => {

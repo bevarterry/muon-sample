@@ -25,7 +25,7 @@ type Props = {
   maxLength?: number;
   textContentStyle?: any;
   initValue?: string | number;
-  maxValue: number;
+  maxValue?: number;
   numberOnly?: boolean;
   textAlign?: 'center' | 'right' | 'left' | undefined;
 };

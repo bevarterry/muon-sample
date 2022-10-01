@@ -21,3 +21,7 @@ export const USDC_SYMBOL = 'USDC';
 export const USDC_DISPLAY_SYMBOL = 'USDC';
 export const MU_SYMBOL = 'MU';
 export const MU_DISPLAY_SYMBOL = 'MU:P';
+
+
+
+export const NOTI_AUTH_PHONE="AUTH_PHONE";

@@ -22,6 +22,10 @@ import GlobalModal from './globalModal';
 import {useSelector} from 'react-redux';
 import {RootState} from '~/store/modules';
 import GlobalLoading from './common/GlobalLoading';
+import messaging from '@react-native-firebase/messaging';
+import Toast from 'react-native-simple-toast';
+import { NOTI_AUTH_PHONE } from './constantProperties';
+
 const Tab = createBottomTabNavigator();
 
 const home_icon = require('../../assets/image/home_icon.png');
@@ -48,6 +52,91 @@ const Main = () => {
       bottomModalRef.current.closeModal();
     }
   }, [globalModalStore]);
+
+
+
+
+  // messaging().onMessage(async remoteMessage => {
+  //   if (remoteMessage === null) return;
+
+  //   console.log('**************** 앱 켜져있을떄 호출됨 : ', remoteMessage.data,);
+    
+  // });
+
+  // messaging().onNotificationOpenedApp(remoteMessage => {
+  //   if (remoteMessage === null) return;
+  //   console.log('**************** 노티 클릭후 떴을떄 : ', remoteMessage);
+  //   Toast.show(`푸시 옴`+ remoteMessage.data, Toast.SHORT);
+  // });
+
+  // messaging().getInitialNotification().then(remoteMessage => {
+  //   if (remoteMessage === null) return;
+  //   console.log('**************** 앱 완전 재실행시 : ', remoteMessage);
+  //   Toast.show(`푸시 옴`+ remoteMessage.data, Toast.SHORT);
+  // });
+  
+  // messaging().setBackgroundMessageHandler(async (remoteMessage) => {
+    
+  //   if (remoteMessage === null) return;
+    
+  //   console.log('**************** 앱 중지 상태 호출됨 : ', remoteMessage);
+  //   Toast.show(`푸시 옴`+ remoteMessage.data, Toast.SHORT);
+  // });
+
+
+
+
+
+
+  messaging().onMessage(async remoteMessage => {
+    if (remoteMessage === null) return;
+
+    pushNextStep(remoteMessage?.data?.title);
+  });
+
+  messaging().onNotificationOpenedApp(remoteMessage => {
+    if (remoteMessage === null) return;
+  
+    pushNextStep(remoteMessage?.data?.title);
+  });
+
+  messaging().getInitialNotification().then(remoteMessage => {
+    if (remoteMessage === null) return;
+    
+    console.log("[MAIN getInitialNotification OpenedApp] id ", JSON.stringify(remoteMessage));
+    pushNextStep(remoteMessage?.data?.title);
+  });
+  
+  messaging().setBackgroundMessageHandler(async (remoteMessage) => {
+    
+    if (remoteMessage === null) return;
+    
+
+    console.log("[MAIN Background Push] id ", JSON.stringify(remoteMessage));
+    pushNextStep(remoteMessage?.data?.title);
+  });
+
+
+
+  function pushNextStep(id: string | undefined) {
+    if (id === undefined) return;
+
+    if (id === NOTI_AUTH_PHONE) {
+      
+      //return props.navigation.navigate('Character' as never);
+    }
+
+  }
+
+
+
+
+
+
+
+
+
+
 
   // 탭 메뉴 함수
   function TabOption({state, descriptors, navigation, props}: any) {

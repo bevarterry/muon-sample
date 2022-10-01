@@ -11,7 +11,7 @@ const StepTwo = () => {
   const navigation = useNavigation();
 
   function moveToEmailAuth() {
-    navigation.navigate('InputEmail' as never);
+    navigation.navigate('InputPhone' as never);
   }
 
   function moveToInheritAuth() {

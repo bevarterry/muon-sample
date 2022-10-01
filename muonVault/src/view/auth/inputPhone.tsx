@@ -22,30 +22,28 @@ import BasicTextInput from '../common/basicTextInput';
 import ButtonComponent from '../common/ButtonComponent';
 import Top from '../common/top';
 import {STORED_ACCESS_TOKEN} from '../constantProperties';
+import Toast from 'react-native-simple-toast';
+import PinCodeInput from '../common/pinCodeInput';
 
 const InputPhone = (props: any) => {
   const navigation = useNavigation();
-  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
 
   const isActiveDoneButton = () => {
-    const validRegex =
-      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    if (email.match(validRegex)) return true;
 
-    return false;
+    return phoneNumber.length > 10;
   };
 
-  function requestAuthByEmail() {
+  function requestAuthByPhone() {
     const param = {
-      type: 'email',
-      value: email,
+      type: 'phone',
+      value: phoneNumber,
     };
     Auth.auth(param)
       .then(res => {
-        const {token} = res.data;
-
-        setCommonInfo(STORED_ACCESS_TOKEN, token);
-        navigation.navigate('VerifyCode' as never, {email: email} as never);
+        Toast.show(`인증번호 요청 완료`, Toast.SHORT);
+        
+        navigation.navigate('VerifyCode' as never, {phone: phoneNumber} as never);
       })
       .catch(e => {
         console.log(e);
@@ -58,21 +56,23 @@ const InputPhone = (props: any) => {
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? "padding": "height"}>
         <View style={s.wrapper}>
           <Top
-            title={'Verification Email'}
+            title={'Verification Mobile'}
             backgroundColor={BASE_BACKGROUND}
             left={true}
             onTouchBackButton={navigation.goBack}
           />
-          <Text style={s.title}>Please type in your Email Address.</Text>
-          <Text style={s.inputTitle}>Email Address</Text>
+          <Text style={s.title}>Please type in your mobile number.</Text>
+          <Text style={s.inputTitle}>Phone Number</Text>
           <View style={{marginHorizontal: 23, marginTop: 10}}>
-            <BasicTextInput
+          <PinCodeInput
+              numberOnly={true}
+              maxLength={11}
               update={(e: string) => {
-                setEmail(e);
+                setPhoneNumber(e);
               }}
               blur={(e: string) => {}}
               style={{
-                paddingVertical: Platform.OS === 'ios' ? 16: 5,
+                paddingVertical: Platform.OS === 'ios' ? 16 : 5,
                 width: '100%',
                 borderTopWidth: 0,
                 borderBottomWidth: 3,
@@ -82,10 +82,9 @@ const InputPhone = (props: any) => {
                 borderLeftWidth: 0,
                 marginTop: 10,
               }}
-              initValue={email}
               textContentStyle={{
                 fontSize: 22,
-                color: MAIN_BLACK,
+                color: '#000000',
                 fontWeight: '700',
               }}
             />
@@ -98,7 +97,7 @@ const InputPhone = (props: any) => {
               bottom: 43,
             }}>
             <ButtonComponent
-              title="Verify via Email"
+              title="Verify via SMS"
               width="100%"
               borderColor={BASE_BUTTON}
               titleColor={DIMED_GRAY}
@@ -106,7 +105,7 @@ const InputPhone = (props: any) => {
               activeColor={isActiveDoneButton() ? MAIN_BLACK : BASE_BUTTON}
               activeFontColor={isActiveDoneButton() ? CC_WHITE : DIMED_GRAY}
               bodyColor={BASE_BUTTON}
-              click={requestAuthByEmail}
+              click={requestAuthByPhone}
             />
           </View>
         </View>

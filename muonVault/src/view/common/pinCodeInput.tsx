@@ -6,6 +6,8 @@ import {
   TextInput,
   Dimensions,
   Text,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 
 const {width, height} = Dimensions.get('window');
@@ -65,6 +67,7 @@ const PinCodeInput: React.FC<React.PropsWithChildren<Props>> = ({
   }
   return (
     <>
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? "padding": "height"}>
       <TouchableOpacity
         activeOpacity={1}
         onPress={() => {
@@ -122,6 +125,7 @@ const PinCodeInput: React.FC<React.PropsWithChildren<Props>> = ({
 
         {rightComponent}
       </TouchableOpacity>
+      </KeyboardAvoidingView>
     </>
   );
 };

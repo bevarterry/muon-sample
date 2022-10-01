@@ -29,9 +29,45 @@ import {
 import ButtonComponent from '../common/ButtonComponent';
 import PinCodeInput from '../common/pinCodeInput';
 import Top from '../common/top';
-import {STORED_ACCESS_TOKEN, STORED_FCM_TOKEN} from '../constantProperties';
+import {NOTI_AUTH_PHONE, STORED_ACCESS_TOKEN, STORED_FCM_TOKEN} from '../constantProperties';
+import messaging from '@react-native-firebase/messaging';
 
 const VerifyCode = (props: any) => {
+
+  messaging().onMessage(async remoteMessage => {
+    if (remoteMessage === null) return;
+
+    pushNextStep(remoteMessage?.data?.title, remoteMessage?.data?.message);
+  });
+
+  messaging().onNotificationOpenedApp(remoteMessage => {
+    if (remoteMessage === null) return;
+    console.log(remoteMessage?.data);
+  });
+
+  messaging().getInitialNotification().then(remoteMessage => {
+    if (remoteMessage === null) return;
+    
+    console.log(remoteMessage?.data);
+  });
+  
+  messaging().setBackgroundMessageHandler(async (remoteMessage) => {
+    
+    if (remoteMessage === null) return;
+    console.log(remoteMessage?.data);
+  });
+
+
+  function pushNextStep(id: string | undefined, pin: any) {
+    if (id === undefined) return;
+
+    if (id === NOTI_AUTH_PHONE) {
+      setVerifyCode(pin);
+      //return props.navigation.navigate('Character' as never);
+    }
+
+  }
+
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
@@ -93,7 +129,28 @@ const VerifyCode = (props: any) => {
   return (
     <>
       <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      style={{backgroundColor: BASE_BACKGROUND,}}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}>
+          <View
+            style={{
+              width: '100%',
+              paddingHorizontal: 22,
+              position: 'absolute',
+              backgroundColor: BASE_BACKGROUND,
+              bottom: 43,
+            }}>
+            <ButtonComponent
+              title="Verify"
+              width="100%"
+              borderColor={BASE_BUTTON}
+              titleColor={DIMED_GRAY}
+              borderRadius={20}
+              activeColor={isActiveDoneButton() ? MAIN_BLACK : BASE_BUTTON}
+              activeFontColor={isActiveDoneButton() ? CC_WHITE : DIMED_GRAY}
+              bodyColor={BASE_BUTTON}
+              click={requestVerifyPincode}
+            />
+          </View>
         <View style={s.wrapper}>
           <Top
             title={'Verification Code'}
@@ -155,27 +212,10 @@ const VerifyCode = (props: any) => {
                 fontWeight: '700',
               }}
             /> */}
+
+          
           </View>
 
-          <View
-            style={{
-              width: '100%',
-              paddingHorizontal: 22,
-              position: 'absolute',
-              bottom: 43,
-            }}>
-            <ButtonComponent
-              title="Verify"
-              width="100%"
-              borderColor={BASE_BUTTON}
-              titleColor={DIMED_GRAY}
-              borderRadius={20}
-              activeColor={isActiveDoneButton() ? MAIN_BLACK : BASE_BUTTON}
-              activeFontColor={isActiveDoneButton() ? CC_WHITE : DIMED_GRAY}
-              bodyColor={BASE_BUTTON}
-              click={requestVerifyPincode}
-            />
-          </View>
         </View>
       </KeyboardAvoidingView>
     </>
