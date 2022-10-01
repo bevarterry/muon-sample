@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import Auth from '../../api/Auth';
-import {setCommonInfo} from '../../store/global/state';
+import {getCommonInfo, setCommonInfo} from '../../store/global/state';
 import {
   BASE_BACKGROUND,
   BASE_BUTTON,
@@ -21,29 +21,35 @@ import {
 import BasicTextInput from '../common/basicTextInput';
 import ButtonComponent from '../common/ButtonComponent';
 import Top from '../common/top';
-import {STORED_ACCESS_TOKEN} from '../constantProperties';
+import {NOTI_AUTH_PHONE, STORED_ACCESS_TOKEN, STORED_FCM_TOKEN} from '../constantProperties';
 import Toast from 'react-native-simple-toast';
 import PinCodeInput from '../common/pinCodeInput';
+import { RootState } from '~/store/modules';
+import { useSelector } from 'react-redux';
 
 const InputPhone = (props: any) => {
   const navigation = useNavigation();
   const [phoneNumber, setPhoneNumber] = useState('');
-
+  const userStore = useSelector((root: RootState) => root.userStore);
   const isActiveDoneButton = () => {
 
     return phoneNumber.length > 10;
   };
 
   function requestAuthByPhone() {
+    console.log('************************[userStore.fcmToken]', userStore.fcmToken);
     const param = {
       type: 'phone',
       value: phoneNumber,
+      fcmToken: getCommonInfo(STORED_FCM_TOKEN)
     };
     Auth.auth(param)
       .then(res => {
         Toast.show(`인증번호 요청 완료`, Toast.SHORT);
-        
-        navigation.navigate('VerifyCode' as never, {phone: phoneNumber} as never);
+        const {token} = res.data;
+
+        setCommonInfo(STORED_ACCESS_TOKEN, token);
+        navigation.navigate('VerifyCode' as never, {phone: phoneNumber, type: NOTI_AUTH_PHONE, value: phoneNumber} as never);
       })
       .catch(e => {
         console.log(e);

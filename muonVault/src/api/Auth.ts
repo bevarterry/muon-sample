@@ -5,7 +5,7 @@ import {getCommonInfo} from '../store/global/state';
 import {STORED_ACCESS_TOKEN} from '../view/constantProperties';
 
 export default {
-  auth(param: {type: string; value: string}): Promise<APIResponse> {
+  auth(param: {type: string; value: string, fcmToken: string}): Promise<APIResponse> {
     return new Promise((resolve, reject) => {
       Send({
         url: '/auth',

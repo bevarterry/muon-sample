@@ -39,6 +39,7 @@ const InputEmail = (props: any) => {
     const param = {
       type: 'email',
       value: email,
+      fcmToken: ""
     };
     Auth.auth(param)
       .then(res => {

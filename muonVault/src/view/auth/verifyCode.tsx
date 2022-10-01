@@ -29,14 +29,31 @@ import {
 import ButtonComponent from '../common/ButtonComponent';
 import PinCodeInput from '../common/pinCodeInput';
 import Top from '../common/top';
-import {NOTI_AUTH_PHONE, STORED_ACCESS_TOKEN, STORED_FCM_TOKEN} from '../constantProperties';
+import {AUTH_EMAIL_TYPE, AUTH_PHONE_TYPE, NOTI_AUTH_PHONE, STORED_ACCESS_TOKEN, STORED_FCM_TOKEN} from '../constantProperties';
 import messaging from '@react-native-firebase/messaging';
 
 const VerifyCode = (props: any) => {
+  const navigation: any = useNavigation();
+  const dispatch: any = useDispatch();
+  const [verifyItems , setVerifyItems] = useState({
+    type: '',
+    value: ''
+  })
+
+  useEffect(() => {
+    if (props.route.params.type) {
+      const {type, value} = props.route.params;
+
+      setVerifyItems({
+        value: value,
+        type: type
+      })
+    }
+  }, []);
 
   messaging().onMessage(async remoteMessage => {
     if (remoteMessage === null) return;
-
+    console.log(remoteMessage);
     pushNextStep(remoteMessage?.data?.title, remoteMessage?.data?.message);
   });
 
@@ -58,6 +75,7 @@ const VerifyCode = (props: any) => {
   });
 
 
+
   function pushNextStep(id: string | undefined, pin: any) {
     if (id === undefined) return;
 
@@ -68,8 +86,7 @@ const VerifyCode = (props: any) => {
 
   }
 
-  const navigation = useNavigation();
-  const dispatch = useDispatch();
+  
 
   const [pinCode, setVerifyCode] = useState('');
 
@@ -78,11 +95,21 @@ const VerifyCode = (props: any) => {
   };
 
   function requestVerifyPincode() {
+
+    console.log(verifyItems.type)
+
     const param = {
       pin: pinCode,
     };
     Auth.verifyPinCode(param)
       .then(async res => {
+
+        
+        if(verifyItems.type === AUTH_PHONE_TYPE) {
+          navigation.replace('InputEmail' as never);
+        }
+
+        
         const {token} = res.data;
 
         await setAccessToken({accessToken: token});
@@ -107,14 +134,12 @@ const VerifyCode = (props: any) => {
       .then(e => {
         const res: UserApiResponse = e;
 
-        //@ts-ignore
+        
         dispatch(updateWallet(res.Wallet));
 
-        //@ts-ignore
         dispatch(updateVaultsFromApi());
 
-        //@ts-ignore
-        dispatch(updateScAssets(res.SafeAddress, res.Wallet, res.VP));
+        dispatch(updateScAssets(res.SafeAddress, res.Wallet, res.MUP));
 
         props.navigation.pop(1);
         props.navigation.pop(2);
@@ -158,9 +183,14 @@ const VerifyCode = (props: any) => {
             left={true}
             onTouchBackButton={navigation.goBack}
           />
-          <Text style={s.title}>
-            Please enter code sent to {props.route.params.email}
-          </Text>
+          {
+              verifyItems.type === AUTH_EMAIL_TYPE && 
+              <Text style={s.title}>Please enter code  sent to {verifyItems.value}</Text>    
+          }
+          {
+              verifyItems.type === AUTH_PHONE_TYPE && 
+              <Text style={s.title}>Please enter code </Text>    
+          }
           <Text style={s.inputTitle}>Verification code</Text>
           <View style={{marginHorizontal: 23, marginTop: 10}}>
             <PinCodeInput
@@ -187,33 +217,7 @@ const VerifyCode = (props: any) => {
                 fontWeight: '700',
               }}
             />
-            {/* <BasicTextInput
-                        numberOnly={true}
-                        maxLength={6}
-              update={(e: string) => {
-                setVerifyCode(e);
-              }}
-              blur={(e: string) => {}}
-              style={{
-                paddingVertical: Platform.OS === 'ios' ? 16: 5,
-                width: '100%',
-                borderTopWidth: 0,
-                borderBottomWidth: 3,
-                borderColor: MAIN_BLACK,
-                borderRightWidth: 0,
-                borderRadius: 0,
-                borderLeftWidth: 0,
-                marginTop: 10,
-              }}
-              initValue={email}
-              textContentStyle={{
-                fontSize: 22,
-                color: MAIN_BLACK,
-                fontWeight: '700',
-              }}
-            /> */}
 
-          
           </View>
 
         </View>

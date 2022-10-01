@@ -25,3 +25,5 @@ export const MU_DISPLAY_SYMBOL = 'MU:P';
 
 
 export const NOTI_AUTH_PHONE="AUTH_PHONE";
+export const AUTH_PHONE_TYPE="AUTH_PHONE";
+export const AUTH_EMAIL_TYPE="AUTH_EMAIL";
