@@ -15,8 +15,9 @@ export const updateScAssets = (
     let binance = 0;
     let etherBalance = 0;
     const usdc = 0;
-    const muon = Number(totalMuon ? totalMuon : 0);
 
+    const muon = Number(totalMuon ? totalMuon : 0);
+    console.log('::::::::::::::::::::: muon Balance ', muon);
     try {
       const res = await getBalanceBnb(
         walletSet.BNB.PRIVATE,

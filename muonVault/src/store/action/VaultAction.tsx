@@ -84,7 +84,7 @@ function mapToStore(list: Array<VaultResponse>): VaultList {
       BNB: list[i].BNB,
       USDC: list[i].USDC,
       ETH: list[i].ETH,
-      VP: list[i].VP,
+      VP: list[i].VP ? list[i].VP : 0,
       color: colorSet[i],
     });
   }
