@@ -25,6 +25,7 @@ type Props = {
   maxLength?: number;
   textContentStyle?: any;
   initValue?: string | number;
+  maxValue: number;
   numberOnly?: boolean;
   textAlign?: 'center' | 'right' | 'left' | undefined;
 };
@@ -45,6 +46,7 @@ const BasicTextInput: React.FC<React.PropsWithChildren<Props>> = ({
   initValue,
   maxLength,
   numberOnly,
+  maxValue,
 }) => {
   const ref_input = useRef(null);
   const [value, onChangeText] = useState('');
@@ -60,6 +62,10 @@ const BasicTextInput: React.FC<React.PropsWithChildren<Props>> = ({
       let val = e;
 
       if (!e) val = '0';
+
+      if (maxValue && Number(val) > maxValue) {
+        val = String(maxValue);
+      }
 
       if (update) update(parseInt(val));
       onChangeText(parseInt(val) + '');

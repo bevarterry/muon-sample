@@ -1,6 +1,6 @@
 import {ActionType, createReducer, deprecated} from 'typesafe-actions';
 import produce from 'immer';
-import {DepositModal} from '../../model/Modal';
+import {DepositModal} from '../../model/modal';
 
 const {createStandardAction} = deprecated;
 

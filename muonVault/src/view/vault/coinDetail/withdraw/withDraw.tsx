@@ -18,8 +18,8 @@ import Step1 from './step1';
 import SendToAddress from './sendToAddress';
 import SendToVault from './sendToVault';
 import GlobalLoading from '~/view/common/GlobalLoading';
-import { useSelector } from 'react-redux';
-import { RootState } from '~/store/modules';
+import {useSelector} from 'react-redux';
+import {RootState} from '~/store/modules';
 
 const WithDraw = (props: any) => {
   const globalLoadingStateStore = useSelector(

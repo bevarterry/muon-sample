@@ -53,7 +53,7 @@ const CoinDetail = (props: any) => {
         symbol: symbol,
       });
     }
-  }, []);
+  }, [props.route.params.vault]);
 
   function moveTOWithDraw() {
     navigation.navigate(

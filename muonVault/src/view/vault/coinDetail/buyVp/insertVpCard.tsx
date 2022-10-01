@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
+import {CoinDetailType} from '~/model/coin';
 import {
   CC_WHITE,
   DIMED_GRAY,
@@ -9,12 +10,19 @@ import {
 } from '../../../ColorCode';
 import BasicTextInput from '../../../common/basicTextInput';
 const buy_vp_icon = require('../../../../../assets/image/buy_vp_icon.png');
-type Props = {updateInput: Function; fucus?: Function};
+type Props = {updateInput: Function; fucus?: Function; coin: CoinDetailType};
 const InsertVpCard: React.FC<React.PropsWithChildren<Props>> = ({
   updateInput,
   fucus,
+  coin,
 }) => {
+  const [posibleBuyAmount, setPosibleBuyAmount] = useState(0);
   const [initValue, setInitValue] = useState(0);
+  const muDollarRatio = 0.01;
+  useEffect(() => {
+    setPosibleBuyAmount((coin.ratio * coin.value) / muDollarRatio);
+  }, [coin]);
+
   return (
     <>
       <View style={s.wrapper}>
@@ -28,18 +36,21 @@ const InsertVpCard: React.FC<React.PropsWithChildren<Props>> = ({
         />
         <BasicTextInput
           numberOnly={true}
+          maxValue={posibleBuyAmount}
           update={(e: string) => {
             if (!e) {
               setInitValue(0);
               updateInput(0);
               return;
             }
+            let inputValue = parseInt(e);
+            if (inputValue > posibleBuyAmount) inputValue = posibleBuyAmount;
 
-            updateInput(parseInt(e));
+            updateInput(inputValue);
           }}
           blur={(e: string) => {}}
           style={{
-            paddingVertical: Platform.OS === 'ios' ? 16: 5,
+            paddingVertical: Platform.OS === 'ios' ? 16 : 5,
             width: '100%',
             borderTopWidth: 0,
             borderBottomWidth: 3,
@@ -59,7 +70,7 @@ const InsertVpCard: React.FC<React.PropsWithChildren<Props>> = ({
         />
         <View style={[s.row]}>
           <Text style={s.value}>
-            {17}Maximum {'67,231'}MU:P
+            {}Maximum {Number(posibleBuyAmount).toFixed(0)}MU:P
           </Text>
         </View>
       </View>

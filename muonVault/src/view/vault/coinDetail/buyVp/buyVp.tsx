@@ -1,6 +1,12 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
-import {KeyboardAvoidingView, Platform, StyleSheet, Text, View} from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {
   BASE_BACKGROUND,
@@ -14,6 +20,8 @@ import ButtonComponent from '../../../common/ButtonComponent';
 import SummaryCard from '../component/summaryCard';
 import Top from '../../../common/top';
 import InsertVpCard from './insertVpCard';
+import {CoinDetailType} from '~/model/coin';
+import {Vault} from '~/model/vaults';
 
 type Props = {
   from: string;
@@ -25,15 +33,50 @@ type Props = {
 };
 const BuyVp = (props: any) => {
   const navigation = useNavigation();
-  const [vpValue, setVp] = useState(0);
+  const [inputMuAmount, setInputMuAmount] = useState(0);
+  const [posibleBuyAmount, setPosibleBuyAmount] = useState(0);
+  const [coin, setCoin] = useState<CoinDetailType>({
+    value: 0,
+    ratio: 0,
+    symbol: '',
+  });
+  const muDollarRatio = 0.01;
+
+  const [toVault, setToVault] = useState<Vault>({
+    id: '',
+    idx: '',
+    name: '',
+    BTC: 0,
+    BNB: 0,
+    USDC: 0,
+    ETH: 0,
+    VP: 0,
+    color: '#000000',
+  });
 
   const isActiveDoneButton = () => {
-    return vpValue !== 0;
+    return inputMuAmount !== 0 && posibleBuyAmount !== 0 && !isExcessBalance();
+  };
+
+  useEffect(() => {
+    if (props.route.params.vault) {
+      const {coin, vault} = props.route.params;
+
+      setToVault(vault);
+      setCoin(coin);
+
+      setPosibleBuyAmount((coin.ratio * coin.value) / muDollarRatio);
+    }
+  }, []);
+
+  const isExcessBalance = () => {
+    return posibleBuyAmount < inputMuAmount;
   };
 
   return (
     <>
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? "padding": "height"}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <View style={s.wrapper}>
           <Top
             title={'Buy Vault MU:Point'}
@@ -43,8 +86,9 @@ const BuyVp = (props: any) => {
           />
           <View style={{marginTop: 34, marginHorizontal: 12}}>
             <InsertVpCard
+              coin={coin}
               updateInput={(e: number) => {
-                setVp(e);
+                setInputMuAmount(e);
               }}
             />
           </View>
@@ -59,10 +103,13 @@ const BuyVp = (props: any) => {
               },
             ]}>
             <Text style={s.balanceText}>
-              Balance <Text style={{color: MAIN_BLACK}}>23.5 </Text>
-              ($38,528.12)
+              Balance{' '}
+              <Text style={{color: MAIN_BLACK}}>
+                {coin.value} {coin.symbol}{' '}
+              </Text>
+              (${Number(coin.value * coin.ratio).toFixed(2)})
             </Text>
-            <Text style={s.balanceText}>1 ETH = $1,642.04</Text>
+            <Text style={s.balanceText}>1 MU:P = ${muDollarRatio}</Text>
           </View>
 
           <View
