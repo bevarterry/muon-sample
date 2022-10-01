@@ -21,7 +21,9 @@ const TotalAssetsComponent = () => {
         <View style={s.assetWrapper}>
           <Text style={s.displayCoinName}>{asset.displayName}</Text>
           <View style={s.assetValueWrapper}>
-            <Text style={s.displayCoinName}>{totalValue}</Text>
+            <Text style={s.displayCoinName}>
+              {Number(totalValue).toFixed(4)}
+            </Text>
             <Text style={s.coinValue}>{asset.symbol}</Text>
             <Text style={s.dollarValue}>
               (${Number(totalValue * ratio).toFixed(2)})

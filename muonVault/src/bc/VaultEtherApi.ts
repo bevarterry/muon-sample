@@ -1,24 +1,33 @@
 import '@ethersproject/shims';
 import {ethers, providers} from 'ethers';
-import muVaultConfig from './mu_vault_bnb_abi.json';
+import muVaultConfig from './mu_vault_ether_abi.json';
 
 const predefine = {
-  scan_bsc_mainnet: 'https://api.bscscan.com/',
-  scan_bsc_testnet: 'https://api-testnet.bscscan.com/',
-  node_host_bsc_mainnet: 'https://bsc-dataseed.binance.org/',
-  node_host_bsc_testnet: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
+  SCAN_API_KEY: 'IXDXEM3TG5PP4AQUJZSGRF4ZKCDV6Y14CC',
+  SCAN_MAINNET: 'http://api.etherscan.io/',
+  SCAN_TESTNET: 'https://api-rinkeby.etherscan.io/',
+  SCAN_ROPSTEN: 'https://api-ropsten.etherscan.io/',
+  SCAN_RINKEBY: 'https://api-rinkeby.etherscan.io/',
+
+  NODE_HOST_MAINNET:
+    'https://mainnet.infura.io/v3/35e8ec5bb21b460bbb74bbe1ee56b2d5',
+  NODE_HOST_TESTNET:
+    'https://rinkeby.infura.io/v3/35e8ec5bb21b460bbb74bbe1ee56b2d5',
+  NODE_HOST_ROPSTEN:
+    'https://ropsten.infura.io/v3/35e8ec5bb21b460bbb74bbe1ee56b2d5',
+  NODE_HOST_RINKEBY:
+    'https://rinkeby.infura.io/v3/35e8ec5bb21b460bbb74bbe1ee56b2d5',
 };
 
 const gasPrice = '10';
 const gasLimit = 1000000;
 
-let provider = new ethers.providers.JsonRpcProvider(
-  predefine.node_host_bsc_testnet,
+const provider = new providers.InfuraProvider(
+  'rinkeby',
+  '35e8ec5bb21b460bbb74bbe1ee56b2d5',
 );
 
-const MU_VAULT_CONTRACT = '0x70068D8B45F04056C896C6E44A4b5E0Fb02c7d67';
-
-const getBalanceBnb = async (privateKey: string, contractAddress: string) => {
+const getBalanceEther = async (privateKey: string, contractAddress: string) => {
   const wallet = new ethers.Wallet(privateKey);
 
   const signer = wallet.connect(provider);
@@ -203,4 +212,4 @@ const requestWithdrawExceptionHandling = async (
 //     return ethers.utils.formatEther(value);
 // }
 
-export {getBalanceBnb};
+export {getBalanceEther};

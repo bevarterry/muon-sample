@@ -1,5 +1,6 @@
 import {Dispatch} from 'redux';
 import {getBalanceBnb} from '~/bc/VaultBinanceApi';
+import {getBalanceEther} from '~/bc/VaultEtherApi';
 import {SafeAddressSet, WalletSet} from '../../api/interface/userApiResponse';
 import {setScAssets} from '../modules/ScAssetReducer';
 import {setDefaultVault, setTotalAssets} from '../modules/valutsReducer';
@@ -11,23 +12,36 @@ export const updateScAssets = (
 ) => {
   return async (dispatch: Dispatch) => {
     const bitcoin = 0;
-
-    console.log(walletSet.BNB.PRIVATE + '  :  ' + SafeAddressSet.BNB);
-    const binance = await getBalanceBnb(
-      walletSet.BNB.PRIVATE,
-      SafeAddressSet.BNB,
-    );
-    const ethereum = 1000;
+    let binance = 0;
+    let etherBalance = 0;
     const usdc = 0;
     const muon = Number(totalMuon ? totalMuon : 0);
+
+    try {
+      const res = await getBalanceBnb(
+        walletSet.BNB.PRIVATE,
+        SafeAddressSet.BNB,
+      );
+      console.log('::::::::::::::::::::: bnb Balance ', res);
+      binance = Number(res);
+    } catch (error) {}
+
+    try {
+      const res = await getBalanceEther(
+        walletSet.ETH.PRIVATE,
+        SafeAddressSet.ETH,
+      );
+      console.log('::::::::::::::::::::: ether Balance ', res);
+      etherBalance = Number(res);
+    } catch (error) {}
 
     dispatch(
       setTotalAssets({
         vaults: [],
         totalAssets: {
-          binance: Number(binance),
+          binance: binance,
           bitcoin: bitcoin,
-          ethereum: ethereum,
+          ethereum: etherBalance,
           usdc: usdc,
           muon: muon,
         },
