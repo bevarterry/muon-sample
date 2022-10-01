@@ -92,4 +92,27 @@ export default {
         });
     });
   },
+
+  sendTxid(param: {
+    symbol: string;
+    txid: string;
+  }): Promise<Array<VaultResponse>> {
+    return new Promise((resolve, reject) => {
+      Send({
+        url: '/bc/txid',
+        method: 'post',
+        headers: {
+          'content-type': 'application/x-www-form-urlencoded',
+          Authorization: getCommonInfo(STORED_ACCESS_TOKEN),
+        },
+        data: qs.stringify(param),
+      })
+        .then(response => {
+          resolve(response.data);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
+  },
 };

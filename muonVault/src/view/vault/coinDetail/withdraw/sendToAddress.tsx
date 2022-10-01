@@ -27,6 +27,7 @@ import {RootState} from '~/store/modules';
 import {requestEtherWithdrawConfirm} from '~/bc/VaultEtherApi';
 import {BNB_SYMBOL, ETH_SYMBOL} from '~/view/constantProperties';
 import {requestBnbWithdrawConfirm} from '~/bc/VaultBinanceApi';
+import VaultApi from '../../../../api/Vault';
 
 const {width, height} = Dimensions.get('window');
 const buttonWidth = (width - 34) / 2;
@@ -44,10 +45,9 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
 
   async function sendAll() {
     try {
-      const response = await requestWithdrawConfirm();
+      const hash = await requestWithdrawConfirm();
 
-      console.log(JSON.stringify(response));
-
+      sendTxid(hash);
       // navigation.replace('CompleteWithdraw', {
       //   from: '',
       //   to: '',
@@ -59,6 +59,20 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
     } catch (error) {
       console.log(JSON.stringify(error));
     }
+  }
+
+  function sendTxid(txid: string) {
+    console.log(':::::::::::::::::::: txid : ', txid);
+    VaultApi.sendTxid({
+      txid: txid,
+      symbol: props.coin.symbol,
+    })
+      .then(res => {
+        console.log(res);
+      })
+      .catch(e => {
+        console.log(e);
+      });
   }
 
   async function requestWithdrawConfirm() {
