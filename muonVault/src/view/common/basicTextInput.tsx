@@ -22,6 +22,7 @@ type Props = {
   leftComponent?: any;
   rightComponent?: any;
   style?: any;
+  maxLength?: number;
   textContentStyle?: any;
   initValue?: string | number;
   numberOnly?: boolean;
@@ -42,6 +43,7 @@ const BasicTextInput: React.FC<React.PropsWithChildren<Props>> = ({
   style,
   textContentStyle,
   initValue,
+  maxLength,
   numberOnly,
 }) => {
   const ref_input = useRef(null);
@@ -96,6 +98,7 @@ const BasicTextInput: React.FC<React.PropsWithChildren<Props>> = ({
           keyboardType={keyboardType()}
           textAlign={textAlign ? textAlign : 'center'}
           editable
+          maxLength={maxLength}
           ref={ref_input}
           numberOfLines={1}
           onEndEditing={() => {}}

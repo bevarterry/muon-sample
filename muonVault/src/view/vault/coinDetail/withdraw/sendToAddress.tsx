@@ -41,6 +41,8 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({prop}) => {
   return (
     <>
       <SummaryCard
+        serviceFee={10}
+        estimateGasFee={10}
         totalComponent={
           <>
             <BasicBadge

@@ -7,6 +7,7 @@ import {
   TextInput,
   Dimensions,
   Text,
+  Platform,
 } from 'react-native';
 import {Value} from 'react-native-reanimated';
 
@@ -65,7 +66,7 @@ const TextInputComponent: React.FC<React.PropsWithChildren<Props>> = ({
       <View
         style={[
           {
-            paddingVertical: paddingVertical ? paddingVertical : 23,
+            paddingVertical: (paddingVertical ? paddingVertical : 23 - (Platform.OS === 'ios' ? 0 : 10)),
             marginHorizontal: marginHorizontal ? marginHorizontal : 7,
             paddingLeft: 20,
             paddingRight: 32,

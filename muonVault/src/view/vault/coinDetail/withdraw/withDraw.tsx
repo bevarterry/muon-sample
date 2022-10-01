@@ -17,8 +17,15 @@ import Step0 from './step0';
 import Step1 from './step1';
 import SendToAddress from './sendToAddress';
 import SendToVault from './sendToVault';
+import GlobalLoading from '~/view/common/GlobalLoading';
+import { useSelector } from 'react-redux';
+import { RootState } from '~/store/modules';
 
 const WithDraw = (props: any) => {
+  const globalLoadingStateStore = useSelector(
+    (root: RootState) => root.globalLoadingState,
+  );
+
   const [toAddress, setToAddress] = useState('');
   const [amount, setAmount] = useState('');
   const [step, setStep] = useState(WITHDRAW_INPUT_TO_ADDRESS);
@@ -93,7 +100,7 @@ const WithDraw = (props: any) => {
           <BasicBadge
             title={'From'}
             paddingHorizontal={12}
-            paddingVertical={4}
+            paddingVertical={0}
             backgroundColor={MAIN_BLACK}
             fontColor={'#ffffff'}
             fontSize={12}
@@ -201,6 +208,7 @@ const WithDraw = (props: any) => {
           />
         )}
       </View>
+      <GlobalLoading action={globalLoadingStateStore.state} />
     </>
   );
 };

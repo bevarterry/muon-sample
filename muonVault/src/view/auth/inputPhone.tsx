@@ -23,7 +23,7 @@ import ButtonComponent from '../common/ButtonComponent';
 import Top from '../common/top';
 import {STORED_ACCESS_TOKEN} from '../constantProperties';
 
-const InputEmail = (props: any) => {
+const InputPhone = (props: any) => {
   const navigation = useNavigation();
   const [email, setEmail] = useState('');
 
@@ -115,7 +115,7 @@ const InputEmail = (props: any) => {
   );
 };
 
-export default InputEmail;
+export default InputPhone;
 
 const s = StyleSheet.create({
   wrapper: {

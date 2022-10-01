@@ -21,12 +21,16 @@ type Props = {
   toComponent?: React.ReactNode;
   amountComponent?: React.ReactNode;
   totalComponent?: React.ReactNode;
+  serviceFee: number;
+  estimateGasFee: number;
 };
 const SummaryCard: React.FC<React.PropsWithChildren<Props>> = ({
   totalComponent,
   toComponent,
   fromComponent,
   amountComponent,
+  serviceFee,
+  estimateGasFee
 }) => {
   return (
     <>
@@ -42,20 +46,22 @@ const SummaryCard: React.FC<React.PropsWithChildren<Props>> = ({
         {amountComponent && (
           <View style={[s.row, {height: 60}]}>{amountComponent}</View>
         )}
+        {estimateGasFee !== 0 && <>
+          <View style={[s.row, {marginTop: 40}]}>
+            <Text style={s.title}>Estimated Gas Fee</Text>
+            <Text style={s.value}>$20.90</Text>
+          </View>
+          <View style={s.row}>
+            <Text style={s.subTitle}>Likely in {'<'} 30 seconds</Text>
+          </View>
+          <View style={[s.row, {marginTop: 11, marginBottom: 10}]}>
+            <Text style={s.title}>Service Fee</Text>
+            <Text style={s.value}>{17}Valut Points</Text>
+          </View>
+        </>}
 
-        <View style={[s.row, {marginTop: 40}]}>
-          <Text style={s.title}>Estimated Gas Fee</Text>
-          <Text style={s.value}>$20.90</Text>
-        </View>
-        <View style={s.row}>
-          <Text style={s.subTitle}>Likely in {'<'} 30 seconds</Text>
-        </View>
-        <View style={[s.row, {marginTop: 11}]}>
-          <Text style={s.title}>Service Fee</Text>
-          <Text style={s.value}>{17}Valut Points</Text>
-        </View>
 
-        <View style={{width: '100%', borderWidth: 1, marginVertical: 31}} />
+        <View style={{width: '100%', borderWidth: 1, marginBottom: 31, marginTop: 21}} />
 
         <View style={[s.row]}>{totalComponent}</View>
       </View>

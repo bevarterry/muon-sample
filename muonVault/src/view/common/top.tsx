@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, Platform} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import { MAIN_BLACK } from '../ColorCode';

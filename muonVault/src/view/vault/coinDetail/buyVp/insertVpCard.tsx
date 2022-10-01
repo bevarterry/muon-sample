@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Platform, StyleSheet, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {
   CC_WHITE,
@@ -39,7 +39,7 @@ const InsertVpCard: React.FC<React.PropsWithChildren<Props>> = ({
           }}
           blur={(e: string) => {}}
           style={{
-            paddingVertical: 16,
+            paddingVertical: Platform.OS === 'ios' ? 16: 5,
             width: '100%',
             borderTopWidth: 0,
             borderBottomWidth: 3,

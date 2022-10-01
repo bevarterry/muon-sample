@@ -56,7 +56,7 @@ const PinCodeInput: React.FC<React.PropsWithChildren<Props>> = ({
   }
   useEffect(() => {
     //@ts-ignore
-    ref_input.current.focus();
+    //ref_input.current.focus();
   }, []);
 
   function keyboardType() {

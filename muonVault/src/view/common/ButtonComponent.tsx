@@ -6,6 +6,8 @@ import {
   Text,
   Dimensions,
   Image,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import {MAIN_BLACK} from '../ColorCode';
 
@@ -40,6 +42,7 @@ const ButtonComponent: React.FC<React.PropsWithChildren<Props>> = ({
   fontSize,
 }) => {
   return (
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? "padding": "height"}>
     <TouchableOpacity
       activeOpacity={0.8}
       onPress={() => {
@@ -78,6 +81,7 @@ const ButtonComponent: React.FC<React.PropsWithChildren<Props>> = ({
         </View>
       </View>
     </TouchableOpacity>
+    </KeyboardAvoidingView>
   );
 };
 

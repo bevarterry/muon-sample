@@ -54,7 +54,7 @@ const MyInsurance = (props: any) => {
 
   return (
     <>
-      <ScrollView contentContainerStyle={s.wrapper}>
+      <ScrollView contentContainerStyle={s.wrapper} horizontal={false} style={{height: '100%', paddingBottom: 200}}>
         <Top
           title={'View My Insurance'}
           backgroundColor={BASE_BACKGROUND}
@@ -82,7 +82,7 @@ const MyInsurance = (props: any) => {
             titleColor={CC_WHITE}
             borderRadius={20}
             bodyColor={MAIN_BLACK}
-            click={moveToNext}
+            click={()=>{}}
           />
           <View style={{height: 10}} />
           <ButtonComponent
@@ -120,10 +120,9 @@ const s = StyleSheet.create({
     paddingTop: 50 + getStatusBarHeight(),
     width: '100%',
     backgroundColor: BASE_BACKGROUND,
-    height: '100%',
-    paddingBottom: 100,
     display: 'flex',
     alignItems: 'center',
+    paddingBottom: 50
   },
   title: {
     marginLeft: 23,
