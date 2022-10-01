@@ -69,7 +69,6 @@ const WithDraw = (props: any) => {
       setCoin(coin);
     }
   }, []);
-
   const topCompoennt = (
     <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
       <FastImage

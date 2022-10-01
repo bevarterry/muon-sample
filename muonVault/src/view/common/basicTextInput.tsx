@@ -132,7 +132,7 @@ const BasicTextInput: React.FC<React.PropsWithChildren<Props>> = ({
                 marginLeft: 5,
               },
             ]}>
-            VP
+            {postfix}
           </Text>
         )}
 

@@ -73,6 +73,12 @@ const BuyVp = (props: any) => {
     return posibleBuyAmount < inputMuAmount;
   };
 
+  function moveToComfirmPage() {
+    navigation.navigate(
+      'CompleteBuyVP' as never,
+      {coin: coin, muAmount: inputMuAmount} as never,
+    );
+  }
   return (
     <>
       <KeyboardAvoidingView
@@ -129,7 +135,7 @@ const BuyVp = (props: any) => {
               activeFontColor={isActiveDoneButton() ? CC_WHITE : DIMED_GRAY}
               bodyColor={BASE_BUTTON}
               click={() => {
-                navigation.navigate('CompleteBuyVP' as never);
+                moveToComfirmPage();
               }}
             />
           </View>

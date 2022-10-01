@@ -1,6 +1,12 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
-import {KeyboardAvoidingView, Platform, StyleSheet, Text, View} from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {
   BASE_BACKGROUND,
@@ -18,21 +24,36 @@ import CoinTitleComponent from '../../../common/coinTitleComponent';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../../../store/modules';
 import FastImage from 'react-native-fast-image';
+import {CoinDetailType} from '~/model/coin';
 
 const buy_vp_icon = require('../../../../../assets/image/buy_vp_icon.png');
 const arrow_down_img = require('../../../../../assets/image/arrow_down_img.png');
 type Props = {
-  from: string;
-  to: string;
-  symbol: string;
-  estimateGasFee: number;
-  serviceFee: number;
-  totalAmount: number;
+  coin: CoinDetailType;
+  muAmount: number;
 };
+const muDollarRatio = 0.01;
+
 const CompleteBuyVp = (props: any) => {
   const ratioStore = useSelector((root: RootState) => root.ratioStore);
   const navigation: any = useNavigation();
-  const [vpValue, setVp] = useState(0);
+  const [muAmount, setMuPointAmount] = useState(0);
+  const [toValue, setToValue] = useState(0);
+  const [coin, setCoin] = useState<CoinDetailType>({
+    value: 0,
+    ratio: 0,
+    symbol: '',
+  });
+
+  useEffect(() => {
+    if (props.route.params.coin) {
+      const {coin, muAmount} = props.route.params;
+
+      setCoin(coin);
+      setToValue((muAmount * muDollarRatio) / coin.ratio);
+      setMuPointAmount(muAmount);
+    }
+  }, []);
 
   const coinRow = (symbol: string, icon: any, value: number, ratio: number) => {
     return (
@@ -51,7 +72,7 @@ const CompleteBuyVp = (props: any) => {
             alignItems: 'flex-end',
             justifyContent: 'flex-end',
           }}>
-          <Text style={s.value}>{value}</Text>
+          <Text style={s.value}>{value.toFixed(8)}</Text>
           <Text style={s.dollarValue}>$({value * ratio})</Text>
         </View>
       </View>
@@ -59,7 +80,8 @@ const CompleteBuyVp = (props: any) => {
   };
   return (
     <>
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? "padding": "height"}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <View style={s.wrapper}>
           <Top
             title={'Buy Vault MU:Point'}
@@ -79,16 +101,13 @@ const CompleteBuyVp = (props: any) => {
                 marginTop: 12,
               },
             ]}>
-            <Text style={s.summaryText}>Buy 1000 MU:Points using</Text>
-            <Text style={s.summaryText}>0.6 ETH ($1,000)</Text>
+            <Text style={s.summaryText}>Buy {muAmount} MU:Points using</Text>
+            <Text style={s.summaryText}>
+              {toValue.toFixed(8)} ETH ($ {toValue * coin.ratio})
+            </Text>
 
             <View style={{width: '100%', marginTop: 96}}>
-              {coinRow(
-                'Vault Point',
-                buy_vp_icon,
-                1000,
-                ratioStore.ratioSet.USDC,
-              )}
+              {coinRow('Vault Point', coin.icon, toValue, coin.ratio)}
             </View>
 
             <View style={{marginVertical: 40}}>
@@ -103,7 +122,7 @@ const CompleteBuyVp = (props: any) => {
             </View>
 
             <View style={{width: '100%'}}>
-              {coinRow('MU:Point', buy_vp_icon, 1000, ratioStore.ratioSet.USDC)}
+              {coinRow('MU:Point', buy_vp_icon, muAmount, muDollarRatio)}
             </View>
           </View>
 
