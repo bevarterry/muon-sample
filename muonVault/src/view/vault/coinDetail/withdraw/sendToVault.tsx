@@ -15,7 +15,7 @@ import VaultApi from '../../../../api/Vault';
 import {useDispatch} from 'react-redux';
 import {updateVaults} from '~/store/action/VaultAction';
 import {CompleteWithdrawProps} from './completeWithdraw';
-import { setGlobalLoadingState } from '~/store/modules/GlobalLoadingReducer';
+import {setGlobalLoadingState} from '~/store/modules/GlobalLoadingReducer';
 
 const {width, height} = Dimensions.get('window');
 const buttonWidth = (width - 34) / 2;
@@ -33,19 +33,15 @@ const SendToVault: React.FC<React.PropsWithChildren<Props>> = ({prop}) => {
   const dispatch: any = useDispatch();
 
   function requestVaultUpdate() {
-    
     const param = {
       symbol: prop.coin.symbol,
       fromVaultIdx: prop.fromVault.idx,
       toVaultIdx: prop.toVault.idx,
       value: prop.amount,
     };
-    
+
     VaultApi.patchVault(param)
       .then(response => {
-        
-        dispatch(updateVaults(response));
-
         const props: CompleteWithdrawProps = {
           from: prop.fromVault.name,
           to: prop.toAddress ? prop.toAddress : prop.toVault.name,
@@ -54,12 +50,12 @@ const SendToVault: React.FC<React.PropsWithChildren<Props>> = ({prop}) => {
           coin: prop.coin,
           amount: prop.amount,
         };
-        
+
         setTimeout(() => {
-          dispatch(setGlobalLoadingState(false));  
-          navigation.replace('CompleteWithdraw', props);      
+          dispatch(updateVaults(response));
+          dispatch(setGlobalLoadingState(false));
+          navigation.replace('CompleteWithdraw', props);
         }, 2000);
-        
       })
       .catch(e => {});
   }
@@ -84,11 +80,8 @@ const SendToVault: React.FC<React.PropsWithChildren<Props>> = ({prop}) => {
           borderRadius={16}
           bodyColor={MAIN_BLACK}
           click={() => {
-            dispatch(setGlobalLoadingState(true));  
+            dispatch(setGlobalLoadingState(true));
             requestVaultUpdate();
-
-            
-            
           }}
         />
         <View style={{width: 10}} />

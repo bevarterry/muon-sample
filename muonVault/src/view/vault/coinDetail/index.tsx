@@ -76,7 +76,7 @@ const CoinDetail = (props: any) => {
       />
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={{height: '100%', zIndex: -1}}
+        style={{height: '100%', zIndex: -1, backgroundColor: BASE_BACKGROUND}}
         contentContainerStyle={s.wrapper}
         bounces={false}>
         <FastImage

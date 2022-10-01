@@ -8,7 +8,8 @@ export interface VaultResponse {
   idx: string;
   id: string;
   name: string;
-  VP: number;
+  MUP?: number;
+  MU?: number;
   ETH: number;
   BNB: number;
   USDC: number;

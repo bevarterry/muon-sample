@@ -49,7 +49,7 @@ const Splash = (props: any) => {
         console.log(
           '::::::::::::::::::::: [User Info ] ' + JSON.stringify(res),
         );
-        dispatch(updateScAssets(res.SafeAddress, res.Wallet, res.VP));
+        dispatch(updateScAssets(res.SafeAddress, res.Wallet, res.MUP));
         props.navigation.replace('Main');
       })
       .catch(e => {

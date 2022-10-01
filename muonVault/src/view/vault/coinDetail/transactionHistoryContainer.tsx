@@ -7,6 +7,7 @@ import {Vault} from '../../../model/vaults';
 import {MAIN_BORDER_COROR} from '../../ColorCode';
 import {BUY_VP, DEPOSIT, WITHDRAW} from '../../constantProperties';
 import TransactionHistoryCard from './transactionHistoryCard';
+import VaultApi from '../../../api/Vault';
 const search_icon = require('../../../../assets/image/search_icon.png');
 type Props = {
   symbol: string;
@@ -16,44 +17,57 @@ const TransactionHistoryContainer: React.FC<React.PropsWithChildren<Props>> = ({
   symbol,
   vault,
 }) => {
-  const [histories, setHistories] = useState<Array<TxHistory>>([
-    {
-      from: '0x830B04Cd1E570C09A55E0d82Ec22933D77C7c78e',
-      to: '0xeC20Ffc18Daa902567E79919d1f73AFcB427B246',
-      purpose: DEPOSIT,
-      value: 120,
-    },
-    {
-      from: '0xeC20Ffc18Daa902567E79919d1f73AFcB427B246',
-      to: '0x830B04Cd1E570C09A55E0d82Ec22933D77C7c78e',
-      purpose: WITHDRAW,
-      value: 200,
-    },
-    {
-      from: '0xeC20Ffc18Daa902567E79919d1f73AFcB427B246',
-      to: '0x830B04Cd1E570C09A55E0d82Ec22933D77C7c78e',
-      purpose: BUY_VP,
-      value: 300,
-    },
-    {
-      from: '0x830B04Cd1E570C09A55E0d82Ec22933D77C7c78e',
-      to: '0xeC20Ffc18Daa902567E79919d1f73AFcB427B246',
-      purpose: DEPOSIT,
-      value: 120,
-    },
-    {
-      from: '0xeC20Ffc18Daa902567E79919d1f73AFcB427B246',
-      to: '0x830B04Cd1E570C09A55E0d82Ec22933D77C7c78e',
-      purpose: WITHDRAW,
-      value: 200,
-    },
-    {
-      from: '0xeC20Ffc18Daa902567E79919d1f73AFcB427B246',
-      to: '0x830B04Cd1E570C09A55E0d82Ec22933D77C7c78e',
-      purpose: BUY_VP,
-      value: 300,
-    },
-  ]);
+  const [histories, setHistories] = useState<Array<TxHistory>>([]);
+
+  useEffect(() => {
+    VaultApi.history(vault.idx, symbol)
+      .then(res => {
+        console.log(res);
+        historiesMap(res);
+      })
+      .catch(e => {
+        console.log(111, e);
+      });
+  }, [symbol]);
+
+  function historiesMap(hists: Array<any>) {
+    const historyList: Array<TxHistory> = [];
+
+    hists.forEach(e => {
+      const action = dispplayActionName(e.to, e.from);
+
+      if (action !== '' || e.purpose) {
+        historyList.push({
+          from: displayToName(e.from),
+          to: displayToName(e.to),
+          purpose: action,
+          value: e.value,
+        });
+      }
+    });
+
+    setHistories(historyList);
+  }
+
+  const displayToName = (to: string) => {
+    if (vault.idx == to) return vault.name;
+
+    return to;
+  };
+
+  const displayFromName = (from: string) => {
+    if (vault.idx == from) return vault.name;
+
+    return from;
+  };
+
+  const dispplayActionName = (to: string, from: string) => {
+    if (vault.idx == from) return WITHDRAW;
+    if (vault.idx == to) return DEPOSIT;
+    if (to === 'asdasdasdasdas') return BUY_VP;
+
+    return '';
+  };
 
   return (
     <View style={s.wrapper}>
@@ -97,6 +111,7 @@ const s = StyleSheet.create({
     marginTop: 20,
     display: 'flex',
     width: '100%',
+    height: '100%',
   },
   titleWrapper: {
     paddingHorizontal: 22,

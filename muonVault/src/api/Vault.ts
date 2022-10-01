@@ -16,7 +16,29 @@ export default {
         },
       })
         .then(response => {
+          console.log(11111, JSON.stringify(response.data.data.vaults));
           resolve(response.data.data.vaults);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
+  },
+
+  history(vaultId: string, symbol: string): Promise<Array<VaultResponse>> {
+    console.log(vaultId, symbol);
+    return new Promise((resolve, reject) => {
+      Send({
+        url: `/bc/vault/${vaultId}/history?symbol=${symbol}`,
+        method: 'get',
+        headers: {
+          'content-type': 'application/x-www-form-urlencoded',
+          Authorization: getCommonInfo(STORED_ACCESS_TOKEN),
+        },
+      })
+        .then(response => {
+          console.log(response.data.data.histories);
+          resolve(response.data.data.histories);
         })
         .catch(err => {
           reject(err);

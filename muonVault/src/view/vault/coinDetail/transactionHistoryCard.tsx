@@ -6,7 +6,7 @@ import {TxHistory} from '../../../model/transactionHistory';
 import {Vault} from '../../../model/vaults';
 import {MAIN_BORDER_COROR} from '../../ColorCode';
 import BasicBadge from '../../common/basicBadge';
-import {BUY_VP, WITHDRAW} from '../../constantProperties';
+import {BUY_VP, DEPOSIT, WITHDRAW} from '../../constantProperties';
 
 const withdraw_icon = require('../../../../assets/image/withdraw_icon.png');
 const deposit_icon = require('../../../../assets/image/deposit_icon.png');
@@ -34,10 +34,10 @@ const TransactionHistoryCard: React.FC<React.PropsWithChildren<Props>> = ({
   };
 
   const displayPurposeText = (purpose: string) => {
-    if (purpose === WITHDRAW) return 'Withdraw';
-    if (purpose === BUY_VP) return 'Buy MU:P';
+    if (purpose === WITHDRAW) return WITHDRAW;
+    if (purpose === BUY_VP) return BUY_VP;
 
-    return 'Deposit';
+    return DEPOSIT;
   };
 
   return (

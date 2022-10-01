@@ -16,6 +16,7 @@ const usdc_icon = require('../../../../assets/image/usdc_icon.png');
 const muon_icon = require('../../../../assets/image/muon_icon.png');
 
 const VaultDetail = (props: any) => {
+  const vaultStore = useSelector((root: RootState) => root.vaultsStore);
   const ratioStore = useSelector((root: RootState) => root.ratioStore);
   const navigation = useNavigation();
   const [vault, setVault] = useState<Vault>({
@@ -35,6 +36,14 @@ const VaultDetail = (props: any) => {
       setVault(props.route.params.element);
     }
   }, []);
+
+  useEffect(() => {
+    const index = vaultStore.vaults.findIndex(x => {
+      return x.idx == props.route.params.element.idx;
+    });
+
+    if (index !== -1) setVault(vaultStore.vaults[index]);
+  }, [vaultStore]);
 
   const totalValueInDallor = () => {
     return Number(

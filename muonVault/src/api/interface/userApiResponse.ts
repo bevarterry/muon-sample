@@ -7,7 +7,7 @@ export interface Response {
 export interface UserApiResponse {
   username: string;
   contact: string;
-  VP: string;
+  MUP: string;
   SafeAddress: SafeAddressSet;
   Wallet: WalletSet;
 }
