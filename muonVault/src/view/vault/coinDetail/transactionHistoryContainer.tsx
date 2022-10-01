@@ -8,6 +8,8 @@ import {MAIN_BORDER_COROR} from '../../ColorCode';
 import {BUY_VP, DEPOSIT, WITHDRAW} from '../../constantProperties';
 import TransactionHistoryCard from './transactionHistoryCard';
 import VaultApi from '../../../api/Vault';
+import {RootState} from '~/store/modules';
+import {useSelector} from 'react-redux';
 const search_icon = require('../../../../assets/image/search_icon.png');
 type Props = {
   symbol: string;
@@ -17,6 +19,7 @@ const TransactionHistoryContainer: React.FC<React.PropsWithChildren<Props>> = ({
   symbol,
   vault,
 }) => {
+  const vaultStore = useSelector((root: RootState) => root.vaultsStore);
   const [histories, setHistories] = useState<Array<TxHistory>>([]);
 
   useEffect(() => {
@@ -30,6 +33,16 @@ const TransactionHistoryContainer: React.FC<React.PropsWithChildren<Props>> = ({
       });
   }, [symbol]);
 
+  function getStoreVaultNameByIdx(idx: string) {
+    const index = vaultStore.vaults.findIndex(x => {
+      return x.idx == idx;
+    });
+
+    if (index !== -1) return vaultStore.vaults[index].name;
+
+    return '';
+  }
+
   function historiesMap(hists: Array<any>) {
     const historyList: Array<TxHistory> = [];
 
@@ -38,7 +51,7 @@ const TransactionHistoryContainer: React.FC<React.PropsWithChildren<Props>> = ({
 
       if (action !== '' || e.purpose) {
         historyList.push({
-          from: displayToName(e.from),
+          from: displayFromName(e.from),
           to: displayToName(e.to),
           purpose: action,
           value: e.value,
@@ -51,12 +64,16 @@ const TransactionHistoryContainer: React.FC<React.PropsWithChildren<Props>> = ({
 
   const displayToName = (to: string) => {
     if (vault.idx == to) return vault.name;
-
+    const toVaultName = getStoreVaultNameByIdx(to);
+    if (toVaultName !== '') return toVaultName;
     return to;
   };
 
   const displayFromName = (from: string) => {
     if (vault.idx == from) return vault.name;
+
+    const fromVaultName = getStoreVaultNameByIdx(from);
+    if (fromVaultName !== '') return fromVaultName;
 
     return from;
   };
