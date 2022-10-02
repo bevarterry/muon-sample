@@ -122,9 +122,17 @@ const WithDraw = (props: any) => {
               fontColor={'#ffffff'}
               fontSize={12}
             />
-            <Text style={{fontSize: 22, fontWeight: '700'}}>
-              {toAddress ? toAddress : toVault?.name}
-            </Text>
+            {toAddress && 
+              <Text ellipsizeMode='middle' numberOfLines={1} style={{width: 150, fontSize: 16, fontWeight: '500'}}>
+                {toAddress}
+              </Text>
+            }
+
+            {!toAddress && toVault?.name &&
+              <Text style={{fontSize: 22, fontWeight: '700'}}>
+                {toVault?.name}
+              </Text>
+            }
           </View>
         )}
         {step !== WITHDRAW_INPUT_TO_ADDRESS && step !== WITHDRAW_INPUT_AMOUNT && (
