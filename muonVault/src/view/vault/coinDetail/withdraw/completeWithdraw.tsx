@@ -30,6 +30,8 @@ const CompleteWithdraw = (props: any) => {
       value: 0,
       symbol: '',
       ratio: 0,
+      privateKey: '',
+      contractAddress: ''
     },
   });
 
@@ -81,7 +83,7 @@ const CompleteWithdraw = (props: any) => {
           toComponent={
             <>
               {badge('To')}
-              <Text style={s.componentText}>{item.to}</Text>
+              <Text ellipsizeMode='middle' numberOfLines={1} style={{width: 150, fontSize: 16, fontWeight: '500'}}>{item.to}</Text>
             </>
           }
           fromComponent={
@@ -94,7 +96,7 @@ const CompleteWithdraw = (props: any) => {
             <>
               {badge('Total')}
               <Text style={s.componentText}>
-                ${Number(item.amount * item.coin.ratio).toFixed(0)}
+                ${Number(item.amount * item.coin.ratio).toFixed(6)}
               </Text>
             </>
           }

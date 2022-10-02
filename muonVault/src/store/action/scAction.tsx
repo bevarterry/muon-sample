@@ -60,7 +60,8 @@ export const updateScAssets = (
         ethereum: {
           symbol: 'ETH',
           displayName: 'Ethereum',
-          contractAddress: SafeAddressSet.ETH,
+          //contractAddress: SafeAddressSet.ETH,
+          contractAddress: '0x208064804D5062e20551942b2bC626333fE8f3B9'
         },
         binance: {
           symbol: 'BNB',

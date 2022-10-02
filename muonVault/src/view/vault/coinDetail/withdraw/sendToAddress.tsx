@@ -22,12 +22,15 @@ import PilotWithdrawBottomDialog from './pilotWithdrawBottomDialog';
 import SummaryCard from '../component/summaryCard';
 import {CoinDetailType} from '~/model/coin';
 import {Vault} from '~/model/vaults';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '~/store/modules';
 import {requestEtherWithdrawConfirm} from '~/bc/VaultEtherApi';
 import {BNB_SYMBOL, ETH_SYMBOL} from '~/view/constantProperties';
 import {requestBnbWithdrawConfirm} from '~/bc/VaultBinanceApi';
 import VaultApi from '../../../../api/Vault';
+import { setGlobalLoadingState } from '~/store/modules/GlobalLoadingReducer';
+import Toast from 'react-native-simple-toast';
+import { CompleteWithdrawProps } from './completeWithdraw';
 
 const {width, height} = Dimensions.get('window');
 const buttonWidth = (width - 34) / 2;
@@ -41,6 +44,8 @@ type Props = {
 };
 const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
   const pilotWithdrawModalRef = useRef();
+  const dispatch: any = useDispatch();
+
   const navigation: any = useNavigation();
 
 
@@ -54,33 +59,37 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
   }
   async function sendAll() {
     try {
+      dispatch(setGlobalLoadingState(true));
       const hash = await requestWithdrawConfirm();
 
       sendTxid(hash);
-      // navigation.replace('CompleteWithdraw', {
-      //   from: '',
-      //   to: '',
-      //   symbol: '',
-      //   estimateGasFee: 0,
-      //   serviceFee: 0,
-      //   totalAmount: 0,
-      // });
+
     } catch (error) {
+      dispatch(setGlobalLoadingState(false));
       console.log(JSON.stringify(error));
     }
   }
 
   function sendTxid(txid: string) {
-    console.log(':::::::::::::::::::: txid : ', txid);
     VaultApi.sendTxid({
       txid: txid,
       symbol: props.coin.symbol,
     })
       .then(res => {
-        console.log(res);
+        dispatch(setGlobalLoadingState(false));
+        Toast.show(`전송 요청을 완료. 컨펌이후 잔고 변경.`, Toast.SHORT);
+        const param:CompleteWithdrawProps  = {
+          from: props.fromVault.name,
+          to: props.toAddress,
+          estimateGasFee: 1000000,
+          serviceFee: 10,
+          amount: Number(props.amount),
+          coin : props.coin
+        }
+        navigation.replace('CompleteWithdraw', param);
       })
       .catch(e => {
-        console.log(e);
+        dispatch(setGlobalLoadingState(false));
       });
   }
 

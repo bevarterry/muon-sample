@@ -60,15 +60,11 @@ const requestEtherWithdrawConfirm = async (
     signer,
   );
 
-  console.log(value);
-  console.log(ethers.utils.parseUnits(value, 'gwei'));
-
   let receipt;
   try {
     receipt = await contract.requestAndConfirmWithdraw(
-      wallet.address,
       to,
-      ethers.utils.parseEther(value),
+      ethers.utils.parseUnits(value, 'ether'),
       {
         from: wallet.address,
         gasLimit: gasLimit,
