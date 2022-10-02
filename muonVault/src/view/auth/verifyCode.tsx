@@ -31,6 +31,8 @@ import PinCodeInput from '../common/pinCodeInput';
 import Top from '../common/top';
 import {AUTH_EMAIL_TYPE, AUTH_PHONE_TYPE, NOTI_AUTH_PHONE, STORED_ACCESS_TOKEN, STORED_FCM_TOKEN} from '../constantProperties';
 import messaging from '@react-native-firebase/messaging';
+import Toast from 'react-native-simple-toast';
+import { stringToHash } from '../Hash';
 
 const VerifyCode = (props: any) => {
   const navigation: any = useNavigation();
@@ -51,36 +53,58 @@ const VerifyCode = (props: any) => {
     }
   }, []);
 
-  messaging().onMessage(async remoteMessage => {
+  messaging().onMessage(async (remoteMessage: any) => {
     if (remoteMessage === null) return;
-    console.log(remoteMessage);
-    pushNextStep(remoteMessage?.data?.title, remoteMessage?.data?.message);
+    console.log('[1]', remoteMessage.data);
+    const hashCodeRomoteMessage = stringToHash(JSON.stringify(remoteMessage));
+
+    if (isDuplicated(hashCodeRomoteMessage)) return;
+
+    pushNextStep(remoteMessage.data.title, remoteMessage.data.message);
   });
 
-  messaging().onNotificationOpenedApp(remoteMessage => {
-    if (remoteMessage === null) return;
-    console.log(remoteMessage?.data);
-  });
+  function isDuplicated(hashCodeRomoteMessage: number) {
+    const v = getCommonInfo(hashCodeRomoteMessage + '');
+    if (v === undefined || v === null) {
+      setCommonInfo(hashCodeRomoteMessage + '', true);
+      return false;
+    }
+    else return true;
+  }
+  // messaging().onNotificationOpenedApp(remoteMessage => {
+  //   if (remoteMessage === null) return;
+  //   console.log('[2]', remoteMessage?.data);
+  //   pushNextStep(remoteMessage?.data?.title, remoteMessage?.data?.message);
+  // });
 
-  messaging().getInitialNotification().then(remoteMessage => {
-    if (remoteMessage === null) return;
+  // messaging().getInitialNotification().then(remoteMessage => {
+  //   if (remoteMessage === null) return;
     
-    console.log(remoteMessage?.data);
-  });
+  //   console.log('[3]', remoteMessage?.data);
+  //   pushNextStep(remoteMessage?.data?.title, remoteMessage?.data?.message);
+  // });
   
-  messaging().setBackgroundMessageHandler(async (remoteMessage) => {
+  // messaging().setBackgroundMessageHandler(async (remoteMessage) => {
     
-    if (remoteMessage === null) return;
-    console.log(remoteMessage?.data);
-  });
+  //   if (remoteMessage === null) return;
+  //   console.log('[4]', remoteMessage?.data);
+  //   pushNextStep(remoteMessage?.data?.title, remoteMessage?.data?.message);
+  // });
 
 
 
-  function pushNextStep(id: string | undefined, pin: any) {
+  function pushNextStep(id: string | undefined, message: any) {
+    
     if (id === undefined) return;
 
     if (id === NOTI_AUTH_PHONE) {
-      setVerifyCode(pin);
+      setTimeout(() => {
+        Toast.show(`인증번호 [${message}] 를 전달받았습니다.`, Toast.SHORT);
+        console.log(message)
+        setVerifyCode(message);
+      }, 1000);
+
+      
       //return props.navigation.navigate('Character' as never);
     }
 
@@ -194,6 +218,7 @@ const VerifyCode = (props: any) => {
           <Text style={s.inputTitle}>Verification code</Text>
           <View style={{marginHorizontal: 23, marginTop: 10}}>
             <PinCodeInput
+              propValue={pinCode}
               numberOnly={true}
               maxLength={6}
               update={(e: string) => {

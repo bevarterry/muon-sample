@@ -13,6 +13,7 @@ import {
 const {width, height} = Dimensions.get('window');
 
 type Props = {
+  propValue? :string;
   postfix?: string;
   placeHolder?: string;
   active?: boolean;
@@ -32,6 +33,7 @@ type Props = {
 };
 const PinCodeInput: React.FC<React.PropsWithChildren<Props>> = ({
   active,
+  propValue,
   postfix,
   textAlign,
   password,
@@ -57,9 +59,10 @@ const PinCodeInput: React.FC<React.PropsWithChildren<Props>> = ({
     onChangeText(e);
   }
   useEffect(() => {
+    if(propValue) onChangeText(propValue);
     //@ts-ignore
     //ref_input.current.focus();
-  }, []);
+  }, [propValue]);
 
   function keyboardType() {
     if (numberOnly) return 'number-pad';
