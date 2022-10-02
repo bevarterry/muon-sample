@@ -49,14 +49,14 @@ const SummaryCard: React.FC<React.PropsWithChildren<Props>> = ({
         {estimateGasFee !== 0 && <>
           <View style={[s.row, {marginTop: 40}]}>
             <Text style={s.title}>Estimated Gas Fee</Text>
-            <Text style={s.value}>$20.90</Text>
+            <Text style={s.value}>{estimateGasFee} gwei</Text>
           </View>
           <View style={s.row}>
             <Text style={s.subTitle}>Likely in {'<'} 30 seconds</Text>
           </View>
           <View style={[s.row, {marginTop: 11, marginBottom: 10}]}>
             <Text style={s.title}>Service Fee</Text>
-            <Text style={s.value}>{17}Valut Points</Text>
+            <Text style={s.value}>{serviceFee} MU Point</Text>
           </View>
         </>}
 

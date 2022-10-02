@@ -43,6 +43,15 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
   const pilotWithdrawModalRef = useRef();
   const navigation: any = useNavigation();
 
+
+  const isOverPilotVue = () => {
+    // 1000 달러 기준
+    return (0.00000000001 - totlalDollar() < 0);
+  }
+
+  const totlalDollar = () => {
+    return (props.coin.ratio * Number(props.amount));
+  }
   async function sendAll() {
     try {
       const hash = await requestWithdrawConfirm();
@@ -111,7 +120,7 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
               fontColor={'#ffffff'}
               fontSize={12}
             />
-            <Text style={s.totalValue}>$19,723.10</Text>
+            <Text style={s.totalValue}>${totlalDollar().toFixed(6)}</Text>
           </>
         }
       />
@@ -140,28 +149,33 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
           flexDirection: 'row',
           paddingHorizontal: 12,
         }}>
-        <ButtonComponent
-          title="Send $1"
-          width={buttonWidth}
-          borderColor={BASE_BUTTON}
-          titleColor={CC_WHITE}
-          paddingVertical={21}
-          borderRadius={16}
-          bodyColor={MAIN_BLACK}
-          click={() => {
-            //@ts-ignore
-            pilotWithdrawModalRef.current.openModal();
-          }}
-        />
-        <View style={{width: 10}} />
+
+          {isOverPilotVue() && 
+          <>
+            <ButtonComponent
+              title="Send $1"
+              width={buttonWidth}
+              borderColor={BASE_BUTTON}
+              titleColor={CC_WHITE}
+              paddingVertical={21}
+              borderRadius={16}
+              bodyColor={MAIN_BLACK}
+              click={() => {
+                //@ts-ignore
+                pilotWithdrawModalRef.current.openModal();
+              }}/>
+            <View style={{width: 10}} />
+            </>
+          }
+
         <ButtonComponent
           title="Send All"
-          width={buttonWidth}
+          width={isOverPilotVue() ? buttonWidth : '100%'}
           borderColor={BASE_BUTTON}
-          titleColor={MAIN_BLACK}
+          titleColor={isOverPilotVue() ? MAIN_BLACK : CC_WHITE}
           paddingVertical={21}
           borderRadius={16}
-          bodyColor={BASE_BUTTON}
+          bodyColor={isOverPilotVue() ? BASE_BUTTON : MAIN_BLACK}
           click={sendAll}
         />
       </View>

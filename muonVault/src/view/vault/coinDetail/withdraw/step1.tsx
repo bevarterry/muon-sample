@@ -93,7 +93,7 @@ const Step1: React.FC<React.PropsWithChildren<Props>> = ({
               source={convert_value_icon}
             />
           </TouchableOpacity>
-          <Text>${(coin.ratio * Number(amount)).toFixed(2)}</Text>
+          <Text>${(coin.ratio * Number(amount)).toFixed(6)}</Text>
         </View>
       </View>
       <View
