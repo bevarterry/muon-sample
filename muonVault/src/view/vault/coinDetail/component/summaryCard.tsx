@@ -21,8 +21,8 @@ type Props = {
   toComponent?: React.ReactNode;
   amountComponent?: React.ReactNode;
   totalComponent?: React.ReactNode;
-  serviceFee: number;
-  estimateGasFee: number;
+  serviceFee?: number;
+  estimateGasFee?: number;
 };
 const SummaryCard: React.FC<React.PropsWithChildren<Props>> = ({
   totalComponent,

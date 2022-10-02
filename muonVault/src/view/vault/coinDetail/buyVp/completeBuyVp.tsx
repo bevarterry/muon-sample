@@ -1,155 +1,129 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
-import {
-  KeyboardAvoidingView,
-  Platform,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
-import {
-  BASE_BACKGROUND,
-  BASE_BUTTON,
-  CC_WHITE,
-  DIMED_GRAY,
-  MAIN_BLACK,
-} from '../../../ColorCode';
+import {useSelector} from 'react-redux';
+import {CoinDetailType} from '~/model/coin';
+import { Vault } from '~/model/vaults';
+import {BASE_BACKGROUND, CC_WHITE, MAIN_BLACK} from '../../../ColorCode';
 import BasicBadge from '../../../common/basicBadge';
 import ButtonComponent from '../../../common/ButtonComponent';
 import SummaryCard from '../component/summaryCard';
-import Top from '../../../common/top';
-import InsertVpCard from './insertVpCard';
-import CoinTitleComponent from '../../../common/coinTitleComponent';
-import {useSelector} from 'react-redux';
-import {RootState} from '../../../../store/modules';
-import FastImage from 'react-native-fast-image';
-import {CoinDetailType} from '~/model/coin';
 
-const buy_vp_icon = require('../../../../../assets/image/buy_vp_icon.png');
-const arrow_down_img = require('../../../../../assets/image/arrow_down_img.png');
-type Props = {
+export interface CompleteBuyVpProps {
+  fromVault: Vault;
   coin: CoinDetailType;
-  muAmount: number;
-};
-const muDollarRatio = 0.01;
+  amount: number;
+}
 
 const CompleteBuyVp = (props: any) => {
-  const ratioStore = useSelector((root: RootState) => root.ratioStore);
   const navigation: any = useNavigation();
-  const [muAmount, setMuPointAmount] = useState(0);
-  const [toValue, setToValue] = useState(0);
-  const [coin, setCoin] = useState<CoinDetailType>({
-    value: 0,
-    ratio: 0,
-    symbol: '',
-    privateKey: '',
-    contractAddress: ''
+  const [item, setItems] = useState<CompleteBuyVpProps>({
+    fromVault: {
+      id: '',
+      idx: '',
+      name: '',
+      BTC: 0,
+      BNB: 0,
+      USDC: 0,
+      ETH: 0,
+      VP: 0,
+      color: '#000000',
+    },
+    amount: 0,
+    coin: {
+      value: 0,
+      symbol: '',
+      ratio: 0,
+      privateKey: '',
+      contractAddress: ''
+    },
   });
 
   useEffect(() => {
-    if (props.route.params.coin) {
-      const {coin, muAmount} = props.route.params;
+    if (props.route.params.fromVault) {
 
-      setCoin(coin);
-      setToValue((muAmount * muDollarRatio) / coin.ratio);
-      setMuPointAmount(muAmount);
+      console.log(props.route.params);
+      setItems(props.route.params);
     }
   }, []);
 
-  const coinRow = (symbol: string, icon: any, value: number, ratio: number) => {
+  const badge = (title: string) => {
     return (
-      <View style={s.coinRow}>
-        <CoinTitleComponent
-          symbol={symbol}
-          imageSource={icon}
-          size={30}
-          fontSize={16}
-          fontWeight={'800'}
-          gap={14}
-        />
-        <View
-          style={{
-            display: 'flex',
-            alignItems: 'flex-end',
-            justifyContent: 'flex-end',
-          }}>
-          <Text style={s.value}>{value.toFixed(8)}</Text>
-          <Text style={s.dollarValue}>$({value * ratio})</Text>
-        </View>
-      </View>
+      <BasicBadge
+        title={title}
+        paddingHorizontal={12}
+        paddingVertical={4}
+        backgroundColor={MAIN_BLACK}
+        fontColor={'#ffffff'}
+        fontSize={12}
+      />
     );
   };
   return (
     <>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-        <View style={s.wrapper}>
-          <Top
-            title={'Buy Vault MU:Point'}
-            backgroundColor={BASE_BACKGROUND}
-            left={true}
-            onTouchBackButton={navigation.goBack}
-          />
+      <View style={s.wrapper}>
+        <Text style={s.completeText}>Complete!</Text>
+        {/* <Text
+          style={{
+            textAlign: 'center',
+            paddingHorizontal: 38,
+            marginTop: 24,
+            marginBottom: 30,
+          }}>
+          {item.amount} {item.coin.symbol} ($
+          {Number(item.amount * item.coin.ratio).toFixed(0)}) has been
+          transferred to the {item.to}
+        </Text> */}
 
-          <View
-            style={[
-              {
-                display: 'flex',
-                alignItems: 'center',
-                width: '100%',
-                justifyContent: 'center',
-                paddingHorizontal: 12,
-                marginTop: 12,
-              },
-            ]}>
-            <Text style={s.summaryText}>Buy {muAmount} MU:Points using</Text>
-            <Text style={s.summaryText}>
-              {toValue.toFixed(8)} ETH ($ {toValue * coin.ratio})
-            </Text>
-
-            <View style={{width: '100%', marginTop: 96}}>
-              {coinRow('Vault Point', coin.icon, toValue, coin.ratio)}
-            </View>
-
-            <View style={{marginVertical: 40}}>
-              <FastImage
-                resizeMode="contain"
-                style={{
-                  width: 38,
-                  height: 38,
-                }}
-                source={arrow_down_img}
-              />
-            </View>
-
-            <View style={{width: '100%'}}>
-              {coinRow('MU:Point', buy_vp_icon, muAmount, muDollarRatio)}
-            </View>
-          </View>
-
-          <View
-            style={{
-              width: '100%',
-              paddingHorizontal: 22,
-              position: 'absolute',
-              bottom: 43,
-            }}>
-            <ButtonComponent
-              title="Confirm"
-              width="100%"
-              borderColor={MAIN_BLACK}
-              titleColor={CC_WHITE}
-              borderRadius={20}
-              bodyColor={MAIN_BLACK}
-              click={() => {
-                navigation.pop(1);
-                navigation.goBack();
-              }}
-            />
-          </View>
-        </View>
-      </KeyboardAvoidingView>
+        <SummaryCard
+          serviceFee={10}
+          estimateGasFee={10}
+          amountComponent={
+            <>
+              {badge('Amount')}
+              <Text style={s.componentText}>
+                {item.amount} {item.coin.symbol}
+              </Text>
+            </>
+          }
+          fromComponent={
+            <>
+              {badge('From')}
+              <Text style={s.componentText}>{item.fromVault.name}</Text>
+            </>
+          }
+          totalComponent={
+            <>
+              {badge('Total')}
+              <Text style={s.componentText}>
+                ${Number(item.amount * item.coin.ratio).toFixed(6)}
+              </Text>
+            </>
+          }
+        />
+      </View>
+      <View
+        style={{
+          width: '100%',
+          paddingHorizontal: 22,
+          position: 'absolute',
+          bottom: 50,
+        }}>
+        <ButtonComponent
+          title="Done"
+          width="100%"
+          borderColor={MAIN_BLACK}
+          titleColor={CC_WHITE}
+          borderRadius={20}
+          bodyColor={MAIN_BLACK}
+          click={() => {
+            navigation.pop(1);
+            navigation.pop(2);
+            navigation.goBack();
+          }}
+        />
+      </View>
     </>
   );
 };
@@ -158,45 +132,22 @@ export default CompleteBuyVp;
 
 const s = StyleSheet.create({
   wrapper: {
-    zIndex: -1,
-    paddingTop: 50 + getStatusBarHeight(),
+    paddingTop: getStatusBarHeight(),
     width: '100%',
-    backgroundColor: BASE_BACKGROUND,
     height: '100%',
+    backgroundColor: BASE_BACKGROUND,
+    paddingHorizontal: 13,
+    display: 'flex',
+    alignItems: 'center',
   },
   completeText: {
     marginTop: 20,
     fontWeight: '700',
     fontSize: 28,
+    marginBottom: 20
   },
   componentText: {
     fontSize: 22,
     fontWeight: '700',
-  },
-  summaryText: {
-    color: MAIN_BLACK,
-    fontSize: 16,
-    fontWeight: '400',
-  },
-  coinRow: {
-    paddingHorizontal: 29,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    display: 'flex',
-    flexDirection: 'row',
-    backgroundColor: CC_WHITE,
-    paddingVertical: 18,
-    borderRadius: 20,
-  },
-  value: {
-    fontSize: 16,
-    fontWeight: '700',
-    marginVertical: 3,
-  },
-  dollarValue: {
-    fontSize: 14,
-    fontWeight: '400',
-    color: DIMED_GRAY,
-    marginBottom: 3,
   },
 });

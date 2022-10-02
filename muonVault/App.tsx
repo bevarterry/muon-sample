@@ -31,6 +31,7 @@ import MyInsuranceComplete from '~/view/concierge/myInsuranceComplete';
 import InputPhone from '~/view/auth/inputPhone';
 import GlobalLoading from '~/view/common/GlobalLoading';
 import { RootState } from '~/store/modules';
+import ConfirmBuyVp from '~/view/vault/coinDetail/buyVp/confirmBuyVp';
 
 const Stack = createStackNavigator();
 const baseTransitionOption = {
@@ -142,7 +143,13 @@ const App = () => {
             options={baseTransitionOption}
           />
           <Stack.Screen
-            name="CompleteBuyVP"
+            name="ConfirmBuyVp"
+            component={ConfirmBuyVp}
+            options={baseTransitionOption}
+          />
+          
+          <Stack.Screen
+            name="CompleteBuyVp"
             component={CompleteBuyVp}
             options={baseTransitionOption}
           />

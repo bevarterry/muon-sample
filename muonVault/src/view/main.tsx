@@ -19,13 +19,14 @@ import Life from './life';
 import Concierge from './concierge';
 import TabIcon from './common/tabIcon';
 import GlobalModal from './globalModal';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '~/store/modules';
 import GlobalLoading from './common/GlobalLoading';
 import messaging from '@react-native-firebase/messaging';
 import Toast from 'react-native-simple-toast';
 import { NOTI_AUTH_PHONE } from './constantProperties';
 import { isDuplicated, stringToHash } from './Hash';
+import { updateVaultsFromApi } from '~/store/action/VaultAction';
 
 const Tab = createBottomTabNavigator();
 
@@ -36,6 +37,7 @@ const life_icon = require('../../assets/image/life_icon.png');
 const concierge_icon = require('../../assets/image/concierge_icon.png');
 
 const Main = () => {
+  const dispatch: any = useDispatch();
   const globalLoadingStateStore = useSelector(
     (root: RootState) => root.globalLoadingState,
   );
@@ -99,6 +101,7 @@ const Main = () => {
       
     }else {
       Toast.show(message, Toast.SHORT);
+      dispatch(updateVaultsFromApi())
     }
   }
 

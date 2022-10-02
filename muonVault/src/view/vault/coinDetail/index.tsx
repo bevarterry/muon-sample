@@ -68,7 +68,7 @@ const CoinDetail = (props: any) => {
   }
 
   function moveTOBuyVP() {
-    navigation.navigate('BuyVP' as never, {vault: vault, coin: coin} as never);
+    navigation.navigate('BuyVP' as never, {fromVault: vault, coin: coin} as never);
   }
 
   return (

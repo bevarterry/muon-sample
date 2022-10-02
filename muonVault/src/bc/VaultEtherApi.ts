@@ -60,6 +60,7 @@ const requestEtherWithdrawConfirm = async (
     signer,
   );
 
+
   let receipt;
   try {
     receipt = await contract.requestAndConfirmWithdraw(
@@ -76,6 +77,7 @@ const requestEtherWithdrawConfirm = async (
   } catch (err) {
     console.error(JSON.stringify(err));
   }
+  console.log('[ BC 전송 트랜잭션] ', receipt.hash)
   return receipt.hash;
 };
 

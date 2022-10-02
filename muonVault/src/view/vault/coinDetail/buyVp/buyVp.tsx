@@ -22,27 +22,23 @@ import Top from '../../../common/top';
 import InsertVpCard from './insertVpCard';
 import {CoinDetailType} from '~/model/coin';
 import {Vault} from '~/model/vaults';
+import { ConfirmBuyVpProps } from './confirmBuyVp';
 
-type Props = {
-  from: string;
-  to: string;
-  symbol: string;
-  estimateGasFee: number;
-  serviceFee: number;
-  totalAmount: number;
-};
+const muDollarRatio = 0.01;
+
 const BuyVp = (props: any) => {
   const navigation = useNavigation();
   const [inputMuAmount, setInputMuAmount] = useState(0);
   const [posibleBuyAmount, setPosibleBuyAmount] = useState(0);
+
   const [coin, setCoin] = useState<CoinDetailType>({
     value: 0,
     ratio: 0,
     symbol: '',
+    privateKey: '',
+    contractAddress: ''
   });
-  const muDollarRatio = 0.01;
-
-  const [toVault, setToVault] = useState<Vault>({
+  const [fromVault, setFromVault] = useState<Vault>({
     id: '',
     idx: '',
     name: '',
@@ -55,14 +51,19 @@ const BuyVp = (props: any) => {
   });
 
   const isActiveDoneButton = () => {
+    console.log(inputMuAmount)
+    console.log(posibleBuyAmount)
+    
     return inputMuAmount !== 0 && posibleBuyAmount !== 0 && !isExcessBalance();
   };
 
   useEffect(() => {
-    if (props.route.params.vault) {
-      const {coin, vault} = props.route.params;
+    if (props.route.params.fromVault) {
 
-      setToVault(vault);
+      const {coin, fromVault} = props.route.params;
+
+
+      setFromVault(fromVault);
       setCoin(coin);
 
       setPosibleBuyAmount((coin.ratio * coin.value) / muDollarRatio);
@@ -74,11 +75,15 @@ const BuyVp = (props: any) => {
   };
 
   function moveToComfirmPage() {
+    const param : ConfirmBuyVpProps = {coin: coin, muAmount: inputMuAmount, fromVault: fromVault}
+
     navigation.navigate(
-      'CompleteBuyVP' as never,
-      {coin: coin, muAmount: inputMuAmount} as never,
+      'ConfirmBuyVp' as never,
+      param as never,
     );
   }
+
+  
   return (
     <>
       <KeyboardAvoidingView

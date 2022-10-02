@@ -78,6 +78,7 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
       .then(res => {
         dispatch(setGlobalLoadingState(false));
         Toast.show(`전송 요청을 완료. 컨펌이후 잔고 변경.`, Toast.SHORT);
+        
         const param:CompleteWithdrawProps  = {
           from: props.fromVault.name,
           to: props.toAddress,

@@ -100,7 +100,7 @@ const BasicTextInput: React.FC<React.PropsWithChildren<Props>> = ({
 
         <TextInput
           secureTextEntry={password ? password : false}
-          style={[textContentStyle]}
+          style={[s.editBox, textContentStyle]}
           keyboardType={keyboardType()}
           textAlign={textAlign ? textAlign : 'center'}
           editable
