@@ -43,44 +43,44 @@ const ButtonComponent: React.FC<React.PropsWithChildren<Props>> = ({
 }) => {
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? "padding": "height"}>
-    <TouchableOpacity
-      activeOpacity={0.8}
-      onPress={() => {
-        click();
-      }}
-      style={[
-        s.button,
-        {
-          paddingVertical: paddingVertical ? paddingVertical : 17,
-          borderColor: borderColor,
-          backgroundColor: activeColor ? activeColor : bodyColor,
-          marginTop: marginTop ? marginTop : 0,
-        },
-      ]}>
-      <View style={{width: width, flexDirection: 'row'}}>
-        <View style={s.editBox}>
-          <Text
-            allowFontScaling={false}
-            style={{
-              fontSize: fontSize ? fontSize : 16,
-              color: activeFontColor ? activeFontColor : titleColor,
-              fontWeight: 'bold',
-            }}>
-            {title}
-          </Text>
-          {subTitle && (
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() => {
+          click();
+        }}
+        style={[
+          s.button,
+          {
+            paddingVertical: paddingVertical ? paddingVertical : 17,
+            borderColor: borderColor,
+            backgroundColor: activeColor ? activeColor : bodyColor,
+            marginTop: marginTop ? marginTop : 0,
+          },
+        ]}>
+        <View style={{width: width, flexDirection: 'row'}}>
+          <View style={s.editBox}>
             <Text
+              allowFontScaling={false}
               style={{
-                fontSize: 14,
+                fontSize: fontSize ? fontSize : 16,
                 color: activeFontColor ? activeFontColor : titleColor,
-                fontWeight: '500',
+                fontWeight: 'bold',
               }}>
-              {subTitle}
+              {title}
             </Text>
-          )}
+            {subTitle && (
+              <Text
+                style={{
+                  fontSize: 14,
+                  color: activeFontColor ? activeFontColor : titleColor,
+                  fontWeight: '500',
+                }}>
+                {subTitle}
+              </Text>
+            )}
+          </View>
         </View>
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
     </KeyboardAvoidingView>
   );
 };

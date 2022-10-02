@@ -56,7 +56,7 @@ const InputEmail = (props: any) => {
 
   return (
     <>
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? "padding": "height"}>
+      <KeyboardAvoidingView keyboardVerticalOffset={-350} behavior={Platform.OS === 'ios' ? "padding": "height"} >
         <View style={s.wrapper}>
           <Top
             title={'Verification Email'}
@@ -64,39 +64,42 @@ const InputEmail = (props: any) => {
             left={true}
             onTouchBackButton={navigation.goBack}
           />
-          <Text style={s.title}>Please type in your Email Address.</Text>
-          <Text style={s.inputTitle}>Email Address</Text>
-          <View style={{marginHorizontal: 23, marginTop: 10}}>
-            <BasicTextInput
-              update={(e: string) => {
-                setEmail(e);
-              }}
-              blur={(e: string) => {}}
-              style={{
-                paddingVertical: Platform.OS === 'ios' ? 16: 5,
-                width: '100%',
-                borderTopWidth: 0,
-                borderBottomWidth: 3,
-                borderColor: MAIN_BLACK,
-                borderRightWidth: 0,
-                borderRadius: 0,
-                borderLeftWidth: 0,
-                marginTop: 10,
-              }}
-              initValue={email}
-              textContentStyle={{
-                fontSize: 22,
-                color: MAIN_BLACK,
-                fontWeight: '700',
-              }}
-            />
+          <View>
+            <Text style={s.title}>Please type in your Email Address.</Text>
+            <Text style={s.inputTitle}>Email Address</Text>
+            <View style={{marginHorizontal: 23, marginTop: 10}}>
+              <BasicTextInput
+                update={(e: string) => {
+                  setEmail(e);
+                }}
+                blur={(e: string) => {}}
+                style={{
+                  paddingVertical: Platform.OS === 'ios' ? 16: 5,
+                  width: '100%',
+                  borderTopWidth: 0,
+                  borderBottomWidth: 3,
+                  borderColor: MAIN_BLACK,
+                  borderRightWidth: 0,
+                  borderRadius: 0,
+                  borderLeftWidth: 0,
+                  marginTop: 10,
+                }}
+                initValue={email}
+                textContentStyle={{
+                  fontSize: 22,
+                  color: MAIN_BLACK,
+                  fontWeight: '700',
+                }}
+              />
+            </View>
           </View>
+          
           <View
             style={{
               width: '100%',
               paddingHorizontal: 22,
               position: 'absolute',
-              bottom: 43,
+              bottom: 30,
             }}>
             <ButtonComponent
               title="Verify via Email"
@@ -125,6 +128,7 @@ const s = StyleSheet.create({
     width: '100%',
     backgroundColor: BASE_BACKGROUND,
     height: '100%',
+    display: 'flex', justifyContent: 'space-between'
   },
   title: {
     marginLeft: 23,

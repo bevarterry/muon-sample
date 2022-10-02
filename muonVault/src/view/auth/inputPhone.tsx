@@ -59,7 +59,7 @@ const InputPhone = (props: any) => {
 
   return (
     <>
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? "padding": "height"}>
+      <KeyboardAvoidingView  keyboardVerticalOffset={-350} behavior={Platform.OS === 'ios' ? "padding": "height"}>
         <View style={s.wrapper}>
           <Top
             title={'Verification Mobile'}

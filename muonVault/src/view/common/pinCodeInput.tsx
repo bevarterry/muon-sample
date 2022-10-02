@@ -58,7 +58,9 @@ const PinCodeInput: React.FC<React.PropsWithChildren<Props>> = ({
     update(e);
     onChangeText(e);
   }
+
   useEffect(() => {
+    
     if(propValue) onChangeText(propValue);
     //@ts-ignore
     //ref_input.current.focus();
@@ -122,7 +124,7 @@ const PinCodeInput: React.FC<React.PropsWithChildren<Props>> = ({
                 marginLeft: 5,
               },
             ]}>
-            VP
+            {postfix}
           </Text>
         )}
 

@@ -37,10 +37,19 @@ import { stringToHash } from '../Hash';
 const VerifyCode = (props: any) => {
   const navigation: any = useNavigation();
   const dispatch: any = useDispatch();
+
+  const [pinCode, setVerifyCode] = useState('');
+
+
+
   const [verifyItems , setVerifyItems] = useState({
     type: '',
     value: ''
   })
+
+  const isActiveDoneButton = () => {
+    return pinCode.length == 6;
+  };
 
   useEffect(() => {
     if (props.route.params.type) {
@@ -71,27 +80,6 @@ const VerifyCode = (props: any) => {
     }
     else return true;
   }
-  // messaging().onNotificationOpenedApp(remoteMessage => {
-  //   if (remoteMessage === null) return;
-  //   console.log('[2]', remoteMessage?.data);
-  //   pushNextStep(remoteMessage?.data?.title, remoteMessage?.data?.message);
-  // });
-
-  // messaging().getInitialNotification().then(remoteMessage => {
-  //   if (remoteMessage === null) return;
-    
-  //   console.log('[3]', remoteMessage?.data);
-  //   pushNextStep(remoteMessage?.data?.title, remoteMessage?.data?.message);
-  // });
-  
-  // messaging().setBackgroundMessageHandler(async (remoteMessage) => {
-    
-  //   if (remoteMessage === null) return;
-  //   console.log('[4]', remoteMessage?.data);
-  //   pushNextStep(remoteMessage?.data?.title, remoteMessage?.data?.message);
-  // });
-
-
 
   function pushNextStep(id: string | undefined, message: any) {
     
@@ -101,24 +89,18 @@ const VerifyCode = (props: any) => {
       setTimeout(() => {
         Toast.show(`인증번호 [${message}] 를 전달받았습니다.`, Toast.SHORT);
         console.log(message)
+    
         setVerifyCode(message);
       }, 1000);
-
       
-      //return props.navigation.navigate('Character' as never);
     }
-
   }
 
   
 
-  const [pinCode, setVerifyCode] = useState('');
-
-  const isActiveDoneButton = () => {
-    return pinCode.length == 6;
-  };
-
   function requestVerifyPincode() {
+
+    if(!isActiveDoneButton()) return;
 
     console.log(verifyItems.type)
 
@@ -130,7 +112,7 @@ const VerifyCode = (props: any) => {
 
         
         if(verifyItems.type === AUTH_PHONE_TYPE) {
-          
+          navigation.pop(1);
           return navigation.replace('InputEmail' as never);
         }
 
@@ -168,7 +150,6 @@ const VerifyCode = (props: any) => {
 
         props.navigation.pop(1);
         props.navigation.pop(2);
-        props.navigation.pop(3);
         
         props.navigation.replace('Main');
       })
