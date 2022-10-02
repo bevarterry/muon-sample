@@ -23,8 +23,11 @@ const TransactionHistoryContainer: React.FC<React.PropsWithChildren<Props>> = ({
   const [histories, setHistories] = useState<Array<TxHistory>>([]);
 
   useEffect(() => {
+    if(!vault.idx || !symbol) return;
+    
     VaultApi.history(vault.idx, symbol)
       .then(res => {
+        
         historiesMap(res);
       })
       .catch(e => {

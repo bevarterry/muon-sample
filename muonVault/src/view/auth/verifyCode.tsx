@@ -130,7 +130,8 @@ const VerifyCode = (props: any) => {
 
         
         if(verifyItems.type === AUTH_PHONE_TYPE) {
-          navigation.replace('InputEmail' as never);
+          
+          return navigation.replace('InputEmail' as never);
         }
 
         
@@ -167,6 +168,8 @@ const VerifyCode = (props: any) => {
 
         props.navigation.pop(1);
         props.navigation.pop(2);
+        props.navigation.pop(3);
+        
         props.navigation.replace('Main');
       })
       .catch(e => {

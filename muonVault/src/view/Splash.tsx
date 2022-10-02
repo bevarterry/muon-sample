@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import {Image, StyleSheet, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {useDispatch} from 'react-redux';
+import { setGlobalLoadingState } from '~/store/modules/GlobalLoadingReducer';
 import {UserApiResponse} from '../api/interface/userApiResponse';
 import User from '../api/User';
 import {getAccessToken} from '../storage/AccessTokenStorage';
@@ -25,6 +26,7 @@ const Splash = (props: any) => {
   }, []);
 
   async function accessTokenCheck() {
+    
     const accessTokenStore = await getAccessToken();
     console.log('[access token] ', accessTokenStore?.accessToken);
     if (!accessTokenStore?.accessToken)
@@ -38,6 +40,7 @@ const Splash = (props: any) => {
   }
 
   function updateUserInfo() {
+    dispatch(setGlobalLoadingState(true));
     User.info()
       .then(e => {
         const res: UserApiResponse = e;
@@ -50,9 +53,11 @@ const Splash = (props: any) => {
           '::::::::::::::::::::: [User Info ] ' + JSON.stringify(res),
         );
         dispatch(updateScAssets(res.SafeAddress, res.Wallet, res.MUP));
+        dispatch(setGlobalLoadingState(false));
         props.navigation.replace('Main');
       })
       .catch(e => {
+        dispatch(setGlobalLoadingState(false));
         props.navigation.replace('StepOne');
       });
   }

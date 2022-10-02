@@ -16,7 +16,8 @@ export default {
         },
       })
         .then(response => {
-          console.log(11111, JSON.stringify(response.data.data.vaults));
+          console.log('[Vaults API] ---- ', JSON.stringify(response.data.data.vaults)+'\n\n');
+          console.log('\n');
           resolve(response.data.data.vaults);
         })
         .catch(err => {

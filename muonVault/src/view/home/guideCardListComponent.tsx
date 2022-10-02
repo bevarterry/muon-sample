@@ -39,7 +39,6 @@ const GuideCardListComponent = () => {
         horizontal
         data={components}
         keyExtractor={item => item.id}
-        decelerationRate="fast"
         snapToAlignment={'start'}
         snapToInterval={width - (paddingHorizontalLength * 2 - 15)}
         onScroll={onScroll}

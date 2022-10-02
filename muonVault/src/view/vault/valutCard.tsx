@@ -98,7 +98,7 @@ const ValutCard: React.FC<React.PropsWithChildren<Prop>> = ({vault}) => {
       {vault.id === 'NEW_CREATE' && (
         <TouchableOpacity
           style={s.createButton}
-          activeOpacity={0.7}
+          activeOpacity={0.8}
           onPress={openCreateSafeModal}>
           <FastImage
             resizeMode="contain"
@@ -111,7 +111,7 @@ const ValutCard: React.FC<React.PropsWithChildren<Prop>> = ({vault}) => {
       {vault.id !== 'NEW_CREATE' && (
         <TouchableOpacity
           style={s.valutCard}
-          activeOpacity={0.7}
+          activeOpacity={0.8}
           onPress={moveDetail}>
           <View style={[s.cardTitle, {backgroundColor: vault.color}]}>
             <Text style={s.cardTitleText}>{vault.name}</Text>

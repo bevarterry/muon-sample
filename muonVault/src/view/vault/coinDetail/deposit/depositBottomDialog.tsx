@@ -25,11 +25,14 @@ import {
   CC_WHITE,
   MAIN_BLACK,
 } from '~/view/ColorCode';
+import Clipboard from '@react-native-clipboard/clipboard';
+import Toast from 'react-native-simple-toast';
 
 import ButtonComponent from '@view/common/ButtonComponent';
 import {useSelector} from 'react-redux';
 import {RootState} from '~/store/modules';
 import {CoinDetailType} from '~/model/coin';
+import { setCommonInfo } from '~/store/global/state';
 const {width, height} = Dimensions.get('window');
 const buttonWidth = (width - 30) / 2;
 
@@ -120,7 +123,13 @@ const DepositBottomDialog: React.FC<React.PropsWithChildren<Props>> =
                 paddingVertical={21}
                 borderRadius={16}
                 bodyColor={BASE_GRAY_BACKGROUND}
-                click={() => {}}
+                click={() => {{
+                  Clipboard.setString(getDepositAddressBySymbol());
+                  Toast.show(`${getDepositAddressBySymbol()} 주소 복사`, Toast.SHORT);
+                  Toast
+                }
+                  
+                }}
               />
               <View style={{width: 10}} />
               <ButtonComponent
