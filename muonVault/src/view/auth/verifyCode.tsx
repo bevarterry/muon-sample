@@ -32,16 +32,13 @@ import Top from '../common/top';
 import {AUTH_EMAIL_TYPE, AUTH_PHONE_TYPE, NOTI_AUTH_PHONE, STORED_ACCESS_TOKEN, STORED_FCM_TOKEN} from '../constantProperties';
 import messaging from '@react-native-firebase/messaging';
 import Toast from 'react-native-simple-toast';
-import { stringToHash } from '../Hash';
+import { isDuplicated, stringToHash } from '../Hash';
 
 const VerifyCode = (props: any) => {
   const navigation: any = useNavigation();
   const dispatch: any = useDispatch();
 
   const [pinCode, setVerifyCode] = useState('');
-
-
-
   const [verifyItems , setVerifyItems] = useState({
     type: '',
     value: ''
@@ -72,14 +69,6 @@ const VerifyCode = (props: any) => {
     pushNextStep(remoteMessage.data.title, remoteMessage.data.message);
   });
 
-  function isDuplicated(hashCodeRomoteMessage: number) {
-    const v = getCommonInfo(hashCodeRomoteMessage + '');
-    if (v === undefined || v === null) {
-      setCommonInfo(hashCodeRomoteMessage + '', true);
-      return false;
-    }
-    else return true;
-  }
 
   function pushNextStep(id: string | undefined, message: any) {
     

@@ -25,6 +25,7 @@ import GlobalLoading from './common/GlobalLoading';
 import messaging from '@react-native-firebase/messaging';
 import Toast from 'react-native-simple-toast';
 import { NOTI_AUTH_PHONE } from './constantProperties';
+import { isDuplicated, stringToHash } from './Hash';
 
 const Tab = createBottomTabNavigator();
 
@@ -56,85 +57,50 @@ const Main = () => {
 
 
 
-  // messaging().onMessage(async remoteMessage => {
-  //   if (remoteMessage === null) return;
-
-  //   console.log('**************** 앱 켜져있을떄 호출됨 : ', remoteMessage.data,);
-    
-  // });
-
-  // messaging().onNotificationOpenedApp(remoteMessage => {
-  //   if (remoteMessage === null) return;
-  //   console.log('**************** 노티 클릭후 떴을떄 : ', remoteMessage);
-  //   Toast.show(`푸시 옴`+ remoteMessage.data, Toast.SHORT);
-  // });
-
-  // messaging().getInitialNotification().then(remoteMessage => {
-  //   if (remoteMessage === null) return;
-  //   console.log('**************** 앱 완전 재실행시 : ', remoteMessage);
-  //   Toast.show(`푸시 옴`+ remoteMessage.data, Toast.SHORT);
-  // });
-  
-  // messaging().setBackgroundMessageHandler(async (remoteMessage) => {
-    
-  //   if (remoteMessage === null) return;
-    
-  //   console.log('**************** 앱 중지 상태 호출됨 : ', remoteMessage);
-  //   Toast.show(`푸시 옴`+ remoteMessage.data, Toast.SHORT);
-  // });
-
-
-
-
-
-
-  messaging().onMessage(async remoteMessage => {
+  messaging().onMessage(async (remoteMessage: any) => {
     if (remoteMessage === null) return;
 
-    pushNextStep(remoteMessage?.data?.title);
+    console.log('**************** 앱 켜져있을떄 호출됨 : ', remoteMessage.data,);
+    pushNextStep(remoteMessage.data.title, remoteMessage.data.message);
   });
 
-  messaging().onNotificationOpenedApp(remoteMessage => {
+  messaging().onNotificationOpenedApp((remoteMessage: any) => {
     if (remoteMessage === null) return;
-  
-    pushNextStep(remoteMessage?.data?.title);
+    console.log('**************** 노티 클릭후 떴을떄 : ', remoteMessage);
+    const hashCodeRomoteMessage = stringToHash(JSON.stringify(remoteMessage));
+
+    if (isDuplicated(hashCodeRomoteMessage)) return;
+
+    pushNextStep(remoteMessage.data.title, remoteMessage.data.message);
   });
 
-  messaging().getInitialNotification().then(remoteMessage => {
+  messaging().getInitialNotification().then((remoteMessage: any) => {
     if (remoteMessage === null) return;
-    
-    console.log("[MAIN getInitialNotification OpenedApp] id ", JSON.stringify(remoteMessage));
-    pushNextStep(remoteMessage?.data?.title);
+    console.log('**************** 앱 완전 재실행시 : ', remoteMessage);
+    Toast.show(`푸시 옴`+ remoteMessage.data, Toast.SHORT);
   });
   
-  messaging().setBackgroundMessageHandler(async (remoteMessage) => {
+  messaging().setBackgroundMessageHandler(async (remoteMessage: any) => {
     
     if (remoteMessage === null) return;
     
-
-    console.log("[MAIN Background Push] id ", JSON.stringify(remoteMessage));
-    pushNextStep(remoteMessage?.data?.title);
+    console.log('**************** 앱 중지 상태 호출됨 : ', remoteMessage);
+    Toast.show(`푸시 옴`+ remoteMessage.data, Toast.SHORT);
   });
 
 
 
-  function pushNextStep(id: string | undefined) {
+  function pushNextStep(id: string | undefined, message: any) {
+  
+      
     if (id === undefined) return;
 
     if (id === NOTI_AUTH_PHONE) {
       
-      //return props.navigation.navigate('Character' as never);
+    }else {
+      Toast.show(message, Toast.SHORT);
     }
-
   }
-
-
-
-
-
-
-
-
 
 
 
