@@ -34,6 +34,7 @@ import VaultApi from '../../../../api/Vault';
 import { CompleteBuyVpProps } from './completeBuyVp';
 import { Vault } from '~/model/vaults';
 import GlobalLoading from '~/view/common/GlobalLoading';
+import { checkBiometic } from '~/view/auth/biometic';
 
 const buy_vp_icon = require('../../../../../assets/image/buy_vp_icon.png');
 const arrow_down_img = require('../../../../../assets/image/arrow_down_img.png');
@@ -92,6 +93,10 @@ const ConfirmBuyVp = (props: any) => {
 
 
   async function requestConfirmForBuy() {
+    if(!await checkBiometic()) {
+      return Toast.show(`생체인증에 실패했습니다.`, Toast.SHORT);
+    }
+
     dispatch(setGlobalLoadingState(true));
     console.log(setGlobalLoadingState(true));
     try {

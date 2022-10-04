@@ -16,6 +16,8 @@ import {useDispatch} from 'react-redux';
 import {updateVaults} from '~/store/action/VaultAction';
 import {CompleteWithdrawProps} from './completeWithdraw';
 import {setGlobalLoadingState} from '~/store/modules/GlobalLoadingReducer';
+import { checkBiometic } from '~/view/auth/biometic';
+import Toast from 'react-native-simple-toast';
 
 const {width, height} = Dimensions.get('window');
 const buttonWidth = (width - 34) / 2;
@@ -31,6 +33,16 @@ type Props = {
 const SendToVault: React.FC<React.PropsWithChildren<Props>> = ({prop}) => {
   const navigation: any = useNavigation();
   const dispatch: any = useDispatch();
+
+
+  async function send() {
+    if(!await checkBiometic()) {
+      return Toast.show(`생체인증에 실패했습니다.`, Toast.SHORT);
+    }
+
+    dispatch(setGlobalLoadingState(true));
+    requestVaultUpdate();
+  }
 
   function requestVaultUpdate() {
     const param = {
@@ -79,10 +91,7 @@ const SendToVault: React.FC<React.PropsWithChildren<Props>> = ({prop}) => {
           paddingVertical={21}
           borderRadius={16}
           bodyColor={MAIN_BLACK}
-          click={() => {
-            dispatch(setGlobalLoadingState(true));
-            requestVaultUpdate();
-          }}
+          click={send}
         />
         <View style={{width: 10}} />
         <ButtonComponent

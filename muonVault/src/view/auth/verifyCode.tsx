@@ -33,6 +33,9 @@ import {AUTH_EMAIL_TYPE, AUTH_PHONE_TYPE, NOTI_AUTH_PHONE, STORED_ACCESS_TOKEN, 
 import messaging from '@react-native-firebase/messaging';
 import Toast from 'react-native-simple-toast';
 import { isDuplicated, stringToHash } from '../Hash';
+import ReactNativeBiometrics from 'react-native-biometrics'
+import { checkBiometic, checkFingerprint, simplePrompt } from './biometic';
+
 
 const VerifyCode = (props: any) => {
   const navigation: any = useNavigation();
@@ -43,6 +46,7 @@ const VerifyCode = (props: any) => {
     type: '',
     value: ''
   })
+
 
   const isActiveDoneButton = () => {
     return pinCode.length == 6;
@@ -88,7 +92,7 @@ const VerifyCode = (props: any) => {
   
 
   function requestVerifyPincode() {
-
+    
     if(!isActiveDoneButton()) return;
 
     console.log(verifyItems.type)
@@ -104,8 +108,13 @@ const VerifyCode = (props: any) => {
           navigation.pop(1);
           return navigation.replace('InputEmail' as never);
         }
+        // FCM토큰 바로갱신
+        updateFcmToken();
 
-        
+        if(!await checkBiometic()) {
+          return Toast.show(`생체인증에 실패했습니다.`, Toast.SHORT);
+        }
+
         const {token} = res.data;
 
         await setAccessToken({accessToken: token});
@@ -113,8 +122,7 @@ const VerifyCode = (props: any) => {
         setCommonInfo(STORED_ACCESS_TOKEN, token);
 
         updateUserInfo();
-
-        updateFcmToken();
+        
       })
       .catch(e => {
         Alert.alert('인증에 실했습니다. 인증코드를 다시 확인하세요. ');
@@ -126,6 +134,8 @@ const VerifyCode = (props: any) => {
   }
 
   function updateUserInfo() {
+
+
     User.info()
       .then(e => {
         const res: UserApiResponse = e;

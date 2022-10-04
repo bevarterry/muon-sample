@@ -31,6 +31,7 @@ import VaultApi from '../../../../api/Vault';
 import { setGlobalLoadingState } from '~/store/modules/GlobalLoadingReducer';
 import Toast from 'react-native-simple-toast';
 import { CompleteWithdrawProps } from './completeWithdraw';
+import { checkBiometic } from '~/view/auth/biometic';
 
 const {width, height} = Dimensions.get('window');
 const buttonWidth = (width - 34) / 2;
@@ -58,6 +59,10 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
     return (props.coin.ratio * Number(props.amount));
   }
   async function sendAll() {
+    if(!await checkBiometic()) {
+      return Toast.show(`생체인증에 실패했습니다.`, Toast.SHORT);
+    }
+
     try {
       dispatch(setGlobalLoadingState(true));
       const hash = await requestWithdrawConfirm();
