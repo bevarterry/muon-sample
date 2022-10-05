@@ -1,6 +1,8 @@
 import React, {useRef, useState} from 'react';
 import {useEffect} from 'react';
 import {
+  Alert,
+  BackHandler,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -43,6 +45,22 @@ const CreateNewSafeModalComponent: React.FC<React.PropsWithChildren<Props>> = ({
     dispatch(createNewVault(safeName));
     if (closeModal) closeModal();
   }
+
+  useEffect(() => {
+    const backAction = () => {
+      if (closeModal) closeModal();
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, []);
+
+
   return (
     <>
     
