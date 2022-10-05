@@ -4,6 +4,7 @@ import FastImage from 'react-native-fast-image';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {useSelector} from 'react-redux';
+import { isAddress } from '~/bc/VaultEtherApi';
 import {Vault} from '../../../../model/vaults';
 import {RootState} from '../../../../store/modules';
 import {
@@ -30,7 +31,7 @@ type Props = {
   selectVault: Function;
   vault: Vault;
 };
-const Step0: React.FC<React.PropsWithChildren<Props>> = ({
+const InputToStep: React.FC<React.PropsWithChildren<Props>> = ({
   updateStep,
   updateToAddress,
   selectVault,
@@ -40,7 +41,7 @@ const Step0: React.FC<React.PropsWithChildren<Props>> = ({
   const [toAddress, setToAddress] = useState('');
 
   const isActiveNextButton = () => {
-    return toAddress !== '';
+    return toAddress !== '' && isAddress(toAddress);
   };
 
   const candidateVaults = () => {
@@ -60,8 +61,10 @@ const Step0: React.FC<React.PropsWithChildren<Props>> = ({
                 key={index}
                 style={{marginRight: 10}}
                 onPress={() => {
+                  setToAddress('');
+                  updateToAddress('');
                   selectVault(element);
-                  setToAddress(element.name);
+                  updateStep(WITHDRAW_INPUT_AMOUNT);
                 }}>
                 <BasicBadge
                   borderRadius={8}
@@ -140,7 +143,7 @@ const Step0: React.FC<React.PropsWithChildren<Props>> = ({
   );
 };
 
-export default Step0;
+export default InputToStep;
 
 const s = StyleSheet.create({
   candidateVaultsWrapper: {

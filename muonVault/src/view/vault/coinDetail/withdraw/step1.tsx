@@ -35,7 +35,7 @@ const Step1: React.FC<React.PropsWithChildren<Props>> = ({
   const [amount, setAmount] = useState('0');
 
   const isActiveDoneButton = () => {
-    return amount !== '0';
+    return Number(amount) !== 0;
   };
 
   const isExcessBalance = () => {

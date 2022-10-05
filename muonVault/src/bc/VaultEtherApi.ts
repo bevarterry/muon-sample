@@ -27,6 +27,12 @@ const provider = new providers.InfuraProvider(
   '35e8ec5bb21b460bbb74bbe1ee56b2d5',
 );
 
+
+
+const isAddress = (address: string ) => {
+  return ethers.utils.isAddress(address);
+}
+
 const getBalanceEther = async (privateKey: string, contractAddress: string) => {
   const wallet = new ethers.Wallet(privateKey);
 
@@ -81,4 +87,4 @@ const requestEtherWithdrawConfirm = async (
   return receipt.hash;
 };
 
-export {getBalanceEther, requestEtherWithdrawConfirm};
+export {getBalanceEther, requestEtherWithdrawConfirm, isAddress};

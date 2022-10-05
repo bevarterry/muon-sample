@@ -13,7 +13,7 @@ import {
   WITHDRAW_INPUT_AMOUNT,
   WITHDRAW_INPUT_TO_ADDRESS,
 } from '../../../constantProperties';
-import Step0 from './step0';
+import InputToStep from './inputToStep';
 import Step1 from './step1';
 import SendToAddress from './sendToAddress';
 import SendToVault from './sendToVault';
@@ -26,11 +26,19 @@ const WithDraw = (props: any) => {
     (root: RootState) => root.globalLoadingState,
   );
 
+  const navigation = useNavigation();
+
   const [toAddress, setToAddress] = useState('');
   const [amount, setAmount] = useState('');
   const [step, setStep] = useState(WITHDRAW_INPUT_TO_ADDRESS);
 
-  const navigation = useNavigation();
+  
+  const [withdrawItems, setWithrawItems ] = useState({
+    to: '',
+    amount : ''
+  })
+
+
   const [coin, setCoin] = useState<CoinDetailType>({
     value: 0,
     ratio: 0,
@@ -67,11 +75,12 @@ const WithDraw = (props: any) => {
     if (props.route.params.vault) {
       const {coin, vault} = props.route.params;
 
-      console.log(coin);
       setFromVault(vault);
       setCoin(coin);
     }
   }, []);
+
+
   const topCompoennt = (
     <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
       <FastImage
@@ -98,6 +107,8 @@ const WithDraw = (props: any) => {
           left={true}
           onTouchBackButton={navigation.goBack}
         />
+
+        {/* 보낼사람 */}
         <View style={s.fromRow}>
           <BasicBadge
             title={'From'}
@@ -111,7 +122,9 @@ const WithDraw = (props: any) => {
             {fromVault.name}
           </Text>
         </View>
-
+        
+        
+        {/* 보낼사람 입력완료시 */}
         {step !== WITHDRAW_INPUT_TO_ADDRESS && (
           <View style={s.fromRow}>
             <BasicBadge
@@ -135,6 +148,9 @@ const WithDraw = (props: any) => {
             }
           </View>
         )}
+
+        
+
         {step !== WITHDRAW_INPUT_TO_ADDRESS && step !== WITHDRAW_INPUT_AMOUNT && (
           <>
             <View style={s.fromRow}>
@@ -167,7 +183,7 @@ const WithDraw = (props: any) => {
         )}
 
         {step === WITHDRAW_INPUT_TO_ADDRESS && (
-          <Step0
+          <InputToStep
             vault={fromVault}
             updateStep={(next: string) => {
               setStep(next);
