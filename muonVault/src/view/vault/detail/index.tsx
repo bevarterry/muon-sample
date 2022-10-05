@@ -54,7 +54,7 @@ const VaultDetail = (props: any) => {
         vault.BNB * ratioStore.ratioSet.BNB +
         vault.USDC * ratioStore.ratioSet.USDC +
         vault.VP * ratioStore.ratioSet.MU,
-    ).toFixed(0);
+    ).toFixed(2);
   };
 
   const coinRow = (
@@ -98,7 +98,7 @@ const VaultDetail = (props: any) => {
             alignItems: 'flex-end',
             justifyContent: 'flex-end',
           }}>
-          <Text style={s.value}>{value}</Text>
+          <Text style={s.value}>{Number(value) === 0 ? '0.0' : Number(value).toFixed(8)}</Text>
           <Text style={s.dollarValue}>${Number(value * ratio).toFixed(0)}</Text>
         </View>
       </TouchableOpacity>

@@ -21,7 +21,7 @@ export function simplePrompt (): Promise<boolean> {
 
             if (success) {
                 resolve(true);
-                Toast.show ('successful biometrics auth!')
+                Toast.show ('생체인증에 성공했습니다')
             } else {
                 resolve(false);
                 
