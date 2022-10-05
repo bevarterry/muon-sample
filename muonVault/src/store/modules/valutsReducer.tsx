@@ -62,7 +62,7 @@ function generateDefaultVault(vaults: Array<Vault>, totalAssets: TotalAssets) {
     {
       idx: DEFAULT_WALLET,
       id: DEFAULT_WALLET,
-      name: 'Wallet (main)',
+      name: 'Safe 1',
       BTC: totalAssets.bitcoin - sumBtc,
       BNB: totalAssets.binance - sumBnb,
       USDC: totalAssets.usdc - sumUsdc,

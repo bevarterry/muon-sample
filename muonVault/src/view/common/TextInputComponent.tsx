@@ -8,12 +8,15 @@ import {
   Dimensions,
   Text,
   Platform,
+  KeyboardTypeOptions,
 } from 'react-native';
 import {Value} from 'react-native-reanimated';
 
 const {width, height} = Dimensions.get('window');
 
 type Props = {
+  textAlign?: "center" | "left" | "right" | undefined;
+  keypad?: KeyboardTypeOptions | undefined;
   title?: string;
   fontSize?: number;
   fontWeight?: any;
@@ -37,9 +40,11 @@ type Props = {
 };
 const TextInputComponent: React.FC<React.PropsWithChildren<Props>> = ({
   title,
+  textAlign,
   backgroundColor,
   active,
   icon,
+  keypad,
   paddingVertical,
   marginHorizontal,
   password,
@@ -94,8 +99,8 @@ const TextInputComponent: React.FC<React.PropsWithChildren<Props>> = ({
               fontWeight: fontWeight ? fontWeight : '400',
             },
           ]}
-          keyboardType={'number-pad'}
-          textAlign={value ? 'right' : 'center'}
+          keyboardType={keypad?keypad:'default'}
+          textAlign={value ? (textAlign ? textAlign: 'right') : (textAlign ? textAlign: 'center')}
           editable
           ref={ref_input}
           numberOfLines={1}
@@ -115,7 +120,9 @@ const TextInputComponent: React.FC<React.PropsWithChildren<Props>> = ({
           }}
           placeholder={placeHolder}
           placeholderTextColor="#9C9C9C"
-          value={value}></TextInput>
+          value={value}>
+            
+          </TextInput>
         {rightComponent}
       </View>
     </>

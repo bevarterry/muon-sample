@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {TxHistory} from '../../../model/transactionHistory';
 import {Vault} from '../../../model/vaults';
@@ -20,6 +20,7 @@ const TransactionHistoryContainer: React.FC<React.PropsWithChildren<Props>> = ({
   vault,
 }) => {
   const vaultStore = useSelector((root: RootState) => root.vaultsStore);
+  const navigation = useNavigation();
   const [histories, setHistories] = useState<Array<TxHistory>>([]);
 
   useEffect(() => {
@@ -92,14 +93,17 @@ const TransactionHistoryContainer: React.FC<React.PropsWithChildren<Props>> = ({
     <View style={s.wrapper}>
       <View style={s.titleWrapper}>
         <Text style={s.title}>{symbol} transaction history</Text>
-        <View style={[s.centerAlign, s.searchIcon]}>
+        <TouchableOpacity activeOpacity={0.8} style={[s.centerAlign, s.searchIcon]}
+          onPress={()=> {
+            navigation.navigate('TransactionHistory' as never, {histories: histories, symbol: symbol} as never);
+          }}>
           <FastImage
             resizeMode="contain"
             tintColor={'#000000'}
             style={{width: 13.9, height: 13.9}}
             source={search_icon}
           />
-        </View>
+        </TouchableOpacity>
       </View>
       {histories && histories.length > 0 && (
         <View style={s.historiesWrapper}>

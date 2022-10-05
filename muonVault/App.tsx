@@ -32,6 +32,7 @@ import InputPhone from '~/view/auth/inputPhone';
 import GlobalLoading from '~/view/common/GlobalLoading';
 import { RootState } from '~/store/modules';
 import ConfirmBuyVp from '~/view/vault/coinDetail/buyVp/confirmBuyVp';
+import TransactionHistory from '~/view/vault/coinDetail/transactionHistory';
 
 const Stack = createStackNavigator();
 const baseTransitionOption = {
@@ -132,6 +133,12 @@ const App = () => {
             component={CoinDetail}
             options={baseTransitionOption}
           />
+          <Stack.Screen
+            name="TransactionHistory"
+            component={TransactionHistory}
+            options={baseTransitionOption}
+          />
+          
           <Stack.Screen
             name="WithDraw"
             component={WithDraw}

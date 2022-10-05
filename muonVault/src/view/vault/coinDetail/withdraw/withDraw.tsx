@@ -14,7 +14,7 @@ import {
   WITHDRAW_INPUT_TO_ADDRESS,
 } from '../../../constantProperties';
 import InputToStep from './inputToStep';
-import Step1 from './step1';
+import Step1 from './inputAmount';
 import SendToAddress from './sendToAddress';
 import SendToVault from './sendToVault';
 import GlobalLoading from '~/view/common/GlobalLoading';

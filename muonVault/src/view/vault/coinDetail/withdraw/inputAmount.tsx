@@ -25,7 +25,7 @@ type Props = {
   updateStep: Function;
   updateAmount: Function;
 };
-const Step1: React.FC<React.PropsWithChildren<Props>> = ({
+const InputAmount: React.FC<React.PropsWithChildren<Props>> = ({
   coin,
   toVault,
   fromVault,
@@ -45,6 +45,7 @@ const Step1: React.FC<React.PropsWithChildren<Props>> = ({
   return (
     <>
       <TextInputComponent
+        keypad={'number-pad'}
         leftComponent={
           <BasicBadge
             title={'Amount'}
@@ -145,7 +146,7 @@ const Step1: React.FC<React.PropsWithChildren<Props>> = ({
   );
 };
 
-export default Step1;
+export default InputAmount;
 
 const s = StyleSheet.create({
   wrapper: {
