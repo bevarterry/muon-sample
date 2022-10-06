@@ -33,6 +33,7 @@ import GlobalLoading from '~/view/common/GlobalLoading';
 import { RootState } from '~/store/modules';
 import ConfirmBuyVp from '~/view/vault/coinDetail/buyVp/confirmBuyVp';
 import TransactionHistory from '~/view/vault/coinDetail/transactionHistory';
+import BiometicContainer from '~/view/auth/biometicContainer';
 
 const Stack = createStackNavigator();
 const baseTransitionOption = {
@@ -94,6 +95,11 @@ const App = () => {
             options={baseTransitionOption}
           />
           <Stack.Screen
+            name="BiometicContainer"
+            component={BiometicContainer}
+            options={modalPresentOption}
+          />
+          <Stack.Screen
             name="Home"
             component={Home}
             options={baseTransitionOption}
@@ -103,6 +109,7 @@ const App = () => {
             component={Crypto}
             options={baseTransitionOption}
           />
+
           <Stack.Screen
             name="Asset"
             component={Asset}

@@ -35,12 +35,13 @@ import Toast from 'react-native-simple-toast';
 import { isDuplicated, stringToHash } from '../Hash';
 import ReactNativeBiometrics from 'react-native-biometrics'
 import { checkBiometic, checkFingerprint, simplePrompt } from './biometic';
+import { INIT_AUTH } from './biometicContainer';
 
 
 const VerifyCode = (props: any) => {
   const navigation: any = useNavigation();
   const dispatch: any = useDispatch();
-
+  const [token, setToken] = useState('');
   const [pinCode, setVerifyCode] = useState('');
   const [verifyItems , setVerifyItems] = useState({
     type: '',
@@ -92,7 +93,7 @@ const VerifyCode = (props: any) => {
   
 
   function requestVerifyPincode() {
-    
+  
     if(!isActiveDoneButton()) return;
 
     console.log(verifyItems.type)
@@ -108,26 +109,37 @@ const VerifyCode = (props: any) => {
           navigation.pop(1);
           return navigation.replace('InputEmail' as never);
         }
+
+        setToken(res.data);
+        
         // FCM토큰 바로갱신
         updateFcmToken();
-
-        if(!await checkBiometic()) {
-          return Toast.show(`생체인증에 실패했습니다.`, Toast.SHORT);
-        }
-
-        const {token} = res.data;
-
-        await setAccessToken({accessToken: token});
-
-        setCommonInfo(STORED_ACCESS_TOKEN, token);
-
-        updateUserInfo();
         
+        props.navigation.navigate('BiometicContainer', {
+          purpose: INIT_AUTH,
+          pass: ()=>{checkBiometicPass()}, 
+          reject: ()=>{reject()}} as never);
+    
       })
       .catch(e => {
         Alert.alert('인증에 실했습니다. 인증코드를 다시 확인하세요. ');
       });
   }
+
+  function reject() {
+    Toast.show(`생체인증에 실패했습니다.`, Toast.SHORT);
+  }
+
+  async function checkBiometicPass() {
+
+    await setAccessToken({accessToken: token});
+
+    setCommonInfo(STORED_ACCESS_TOKEN, token);
+
+    updateUserInfo();
+
+  }
+
 
   function updateFcmToken() {
     User.updateFcm({fcmToken: getCommonInfo(STORED_FCM_TOKEN)});
