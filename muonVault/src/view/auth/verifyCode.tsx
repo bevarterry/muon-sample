@@ -41,7 +41,6 @@ import { INIT_AUTH } from './biometicContainer';
 const VerifyCode = (props: any) => {
   const navigation: any = useNavigation();
   const dispatch: any = useDispatch();
-  const [token, setToken] = useState('');
   const [pinCode, setVerifyCode] = useState('');
   const [verifyItems , setVerifyItems] = useState({
     type: '',
@@ -109,11 +108,11 @@ const VerifyCode = (props: any) => {
           navigation.pop(1);
           return navigation.replace('InputEmail' as never);
         }
+        const {token} = res.data;
 
-        setToken(res.data);
+        await setAccessToken({accessToken: token});
+        setCommonInfo(STORED_ACCESS_TOKEN, token);
         
-        // FCM토큰 바로갱신
-        updateFcmToken();
         
         props.navigation.navigate('BiometicContainer', {
           purpose: INIT_AUTH,
@@ -126,15 +125,16 @@ const VerifyCode = (props: any) => {
       });
   }
 
-  function reject() {
+  async function reject() {
+    await setAccessToken({accessToken: ''});
+    setCommonInfo(STORED_ACCESS_TOKEN, '');
     Toast.show(`생체인증에 실패했습니다.`, Toast.SHORT);
   }
 
   async function checkBiometicPass() {
 
-    await setAccessToken({accessToken: token});
-
-    setCommonInfo(STORED_ACCESS_TOKEN, token);
+    // FCM토큰 바로갱신
+    updateFcmToken();
 
     updateUserInfo();
 
@@ -146,12 +146,9 @@ const VerifyCode = (props: any) => {
   }
 
   function updateUserInfo() {
-
-
     User.info()
       .then(e => {
         const res: UserApiResponse = e;
-
         
         dispatch(updateWallet(res.Wallet));
 
