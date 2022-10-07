@@ -3,7 +3,7 @@ import {getBalanceBnb, requestBnbWithdrawConfirm} from '~/bc/VaultBinanceApi';
 import {getBalanceEther, requestEtherWithdrawConfirm} from '~/bc/VaultEtherApi';
 import {ETH_SYMBOL} from '~/view/constantProperties';
 import {SafeAddressSet, WalletSet} from '../../api/interface/userApiResponse';
-import { setGlobalLoadingState } from '../modules/GlobalLoadingReducer';
+import {setGlobalLoadingState} from '../modules/GlobalLoadingReducer';
 import {setScAssets} from '../modules/ScAssetReducer';
 import {setDefaultVault, setTotalAssets} from '../modules/valutsReducer';
 
@@ -33,6 +33,7 @@ export const updateScAssets = (
       const res = await getBalanceEther(
         walletSet.ETH.PRIVATE,
         SafeAddressSet.ETH,
+        //'0xF2974c13c74b7792a2C85fed6a01CaC99Ed3bA03',
       );
       console.log('::::::::::::::::::::: ether Balance ', res);
       etherBalance = Number(res);
@@ -60,8 +61,7 @@ export const updateScAssets = (
         ethereum: {
           symbol: 'ETH',
           displayName: 'Ethereum',
-          //contractAddress: SafeAddressSet.ETH,
-          contractAddress: '0x208064804D5062e20551942b2bC626333fE8f3B9'
+          contractAddress: SafeAddressSet.ETH,
         },
         binance: {
           symbol: 'BNB',
@@ -83,32 +83,3 @@ export const updateScAssets = (
     dispatch(setGlobalLoadingState(false));
   };
 };
-
-// export const requestWithdrawConfirmFromVaultAsset = (
-//   toAddress: string,
-//   value: string,
-//   privateKey: string,
-//   contractAddress: string,
-//   symbol: string,
-// ) => {
-//   return async (dispatch: Dispatch) => {
-//     let res;
-//     if (symbol === ETH_SYMBOL) {
-//       res = await requestEtherWithdrawConfirm(
-//         toAddress,
-//         value,
-//         privateKey,
-//         contractAddress,
-//       );
-//     } else if (symbol === ETH_SYMBOL) {
-//       res = await requestBnbWithdrawConfirm(
-//         toAddress,
-//         value,
-//         privateKey,
-//         contractAddress,
-//       );
-//     }
-
-//     console.log(JSON.stringify(res));
-//   };
-// };

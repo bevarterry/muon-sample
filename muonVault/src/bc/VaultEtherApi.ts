@@ -23,15 +23,13 @@ const gasPrice = '10';
 const gasLimit = 1000000;
 
 const provider = new providers.InfuraProvider(
-  'rinkeby',
+  'goerli',
   '35e8ec5bb21b460bbb74bbe1ee56b2d5',
 );
 
-
-
-const isAddress = (address: string ) => {
+const isAddress = (address: string) => {
   return ethers.utils.isAddress(address);
-}
+};
 
 const getBalanceEther = async (privateKey: string, contractAddress: string) => {
   const wallet = new ethers.Wallet(privateKey);
@@ -47,7 +45,7 @@ const getBalanceEther = async (privateKey: string, contractAddress: string) => {
   const balance = await contract.getBalance({
     from: wallet.address,
   });
-
+  console.log(balance);
   return ethers.utils.formatEther(balance);
 };
 
@@ -66,7 +64,6 @@ const requestEtherWithdrawConfirm = async (
     signer,
   );
 
-
   let receipt;
   try {
     receipt = await contract.requestAndConfirmWithdraw(
@@ -83,7 +80,7 @@ const requestEtherWithdrawConfirm = async (
   } catch (err) {
     console.error(JSON.stringify(err));
   }
-  console.log('[ BC 전송 트랜잭션] ', receipt.hash)
+  console.log('[ BC 전송 트랜잭션] ', receipt.hash);
   return receipt.hash;
 };
 
