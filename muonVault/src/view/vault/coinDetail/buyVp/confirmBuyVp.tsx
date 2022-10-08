@@ -27,7 +27,7 @@ import FastImage from 'react-native-fast-image';
 import {CoinDetailType} from '~/model/coin';
 import { requestBnbWithdrawConfirm } from '~/bc/VaultBinanceApi';
 import { requestEtherWithdrawConfirm } from '~/bc/VaultEtherApi';
-import { BNB_SYMBOL, ETH_SYMBOL } from '~/view/constantProperties';
+import { BNB_BUY_MU_ADDRESS, BNB_SYMBOL, ETH_BUY_MU_ADDRESS, ETH_SYMBOL } from '~/view/constantProperties';
 import { setGlobalLoadingState } from '~/store/modules/GlobalLoadingReducer';
 import Toast from 'react-native-simple-toast';
 import VaultApi from '../../../../api/Vault';
@@ -98,7 +98,6 @@ const ConfirmBuyVp = (props: any) => {
     }
 
     dispatch(setGlobalLoadingState(true));
-    console.log(setGlobalLoadingState(true));
     try {
       
       const hash = await requestWithdrawConfirm();
@@ -107,7 +106,6 @@ const ConfirmBuyVp = (props: any) => {
 
     } catch (error) {
       dispatch(setGlobalLoadingState(false));
-      console.log(111111, JSON.stringify(error));
     }
   }
 
@@ -150,7 +148,7 @@ const ConfirmBuyVp = (props: any) => {
     if (coin.symbol === ETH_SYMBOL) {
       
       res = await requestEtherWithdrawConfirm(
-        '0x7846715624a96f0EDC69D65cb75f7e9E3b6c98e5',
+        ETH_BUY_MU_ADDRESS,
         String(toValue.toFixed(8)),
         coin.privateKey,
         coin.contractAddress,
@@ -158,7 +156,7 @@ const ConfirmBuyVp = (props: any) => {
 
     } else if (props.coin.symbol === BNB_SYMBOL) {
       res = await requestBnbWithdrawConfirm(
-        '0x1581B470f6202B06752CED6de329AcE5b9317caa',
+        BNB_BUY_MU_ADDRESS,
         String(toValue.toFixed(8)),
         coin.privateKey,
         coin.contractAddress,

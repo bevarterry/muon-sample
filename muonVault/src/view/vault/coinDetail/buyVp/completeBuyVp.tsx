@@ -42,8 +42,6 @@ const CompleteBuyVp = (props: any) => {
 
   useEffect(() => {
     if (props.route.params.fromVault) {
-
-      console.log(props.route.params);
       setItems(props.route.params);
     }
   }, []);

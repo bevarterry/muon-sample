@@ -71,7 +71,6 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
 
     } catch (error) {
       dispatch(setGlobalLoadingState(false));
-      console.log(JSON.stringify(error));
     }
   }
 

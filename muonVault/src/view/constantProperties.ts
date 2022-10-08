@@ -1,5 +1,5 @@
-export const WITHDRAW = 'WITHDRAW';
-export const DEPOSIT = 'DEPOSIT';
+export const WITHDRAW = 'Withdraw';
+export const DEPOSIT = 'Deposit';
 export const BUY_VP = 'BUY_VP';
 
 export const WITHDRAW_INPUT_TO_ADDRESS = 'INPUT_TO_ADDRESS';
@@ -27,3 +27,7 @@ export const MU_DISPLAY_SYMBOL = 'MU:P';
 export const NOTI_AUTH_PHONE="AUTH_PHONE";
 export const AUTH_PHONE_TYPE="AUTH_PHONE";
 export const AUTH_EMAIL_TYPE="AUTH_EMAIL";
+
+
+export const ETH_BUY_MU_ADDRESS="0x7846715624a96f0EDC69D65cb75f7e9E3b6c98e5";
+export const BNB_BUY_MU_ADDRESS="0x1581B470f6202B06752CED6de329AcE5b9317caa";

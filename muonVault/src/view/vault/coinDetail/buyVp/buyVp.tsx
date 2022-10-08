@@ -51,8 +51,6 @@ const BuyVp = (props: any) => {
   });
 
   const isActiveDoneButton = () => {
-    console.log(inputMuAmount)
-    console.log(posibleBuyAmount)
     
     return inputMuAmount !== 0 && posibleBuyAmount !== 0 && !isExcessBalance();
   };

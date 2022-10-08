@@ -5,7 +5,7 @@ import FastImage from 'react-native-fast-image';
 import {TxHistory} from '../../../model/transactionHistory';
 import {Vault} from '../../../model/vaults';
 import {MAIN_BORDER_COROR} from '../../ColorCode';
-import {BUY_VP, DEPOSIT, WITHDRAW} from '../../constantProperties';
+import {BNB_BUY_MU_ADDRESS, BUY_VP, DEPOSIT, ETH_BUY_MU_ADDRESS, WITHDRAW} from '../../constantProperties';
 import TransactionHistoryCard from './transactionHistoryCard';
 import VaultApi from '../../../api/Vault';
 import {RootState} from '~/store/modules';
@@ -20,6 +20,9 @@ const TransactionHistoryContainer: React.FC<React.PropsWithChildren<Props>> = ({
   vault,
 }) => {
   const vaultStore = useSelector((root: RootState) => root.vaultsStore);
+  const walletStore = useSelector((root: RootState) => root.walletStore);
+
+  
   const navigation = useNavigation();
   const [histories, setHistories] = useState<Array<TxHistory>>([]);
 
@@ -41,6 +44,13 @@ const TransactionHistoryContainer: React.FC<React.PropsWithChildren<Props>> = ({
       return x.idx == idx;
     });
 
+    if (index === -1) {
+      
+    }
+    // index = vaultStore.vaults.findIndex(x => {
+    //   return x.idx == idx;
+    // });
+
     if (index !== -1) return vaultStore.vaults[index].name;
 
     return '';
@@ -49,17 +59,17 @@ const TransactionHistoryContainer: React.FC<React.PropsWithChildren<Props>> = ({
   function historiesMap(hists: Array<any>) {
     const historyList: Array<TxHistory> = [];
 
-    hists.forEach(e => {
-      const action = dispplayActionName(e.to, e.from);
-
-      if (action !== '' || e.purpose) {
-        historyList.push({
-          from: displayFromName(e.from),
-          to: displayToName(e.to),
-          purpose: action,
-          value: e.value,
-        });
-      }
+    hists
+    .filter(e => {
+      return (e.purpose === WITHDRAW || e.purpose === DEPOSIT || e.purpose === BUY_VP)
+    })
+    .forEach(e => {
+      historyList.push({
+        from: displayFromName(e.from),
+        to: displayToName(e.to),
+        purpose: e.purpose,
+        value: e.value,
+      });
     });
 
     setHistories(historyList);
@@ -67,8 +77,10 @@ const TransactionHistoryContainer: React.FC<React.PropsWithChildren<Props>> = ({
 
   const displayToName = (to: string) => {
     if (vault.idx == to) return vault.name;
+    
     const toVaultName = getStoreVaultNameByIdx(to);
     if (toVaultName !== '') return toVaultName;
+
     return to;
   };
 
@@ -82,10 +94,11 @@ const TransactionHistoryContainer: React.FC<React.PropsWithChildren<Props>> = ({
   };
 
   const dispplayActionName = (to: string, from: string) => {
+    if (to === ETH_BUY_MU_ADDRESS || to === BNB_BUY_MU_ADDRESS ) return BUY_VP;
+
     if (vault.idx == from) return WITHDRAW;
     if (vault.idx == to) return DEPOSIT;
-    if (to === 'asdasdasdasdas') return BUY_VP;
-
+    
     return '';
   };
 
@@ -109,7 +122,7 @@ const TransactionHistoryContainer: React.FC<React.PropsWithChildren<Props>> = ({
         <View style={s.historiesWrapper}>
           {histories.map((history: TxHistory, index: number) => {
             if(!history.value) return;
-            
+
             return (
               <TransactionHistoryCard
                 history={history}

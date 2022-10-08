@@ -70,7 +70,6 @@ const VaultDetail = (props: any) => {
         style={s.coinRow}
         activeOpacity={0.7}
         onPress={() => {
-          console.log(contractAddress);
           navigation.navigate(
             'CoinDetail' as never,
             {

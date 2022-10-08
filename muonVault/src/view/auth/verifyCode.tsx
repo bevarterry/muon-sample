@@ -162,7 +162,6 @@ const VerifyCode = (props: any) => {
         props.navigation.replace('Main');
       })
       .catch(e => {
-        console.log(111, JSON.stringify(e));
         Alert.alert('인증은 정상적이나, 데이터로드에 오류발생');
       });
   }

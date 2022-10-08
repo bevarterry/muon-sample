@@ -27,6 +27,10 @@ import Toast from 'react-native-simple-toast';
 import { NOTI_AUTH_PHONE } from './constantProperties';
 import { isDuplicated, stringToHash } from './Hash';
 import { updateVaultsFromApi } from '~/store/action/VaultAction';
+import { updateWallet } from '~/store/action/walletAction';
+import { updateScAssets } from '~/store/action/scAction';
+import User from '~/api/User';
+import { UserApiResponse } from '~/api/interface/userApiResponse';
 
 const Tab = createBottomTabNavigator();
 
@@ -63,6 +67,10 @@ const Main = () => {
     if (remoteMessage === null) return;
 
     console.log('**************** 앱 켜져있을떄 호출됨 : ', remoteMessage.data,);
+    const hashCodeRomoteMessage = stringToHash(JSON.stringify(remoteMessage));
+
+    if (isDuplicated(hashCodeRomoteMessage)) return;
+
     pushNextStep(remoteMessage.data.title, remoteMessage.data.message);
   });
 
@@ -79,7 +87,12 @@ const Main = () => {
   messaging().getInitialNotification().then((remoteMessage: any) => {
     if (remoteMessage === null) return;
     console.log('**************** 앱 완전 재실행시 : ', remoteMessage);
-    Toast.show(`푸시 옴`+ remoteMessage.data, Toast.SHORT);
+    const hashCodeRomoteMessage = stringToHash(JSON.stringify(remoteMessage));
+
+    if (isDuplicated(hashCodeRomoteMessage)) return;
+
+    pushNextStep(remoteMessage.data.title, remoteMessage.data.message);
+
   });
   
   messaging().setBackgroundMessageHandler(async (remoteMessage: any) => {
@@ -87,22 +100,35 @@ const Main = () => {
     if (remoteMessage === null) return;
     
     console.log('**************** 앱 중지 상태 호출됨 : ', remoteMessage);
-    Toast.show(`푸시 옴`+ remoteMessage.data, Toast.SHORT);
+    const hashCodeRomoteMessage = stringToHash(JSON.stringify(remoteMessage));
+    
+    if (isDuplicated(hashCodeRomoteMessage)) return;
+
+    pushNextStep(remoteMessage.data.title, remoteMessage.data.message);
   });
 
 
 
-  function pushNextStep(id: string | undefined, message: any) {
-  
-      
+  function pushNextStep(id: string | undefined, message: any) {    
     if (id === undefined) return;
 
     if (id === NOTI_AUTH_PHONE) {
       
     }else {
       Toast.show(message, Toast.SHORT);
-      dispatch(updateVaultsFromApi())
+      updateUserInfo();
     }
+  }
+
+  function updateUserInfo() {
+    User.info()
+      .then(e => {
+        const res: UserApiResponse = e;
+
+        dispatch(updateWallet(res.Wallet));
+        dispatch(updateVaultsFromApi());
+        dispatch(updateScAssets(res.SafeAddress, res.Wallet, res.MUP));
+      })
   }
 
 
