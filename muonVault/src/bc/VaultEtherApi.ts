@@ -1,5 +1,5 @@
 import '@ethersproject/shims';
-import {ethers, providers} from 'ethers';
+import {BigNumber, ethers, providers} from 'ethers';
 import muVaultConfig from './mu_vault_ether_abi.json';
 
 const predefine = {
@@ -45,7 +45,7 @@ const getBalanceEther = async (privateKey: string, contractAddress: string) => {
   const balance = await contract.getBalance({
     from: wallet.address,
   });
-  console.log(balance);
+  
   return ethers.utils.formatEther(balance);
 };
 
@@ -55,6 +55,12 @@ const requestEtherWithdrawConfirm = async (
   privateKey: string,
   contractAddress: string,
 ) => {
+
+  console.log('출금요청 to', to);
+  console.log('출금요청 value', value);
+  console.log('출금요청 privateKey', privateKey);
+  console.log('출금요청 contractAddress', contractAddress);
+
   const wallet = new ethers.Wallet(privateKey);
   const signer = wallet.connect(provider);
 
@@ -84,4 +90,9 @@ const requestEtherWithdrawConfirm = async (
   return receipt.hash;
 };
 
-export {getBalanceEther, requestEtherWithdrawConfirm, isAddress};
+const parseToEther = (value: number) => {
+  if(!value) return '0.0';
+
+  return ethers.utils.formatEther(BigNumber.from(value));
+}
+export {getBalanceEther, requestEtherWithdrawConfirm, isAddress, parseToEther};

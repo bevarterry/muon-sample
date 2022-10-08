@@ -2,6 +2,7 @@ import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
+import { parseToEther } from '~/bc/VaultEtherApi';
 import {TxHistory} from '../../../model/transactionHistory';
 import {Vault} from '../../../model/vaults';
 import {MAIN_BORDER_COROR} from '../../ColorCode';
@@ -58,7 +59,7 @@ const TransactionHistoryCard: React.FC<React.PropsWithChildren<Props>> = ({
       </View>
       <View style={[{alignItems: 'flex-end'}, s.columWrapper]}>
         <Text style={s.value}>
-          {history.value} {symbol}
+          {parseToEther(history.value)} {symbol}
         </Text>
         <View style={s.purpose}>
           <BasicBadge title="to" backgroundColor={'#EFEFEF'} />

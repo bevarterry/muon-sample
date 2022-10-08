@@ -108,6 +108,8 @@ const TransactionHistoryContainer: React.FC<React.PropsWithChildren<Props>> = ({
       {histories && histories.length > 0 && (
         <View style={s.historiesWrapper}>
           {histories.map((history: TxHistory, index: number) => {
+            if(!history.value) return;
+            
             return (
               <TransactionHistoryCard
                 history={history}
