@@ -7,6 +7,7 @@ import {
   KeyboardAvoidingView,
   Alert,
   Platform,
+  ScrollView,
 } from 'react-native';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import Auth from '../../api/Auth';
@@ -22,6 +23,7 @@ import BasicTextInput from '../common/basicTextInput';
 import ButtonComponent from '../common/ButtonComponent';
 import Top from '../common/top';
 import {STORED_ACCESS_TOKEN} from '../constantProperties';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const InputEmail = (props: any) => {
   const navigation = useNavigation();
@@ -36,6 +38,7 @@ const InputEmail = (props: any) => {
   };
 
   function requestAuthByEmail() {
+    if(!isActiveDoneButton()) return;
     const param = {
       type: 'email',
       value: email,
@@ -56,14 +59,14 @@ const InputEmail = (props: any) => {
 
   return (
     <>
-      <KeyboardAvoidingView keyboardVerticalOffset={-350} behavior={Platform.OS === 'ios' ? "padding": "height"} >
-        <View style={s.wrapper}>
+        <ScrollView contentContainerStyle={s.wrapper} style={{ height: '100%' }}>
           <Top
             title={'Verification Email'}
             backgroundColor={BASE_BACKGROUND}
             left={true}
             onTouchBackButton={navigation.goBack}
           />
+          
           <View>
             <Text style={s.title}>Please type in your Email Address.</Text>
             <Text style={s.inputTitle}>Email Address</Text>
@@ -93,13 +96,11 @@ const InputEmail = (props: any) => {
               />
             </View>
           </View>
-          
           <View
             style={{
+              marginTop: 20,
               width: '100%',
               paddingHorizontal: 22,
-              position: 'absolute',
-              bottom: 30,
             }}>
             <ButtonComponent
               title="Verify via Email"
@@ -113,8 +114,8 @@ const InputEmail = (props: any) => {
               click={requestAuthByEmail}
             />
           </View>
-        </View>
-      </KeyboardAvoidingView>
+        </ScrollView>
+
     </>
   );
 };
@@ -125,10 +126,13 @@ const s = StyleSheet.create({
   wrapper: {
     zIndex: -1,
     paddingTop: 50 + getStatusBarHeight(),
+    paddingBottom: Platform.OS === 'ios' ? 43 : 20,
     width: '100%',
-    backgroundColor: BASE_BACKGROUND,
     height: '100%',
-    display: 'flex', justifyContent: 'space-between'
+    backgroundColor: BASE_BACKGROUND,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between'
   },
   title: {
     marginLeft: 23,

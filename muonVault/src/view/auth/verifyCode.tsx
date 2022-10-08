@@ -80,7 +80,7 @@ const VerifyCode = (props: any) => {
 
     if (id === NOTI_AUTH_PHONE) {
       setTimeout(() => {
-        Toast.show(`인증번호 [${message}] 를 전달받았습니다.`, Toast.SHORT);
+        Toast.show(`인증번호 [${message}] 를 전달받았습니다.`, Toast.LONG);
         console.log(message)
     
         setVerifyCode(message);
@@ -178,7 +178,7 @@ const VerifyCode = (props: any) => {
               paddingHorizontal: 22,
               position: 'absolute',
               backgroundColor: BASE_BACKGROUND,
-              bottom: 43,
+              bottom: Platform.OS === 'ios' ? 43 : 20,
             }}>
             <ButtonComponent
               title="Verify"

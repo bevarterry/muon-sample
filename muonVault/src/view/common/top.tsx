@@ -53,6 +53,7 @@ export default top;
 
 const s = StyleSheet.create({
   topWrapper: {
+    zIndex: 2,
     position: 'absolute',
     top: 0,
     paddingTop: getStatusBarHeight(),
