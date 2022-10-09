@@ -61,13 +61,13 @@ const TransactionHistoryContainer: React.FC<React.PropsWithChildren<Props>> = ({
 
     hists
     .filter(e => {
-      return (e.purpose === WITHDRAW || e.purpose === DEPOSIT || e.purpose === BUY_VP)
+      return (e.purpose === WITHDRAW || e.purpose === DEPOSIT)
     })
     .forEach(e => {
       historyList.push({
         from: displayFromName(e.from),
         to: displayToName(e.to),
-        purpose: e.purpose,
+        purpose: displayActionName(e.to, e.purpose),
         value: e.value,
       });
     });
@@ -93,13 +93,12 @@ const TransactionHistoryContainer: React.FC<React.PropsWithChildren<Props>> = ({
     return from;
   };
 
-  const dispplayActionName = (to: string, from: string) => {
-    if (to === ETH_BUY_MU_ADDRESS || to === BNB_BUY_MU_ADDRESS ) return BUY_VP;
+  const displayActionName = (to: string, purose: string) => {
 
-    if (vault.idx == from) return WITHDRAW;
-    if (vault.idx == to) return DEPOSIT;
+    if(to === ETH_BUY_MU_ADDRESS) return BUY_VP;
+    if(to === BNB_BUY_MU_ADDRESS) return BUY_VP;
     
-    return '';
+    return purose;
   };
 
   return (

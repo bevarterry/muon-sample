@@ -83,7 +83,10 @@ const CompleteWithdraw = (props: any) => {
           toComponent={
             <>
               {badge('To')}
-              <Text ellipsizeMode='middle' numberOfLines={1} style={{width: 150, fontSize: 16, fontWeight: '500'}}>{item.to}</Text>
+              <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', width: 150}}>
+                <Text ellipsizeMode='middle' numberOfLines={1} style={{fontSize: 16, fontWeight: '500'} }>{item.to}</Text>
+              </View>
+              
             </>
           }
           fromComponent={

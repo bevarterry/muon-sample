@@ -13,6 +13,9 @@ export function postInheritPin(deadPin: string, token: string): Promise<Array<Va
           'content-type': 'application/x-www-form-urlencoded',
           Authorization: token,
         },
+        data: qs.stringify({
+          deadPin: deadPin
+        }),
       })
         .then(response => {
           console.log(response.data);
