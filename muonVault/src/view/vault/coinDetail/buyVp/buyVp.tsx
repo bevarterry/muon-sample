@@ -24,7 +24,7 @@ import {CoinDetailType} from '~/model/coin';
 import {Vault} from '~/model/vaults';
 import { ConfirmBuyVpProps } from './confirmBuyVp';
 
-const muDollarRatio = 0.01;
+const muDollarRatio = 1;
 
 const BuyVp = (props: any) => {
   const navigation = useNavigation();

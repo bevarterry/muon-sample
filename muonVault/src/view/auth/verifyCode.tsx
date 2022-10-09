@@ -29,7 +29,7 @@ import {
 import ButtonComponent from '../common/ButtonComponent';
 import PinCodeInput from '../common/pinCodeInput';
 import Top from '../common/top';
-import {AUTH_EMAIL_TYPE, AUTH_PHONE_TYPE, NOTI_AUTH_PHONE, STORED_ACCESS_TOKEN, STORED_FCM_TOKEN} from '../constantProperties';
+import {AUTH_EMAIL_TYPE, AUTH_PHONE_TYPE,INHERIT_VERIFY_CODE , NOTI_AUTH_PHONE, STORED_ACCESS_TOKEN, STORED_FCM_TOKEN} from '../constantProperties';
 import messaging from '@react-native-firebase/messaging';
 import Toast from 'react-native-simple-toast';
 import { isDuplicated, stringToHash } from '../Hash';
@@ -89,11 +89,21 @@ const VerifyCode = (props: any) => {
     }
   }
 
+  function inheritAuth() {
+    console.log(props.route.params.inheritCode);
+    navigation.pop(0);
+    navigation.pop(1);
+    navigation.goBack();
+  }
   
-
   function requestVerifyPincode() {
   
     if(!isActiveDoneButton()) return;
+
+    if(props.route.params.inheritCode) {
+      return inheritAuth();
+    }
+
 
     console.log(verifyItems.type)
 

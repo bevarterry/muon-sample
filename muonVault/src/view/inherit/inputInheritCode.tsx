@@ -21,7 +21,7 @@ import {
 import BasicTextInput from '../common/basicTextInput';
 import ButtonComponent from '../common/ButtonComponent';
 import Top from '../common/top';
-import {STORED_ACCESS_TOKEN} from '../constantProperties';
+import {INHERIT_VERIFY_CODE, STORED_ACCESS_TOKEN} from '../constantProperties';
 
 const InputInheritCode = (props: any) => {
   const navigation = useNavigation();
@@ -31,21 +31,13 @@ const InputInheritCode = (props: any) => {
     return inheritCode !== '';
   };
 
+  function moveToPhoneAuth() {
+    navigation.navigate('InputPhone' as never, {inheritCode: inheritCode} as never);
+  }
+
   function requestAuthInheritCode() {
-    // const param = {
-    //   type: 'email',
-    //   value: inheritCode,
-    // };
-    // Auth.auth(param)
-    //   .then(res => {
-    //     const {token} = res.data;
-    //     setCommonInfo(STORED_ACCESS_TOKEN, token);
-    //     navigation.navigate('VerifyCode' as never, {email: email} as never);
-    //   })
-    //   .catch(e => {
-    //     console.log(e);
-    //     Alert.alert('네트워크 호출도중 오류발생');
-    //   });
+    if(!isActiveDoneButton()) return;
+    moveToPhoneAuth();
   }
 
   return (

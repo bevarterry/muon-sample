@@ -46,18 +46,33 @@ type Props = {
 const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
   const pilotWithdrawModalRef = useRef();
   const dispatch: any = useDispatch();
-
   const navigation: any = useNavigation();
+  
+  //
+  const pilotAmount = useState(0);
+  const remainAmount = useState(0);
 
+  useEffect(()=>{
+    
+  }, [props.amount])
+
+
+  function setAmountsPilotAndAll () {
+    if(isOverPilotVue()) {
+      
+    }
+  }
 
   const isOverPilotVue = () => {
-    // 1000 달러 기준
-    return (0.00000000001 - totlalDollar() < 0);
+    // 100 달러 기준
+    return (100 - totalAmountToDollar() < 0);
   }
 
-  const totlalDollar = () => {
+  const totalAmountToDollar = () => {
     return (props.coin.ratio * Number(props.amount));
   }
+
+
   async function sendAll() {
     if(!await checkBiometic()) {
       return Toast.show(`생체인증에 실패했습니다.`, Toast.SHORT);
@@ -73,6 +88,7 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
       dispatch(setGlobalLoadingState(false));
     }
   }
+
 
   function sendTxid(txid: string) {
     VaultApi.sendTxid({
@@ -97,6 +113,7 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
         dispatch(setGlobalLoadingState(false));
       });
   }
+
 
   async function requestWithdrawConfirm() {
     let res;
@@ -134,7 +151,7 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
               fontColor={'#ffffff'}
               fontSize={12}
             />
-            <Text style={s.totalValue}>${totlalDollar().toFixed(6)}</Text>
+            <Text style={s.totalValue}>${totalAmountToDollar().toFixed(6)}</Text>
           </>
         }
       />

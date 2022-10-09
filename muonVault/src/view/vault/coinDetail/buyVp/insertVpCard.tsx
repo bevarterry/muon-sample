@@ -18,7 +18,7 @@ const InsertVpCard: React.FC<React.PropsWithChildren<Props>> = ({
 }) => {
   const [posibleBuyAmount, setPosibleBuyAmount] = useState(0);
   const [initValue, setInitValue] = useState(0);
-  const muDollarRatio = 0.01;
+  const muDollarRatio = 1;
   useEffect(() => {
     setPosibleBuyAmount((coin.ratio * coin.value) / muDollarRatio);
   }, [coin]);

@@ -45,7 +45,7 @@ export type ConfirmBuyVpProps = {
   fromVault: Vault;
   muAmount: number;
 };
-const muDollarRatio = 0.01;
+const muDollarRatio = 1;
 
 const ConfirmBuyVp = (props: any) => {
   const globalLoadingStateStore = useSelector(

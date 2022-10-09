@@ -3,10 +3,8 @@ import {
   StatusBar,
   TouchableOpacity,
   View,
-  Text,
   Platform,
   StyleSheet,
-  KeyboardAvoidingView,
 } from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {getStatusBarHeight} from 'react-native-status-bar-height';

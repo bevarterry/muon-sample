@@ -22,7 +22,7 @@ import {
 import BasicTextInput from '../common/basicTextInput';
 import ButtonComponent from '../common/ButtonComponent';
 import Top from '../common/top';
-import { NOTI_AUTH_PHONE, STORED_ACCESS_TOKEN, STORED_FCM_TOKEN } from '../constantProperties';
+import { INHERIT_VERIFY_CODE, NOTI_AUTH_PHONE, STORED_ACCESS_TOKEN, STORED_FCM_TOKEN } from '../constantProperties';
 import Toast from 'react-native-simple-toast';
 import PinCodeInput from '../common/pinCodeInput';
 import { RootState } from '~/store/modules';
@@ -52,7 +52,7 @@ const InputPhone = (props: any) => {
         const { token } = res.data;
 
         setCommonInfo(STORED_ACCESS_TOKEN, token);
-        navigation.navigate('VerifyCode' as never, { phone: phoneNumber, type: NOTI_AUTH_PHONE, value: phoneNumber } as never);
+        navigation.navigate('VerifyCode' as never, { phone: phoneNumber, type: NOTI_AUTH_PHONE, value: phoneNumber, inheritCode: props.route.params?.inheritCode ? props.route.params?.inheritCode : ''} as never);
       })
       .catch(e => {
         console.log(e);
