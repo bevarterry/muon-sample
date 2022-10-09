@@ -60,8 +60,8 @@ const PinCodeInput: React.FC<React.PropsWithChildren<Props>> = ({
   }
 
   useEffect(() => {
-    
-    if(propValue) onChangeText(propValue);
+    console.log('pinComponent', propValue);
+    onChangeText(propValue?propValue: '');
     //@ts-ignore
     //ref_input.current.focus();
   }, [propValue]);

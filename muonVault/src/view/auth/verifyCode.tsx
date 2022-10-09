@@ -1,6 +1,5 @@
-import {BottomSheetModal, BottomSheetModalProvider} from '@gorhom/bottom-sheet';
-import {useNavigation} from '@react-navigation/native';
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import { useNavigation } from '@react-navigation/native';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,16 +8,16 @@ import {
   Alert,
   Platform,
 } from 'react-native';
-import {getStatusBarHeight} from 'react-native-status-bar-height';
-import {useDispatch} from 'react-redux';
-import {UserApiResponse} from '~/api/interface/userApiResponse';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { useDispatch } from 'react-redux';
+import { UserApiResponse } from '~/api/interface/userApiResponse';
 import User from '~/api/User';
-import {updateScAssets} from '~/store/action/scAction';
-import {updateVaultsFromApi} from '~/store/action/VaultAction';
-import {updateWallet} from '~/store/action/walletAction';
+import { updateScAssets } from '~/store/action/scAction';
+import { updateVaultsFromApi } from '~/store/action/VaultAction';
+import { updateWallet } from '~/store/action/walletAction';
 import Auth from '../../api/Auth';
-import {setAccessToken} from '../../storage/AccessTokenStorage';
-import {getCommonInfo, setCommonInfo} from '../../store/global/state';
+import { setAccessToken } from '../../storage/AccessTokenStorage';
+import { getCommonInfo, setCommonInfo } from '../../store/global/state';
 import {
   BASE_BACKGROUND,
   BASE_BUTTON,
@@ -29,32 +28,29 @@ import {
 import ButtonComponent from '../common/ButtonComponent';
 import PinCodeInput from '../common/pinCodeInput';
 import Top from '../common/top';
-import {AUTH_EMAIL_TYPE, AUTH_PHONE_TYPE,INHERIT_VERIFY_CODE , NOTI_AUTH_PHONE, STORED_ACCESS_TOKEN, STORED_FCM_TOKEN} from '../constantProperties';
+import { AUTH_EMAIL_TYPE, AUTH_PHONE_TYPE, INHERIT_VERIFY_CODE, NOTI_AUTH_PHONE, STORED_ACCESS_TOKEN, STORED_FCM_TOKEN } from '../constantProperties';
 import messaging from '@react-native-firebase/messaging';
 import Toast from 'react-native-simple-toast';
 import { isDuplicated, stringToHash } from '../Hash';
-import ReactNativeBiometrics from 'react-native-biometrics'
-import { checkBiometic, checkFingerprint, simplePrompt } from './biometic';
 import { INIT_AUTH } from './biometicContainer';
+import { postInheritPin } from '~/api/Inherit';
 
 
 const VerifyCode = (props: any) => {
   const navigation: any = useNavigation();
   const dispatch: any = useDispatch();
   const [pinCode, setVerifyCode] = useState('');
-  const [verifyItems , setVerifyItems] = useState({
+  const [verifyItems, setVerifyItems] = useState({
     type: '',
     value: ''
   })
 
 
-  const isActiveDoneButton = () => {
-    return pinCode.length == 6;
-  };
-
   useEffect(() => {
+    setVerifyCode('');
+
     if (props.route.params.type) {
-      const {type, value} = props.route.params;
+      const { type, value } = props.route.params;
 
       setVerifyItems({
         value: value,
@@ -63,11 +59,10 @@ const VerifyCode = (props: any) => {
     }
   }, []);
 
+
   messaging().onMessage(async (remoteMessage: any) => {
     if (remoteMessage === null) return;
-    console.log('[1]', remoteMessage.data);
     const hashCodeRomoteMessage = stringToHash(JSON.stringify(remoteMessage));
-
     if (isDuplicated(hashCodeRomoteMessage)) return;
 
     pushNextStep(remoteMessage.data.title, remoteMessage.data.message);
@@ -75,71 +70,81 @@ const VerifyCode = (props: any) => {
 
 
   function pushNextStep(id: string | undefined, message: any) {
-    
+
     if (id === undefined) return;
 
     if (id === NOTI_AUTH_PHONE) {
       setTimeout(() => {
-        Toast.show(`인증번호 [${message}] 를 전달받았습니다.`, Toast.LONG);
-        console.log(message)
-    
         setVerifyCode(message);
+        Toast.show(`인증번호 [${message}] 를 전달받았습니다.`, Toast.LONG);
       }, 1000);
-      
     }
   }
 
-  function inheritAuth() {
-    console.log(props.route.params.inheritCode);
-    navigation.pop(0);
-    navigation.pop(1);
-    navigation.goBack();
-  }
-  
-  function requestVerifyPincode() {
-  
-    if(!isActiveDoneButton()) return;
 
-    if(props.route.params.inheritCode) {
+  const isActiveDoneButton = () => {
+    return pinCode.length == 6;
+  };
+
+
+  function inheritAuth() {
+    const deadPin = props.route.params.inheritCode;
+
+    postInheritPin(deadPin)
+      .then((e) => {
+        console.log(props.route.params.inheritCode);
+        navigation.pop(0);
+        navigation.pop(1);
+        navigation.goBack();
+      })
+      .catch((err)=> {
+        Alert.alert('inherit code를 처리하는데 문제가 발생했습니다.')
+      })
+  }
+
+
+  function requestVerifyPincode() {
+
+    if (!isActiveDoneButton()) return;
+
+    if (props.route.params.inheritCode) {
       return inheritAuth();
     }
 
-
-    console.log(verifyItems.type)
-
-    const param = {
+    Auth.verifyPinCode({
       pin: pinCode,
-    };
-    Auth.verifyPinCode(param)
+    })
       .then(async res => {
 
-        
-        if(verifyItems.type === AUTH_PHONE_TYPE) {
+        if (verifyItems.type === AUTH_PHONE_TYPE) {
           navigation.pop(1);
           return navigation.replace('InputEmail' as never);
         }
-        const {token} = res.data;
+        const { token } = res.data;
 
-        await setAccessToken({accessToken: token});
+        await setAccessToken({ accessToken: token });
         setCommonInfo(STORED_ACCESS_TOKEN, token);
-        
-        
+
+
         props.navigation.navigate('BiometicContainer', {
           purpose: INIT_AUTH,
-          pass: ()=>{checkBiometicPass()}, 
-          reject: ()=>{reject()}} as never);
-    
+          pass: () => { checkBiometicPass() },
+          reject: () => { reject() }
+        } as never);
+
       })
       .catch(e => {
         Alert.alert('인증에 실했습니다. 인증코드를 다시 확인하세요. ');
       });
   }
 
+
   async function reject() {
-    await setAccessToken({accessToken: ''});
+    await setAccessToken({ accessToken: '' });
     setCommonInfo(STORED_ACCESS_TOKEN, '');
     Toast.show(`생체인증에 실패했습니다.`, Toast.SHORT);
   }
+
 
   async function checkBiometicPass() {
 
@@ -152,14 +157,15 @@ const VerifyCode = (props: any) => {
 
 
   function updateFcmToken() {
-    User.updateFcm({fcmToken: getCommonInfo(STORED_FCM_TOKEN)});
+    User.updateFcm({ fcmToken: getCommonInfo(STORED_FCM_TOKEN) });
   }
+
 
   function updateUserInfo() {
     User.info()
       .then(e => {
         const res: UserApiResponse = e;
-        
+
         dispatch(updateWallet(res.Wallet));
 
         dispatch(updateVaultsFromApi());
@@ -168,7 +174,7 @@ const VerifyCode = (props: any) => {
 
         props.navigation.pop(1);
         props.navigation.pop(2);
-        
+
         props.navigation.replace('Main');
       })
       .catch(e => {
@@ -176,31 +182,32 @@ const VerifyCode = (props: any) => {
       });
   }
 
+
   return (
     <>
       <KeyboardAvoidingView
-      style={{backgroundColor: BASE_BACKGROUND,}}
+        style={{ backgroundColor: BASE_BACKGROUND, }}
         behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}>
-          <View
-            style={{
-              width: '100%',
-              paddingHorizontal: 22,
-              position: 'absolute',
-              backgroundColor: BASE_BACKGROUND,
-              bottom: Platform.OS === 'ios' ? 43 : 20,
-            }}>
-            <ButtonComponent
-              title="Verify"
-              width="100%"
-              borderColor={BASE_BUTTON}
-              titleColor={DIMED_GRAY}
-              borderRadius={20}
-              activeColor={isActiveDoneButton() ? MAIN_BLACK : BASE_BUTTON}
-              activeFontColor={isActiveDoneButton() ? CC_WHITE : DIMED_GRAY}
-              bodyColor={BASE_BUTTON}
-              click={requestVerifyPincode}
-            />
-          </View>
+        <View
+          style={{
+            width: '100%',
+            paddingHorizontal: 22,
+            position: 'absolute',
+            backgroundColor: BASE_BACKGROUND,
+            bottom: Platform.OS === 'ios' ? 43 : 20,
+          }}>
+          <ButtonComponent
+            title="Verify"
+            width="100%"
+            borderColor={BASE_BUTTON}
+            titleColor={DIMED_GRAY}
+            borderRadius={20}
+            activeColor={isActiveDoneButton() ? MAIN_BLACK : BASE_BUTTON}
+            activeFontColor={isActiveDoneButton() ? CC_WHITE : DIMED_GRAY}
+            bodyColor={BASE_BUTTON}
+            click={requestVerifyPincode}
+          />
+        </View>
         <View style={s.wrapper}>
           <Top
             title={'Verification Code'}
@@ -209,15 +216,15 @@ const VerifyCode = (props: any) => {
             onTouchBackButton={navigation.goBack}
           />
           {
-              verifyItems.type === AUTH_EMAIL_TYPE && 
-              <Text style={s.title}>Please enter code  sent to {verifyItems.value}</Text>    
+            verifyItems.type === AUTH_EMAIL_TYPE &&
+            <Text style={s.title}>Please enter code  sent to {verifyItems.value}</Text>
           }
           {
-              verifyItems.type === AUTH_PHONE_TYPE && 
-              <Text style={s.title}>Please enter code </Text>    
+            verifyItems.type === AUTH_PHONE_TYPE &&
+            <Text style={s.title}>Please enter code </Text>
           }
           <Text style={s.inputTitle}>Verification code</Text>
-          <View style={{marginHorizontal: 23, marginTop: 10}}>
+          <View style={{ marginHorizontal: 23, marginTop: 10 }}>
             <PinCodeInput
               propValue={pinCode}
               numberOnly={true}
@@ -225,7 +232,7 @@ const VerifyCode = (props: any) => {
               update={(e: string) => {
                 setVerifyCode(e);
               }}
-              blur={(e: string) => {}}
+              blur={(e: string) => { }}
               style={{
                 paddingVertical: Platform.OS === 'ios' ? 16 : 5,
                 width: '100%',
@@ -243,9 +250,7 @@ const VerifyCode = (props: any) => {
                 fontWeight: '700',
               }}
             />
-
           </View>
-
         </View>
       </KeyboardAvoidingView>
     </>
