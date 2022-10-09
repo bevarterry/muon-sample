@@ -29,6 +29,7 @@ import { updateWallet } from '~/store/action/walletAction';
 import { updateScAssets } from '~/store/action/scAction';
 import User from '~/api/User';
 import { UserApiResponse } from '~/api/interface/userApiResponse';
+import { parseToEther } from '~/bc/VaultEtherApi';
 
 const Tab = createBottomTabNavigator();
 
@@ -108,12 +109,22 @@ const Main = () => {
 
 
   function pushNextStep(id: string | undefined, message: any) {    
+    console.log(111111, message)
     if (id === undefined) return;
 
     if (id === NOTI_AUTH_PHONE) {
       
     }else {
-      Toast.show(message, Toast.SHORT);
+      
+      const {symbol,string, purpose, value, status, txid} = JSON.parse(message);
+      // console.log(symbol);
+      // console.log(string);
+      // console.log(purpose);
+      // console.log(value);
+      // console.log(status);
+      // console.log(txid);
+      if(value === 0) return;
+      Toast.show(`[${string}] -> ${status}, ${parseToEther(value)} ${symbol}`, Toast.LONG);
       updateUserInfo();
     }
   }
