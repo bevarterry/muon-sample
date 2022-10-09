@@ -87,12 +87,14 @@ const VerifyCode = (props: any) => {
   };
 
 
-  function inheritAuth() {
+  function inheritAuth(token: string) {
     const deadPin = props.route.params.inheritCode;
 
-    postInheritPin(deadPin)
+    console.log(token);
+    postInheritPin(deadPin,token)
       .then((e) => {
         console.log(props.route.params.inheritCode);
+
         navigation.pop(0);
         navigation.pop(1);
         navigation.goBack();
@@ -107,20 +109,24 @@ const VerifyCode = (props: any) => {
 
     if (!isActiveDoneButton()) return;
 
-    if (props.route.params.inheritCode) {
-      return inheritAuth();
-    }
-
     Auth.verifyPinCode({
       pin: pinCode,
     })
       .then(async res => {
 
+        const { token } = res.data;
+
         if (verifyItems.type === AUTH_PHONE_TYPE) {
+          
+
+          if (props.route.params.inheritCode) {
+            return inheritAuth(token);
+          }
+          
           navigation.pop(1);
           return navigation.replace('InputEmail' as never);
         }
-        const { token } = res.data;
+        
 
         await setAccessToken({ accessToken: token });
         setCommonInfo(STORED_ACCESS_TOKEN, token);
