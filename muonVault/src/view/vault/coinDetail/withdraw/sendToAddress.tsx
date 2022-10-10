@@ -75,15 +75,30 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
 
     try {
       dispatch(setGlobalLoadingState(true));
-      const hash = await requestWithdrawConfirm();
+      const hash = await requestWithdrawConfirm(remainAmount);
 
+      sendTxid(hash);
+    } catch (error) {
+      dispatch(setGlobalLoadingState(false));
+    }
+  }
+
+  async function sendPilot() {
+    if(!await checkBiometic()) {
+      return Toast.show(`생체인증에 실패했습니다.`, Toast.SHORT);
+    }
+
+    try {
+      dispatch(setGlobalLoadingState(true));
+      const hash = await requestWithdrawConfirm(pilotAmount);
+
+      setRemainAmount(remainAmount - pilotAmount);
       sendTxid(hash);
 
     } catch (error) {
       dispatch(setGlobalLoadingState(false));
     }
   }
-
 
   function sendTxid(txid: string) {
     VaultApi.sendTxid({
@@ -110,20 +125,20 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
   }
 
 
-  async function requestWithdrawConfirm() {
+  async function requestWithdrawConfirm(value: number) {
     let res;
 
     if (props.coin.symbol === ETH_SYMBOL) {
       res = await requestEtherWithdrawConfirm(
         props.toAddress,
-        String(remainAmount),
+        String(value),
         props.coin.privateKey,
         props.coin.contractAddress,
       );
     } else if (props.coin.symbol === BNB_SYMBOL) {
       res = await requestBnbWithdrawConfirm(
         props.toAddress,
-        String(remainAmount),
+        String(value),
         props.coin.privateKey,
         props.coin.contractAddress,
       );
@@ -205,7 +220,10 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
           click={sendAll}
         />
       </View>
-      <PilotWithdrawBottomDialog ref={pilotWithdrawModalRef} />
+      <PilotWithdrawBottomDialog ref={pilotWithdrawModalRef} close={()=>{
+        console.log('pilotAmount', pilotAmount);
+        console.log('remainAmount', remainAmount);
+      }}/>
     </>
   );
 };

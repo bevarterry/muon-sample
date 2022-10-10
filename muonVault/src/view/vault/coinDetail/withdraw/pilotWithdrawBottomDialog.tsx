@@ -118,7 +118,9 @@ const PilotWithdrawBottomDialog = forwardRef((props: any, ref) => {
               paddingVertical={21}
               borderRadius={16}
               bodyColor={MAIN_BLACK}
-              click={() => {}}
+              click={() => {
+                props.close();
+              }}
             />
             <View style={{height: 10}} />
             <ButtonComponent
