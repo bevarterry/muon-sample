@@ -65,8 +65,11 @@ const Main = () => {
   messaging().onMessage(async (remoteMessage: any) => {
     if (remoteMessage === null) return;
 
-    console.log('**************** 앱 켜져있을떄 호출됨 : ', remoteMessage.data,);
+    console.log('**************** 앱 켜져있을떄 호출됨 : ', remoteMessage.data);
     const hashCodeRomoteMessage = stringToHash(JSON.stringify(remoteMessage));
+    console.log(hashCodeRomoteMessage);
+    console.log(isDuplicated(hashCodeRomoteMessage));
+    console.log(remoteMessage.data.title, remoteMessage.data.message);
 
     if (isDuplicated(hashCodeRomoteMessage)) return;
 
@@ -109,8 +112,8 @@ const Main = () => {
 
 
   function pushNextStep(id: string | undefined, message: any) {    
-    if (id === undefined) return;
-
+    console.log(id, message);
+    
     if (id === NOTI_AUTH_PHONE) {
       console.log('main noti ', message);
     }else {

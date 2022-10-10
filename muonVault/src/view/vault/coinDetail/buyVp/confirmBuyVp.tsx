@@ -124,7 +124,7 @@ const ConfirmBuyVp = (props: any) => {
         const param : CompleteBuyVpProps = {
           coin: coin,
           fromVault : fromVault,
-          amount: muAmount
+          amount: toValue
         }
 
         console.log(JSON.stringify(param));

@@ -81,7 +81,7 @@ const CompleteBuyVp = (props: any) => {
             <>
               {badge('Amount')}
               <Text style={s.componentText}>
-                {item.amount} {item.coin.symbol}
+                {item.amount.toFixed(8)} {item.coin.symbol}
               </Text>
             </>
           }
