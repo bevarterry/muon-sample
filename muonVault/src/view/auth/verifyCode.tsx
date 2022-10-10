@@ -90,7 +90,7 @@ const VerifyCode = (props: any) => {
   function inheritAuth(token: string) {
     const deadPin = props.route.params.inheritCode;
 
-    console.log(token);
+    console.log(token, deadPin);
     postInheritPin(deadPin,token)
       .then((e) => {
         console.log(props.route.params.inheritCode);
@@ -120,7 +120,13 @@ const VerifyCode = (props: any) => {
           
 
           if (props.route.params.inheritCode) {
-            return inheritAuth(token);
+            props.navigation.navigate('BiometicContainer', {
+              purpose: INIT_AUTH,
+              pass: () => { inheritAuth(token) },
+              reject: () => { reject() }
+            } as never);
+
+            return ;
           }
           
           navigation.pop(1);
@@ -140,7 +146,7 @@ const VerifyCode = (props: any) => {
 
       })
       .catch(e => {
-        Alert.alert('인증에 실했습니다. 인증코드를 다시 확인하세요. ');
+        Alert.alert('인증코드를 다시 확인하세요. ');
       });
   }
 

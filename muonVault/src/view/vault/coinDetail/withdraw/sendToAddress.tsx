@@ -32,6 +32,7 @@ import { setGlobalLoadingState } from '~/store/modules/GlobalLoadingReducer';
 import Toast from 'react-native-simple-toast';
 import { CompleteWithdrawProps } from './completeWithdraw';
 import { checkBiometic } from '~/view/auth/biometic';
+import CoinDetail from '..';
 
 const {width, height} = Dimensions.get('window');
 const buttonWidth = (width - 34) / 2;
@@ -48,20 +49,14 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
   const dispatch: any = useDispatch();
   const navigation: any = useNavigation();
   
-  //
-  const pilotAmount = useState(0);
-  const remainAmount = useState(0);
-
+  const pilotAmount  = 1 / props.coin.ratio;
+  const [remainAmount, setRemainAmount] = useState(0);
+  
   useEffect(()=>{
-    
+    setRemainAmount(Number(props.amount));
   }, [props.amount])
 
 
-  function setAmountsPilotAndAll () {
-    if(isOverPilotVue()) {
-      
-    }
-  }
 
   const isOverPilotVue = () => {
     // 100 달러 기준
@@ -121,14 +116,14 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
     if (props.coin.symbol === ETH_SYMBOL) {
       res = await requestEtherWithdrawConfirm(
         props.toAddress,
-        props.amount,
+        String(remainAmount),
         props.coin.privateKey,
         props.coin.contractAddress,
       );
     } else if (props.coin.symbol === BNB_SYMBOL) {
       res = await requestBnbWithdrawConfirm(
         props.toAddress,
-        props.amount,
+        String(remainAmount),
         props.coin.privateKey,
         props.coin.contractAddress,
       );

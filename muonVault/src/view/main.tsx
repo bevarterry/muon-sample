@@ -109,20 +109,19 @@ const Main = () => {
 
 
   function pushNextStep(id: string | undefined, message: any) {    
-    console.log(111111, message)
     if (id === undefined) return;
 
     if (id === NOTI_AUTH_PHONE) {
-      
+      console.log('main noti ', message);
     }else {
       
       const {symbol,string, purpose, value, status, txid} = JSON.parse(message);
-      // console.log(symbol);
-      // console.log(string);
-      // console.log(purpose);
-      // console.log(value);
-      // console.log(status);
-      // console.log(txid);
+      console.log(symbol);
+      console.log(string);
+      console.log(purpose);
+      console.log(value);
+      console.log(status);
+      console.log(txid);
       if(value === 0) return;
       Toast.show(`[${string}] -> ${status}, ${parseToEther(value)} ${symbol}`, Toast.LONG);
       updateUserInfo();

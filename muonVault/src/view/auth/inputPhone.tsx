@@ -19,19 +19,14 @@ import {
   DIMED_GRAY,
   MAIN_BLACK,
 } from '../ColorCode';
-import BasicTextInput from '../common/basicTextInput';
 import ButtonComponent from '../common/ButtonComponent';
 import Top from '../common/top';
 import { INHERIT_VERIFY_CODE, NOTI_AUTH_PHONE, STORED_ACCESS_TOKEN, STORED_FCM_TOKEN } from '../constantProperties';
 import Toast from 'react-native-simple-toast';
 import PinCodeInput from '../common/pinCodeInput';
-import { RootState } from '~/store/modules';
-import { useSelector } from 'react-redux';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 const InputPhone = (props: any) => {
   const navigation = useNavigation();
   const [phoneNumber, setPhoneNumber] = useState('');
-  const userStore = useSelector((root: RootState) => root.userStore);
   const isActiveDoneButton = () => {
 
     return phoneNumber.length > 10;
@@ -39,8 +34,6 @@ const InputPhone = (props: any) => {
 
   function requestAuthByPhone() {
     if(!isActiveDoneButton()) return;
-
-    console.log('************************[userStore.fcmToken]', userStore.fcmToken);
     const param = {
       type: 'phone',
       value: phoneNumber,
