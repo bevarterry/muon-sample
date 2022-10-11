@@ -1,6 +1,6 @@
 export const WITHDRAW = 'Withdraw';
 export const DEPOSIT = 'Deposit';
-export const BUY_VP = 'BUY_VP';
+export const BUY_VP = 'BUY_MU:P';
 
 export const WITHDRAW_INPUT_TO_ADDRESS = 'INPUT_TO_ADDRESS';
 export const WITHDRAW_INPUT_AMOUNT = 'INPUT_AMOUNT';
