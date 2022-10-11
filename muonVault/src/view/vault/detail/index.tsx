@@ -150,7 +150,7 @@ const VaultDetail = (props: any) => {
         {coinRow(
           'MU',
           muon_icon,
-          vault.VP,
+          0,
           ratioStore.ratioSet.MU,
           '',
           scAssetsStore.muon.contractAddress,

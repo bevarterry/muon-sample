@@ -149,7 +149,7 @@ const ValutCard: React.FC<React.PropsWithChildren<Prop>> = ({vault}) => {
 
           <View style={s.cardRow}>
             <CoinTitleComponent symbol="MU" imageSource={muon_icon} />
-            {displayValue(vault.VP, ratioStore.ratioSet.MU)}
+            {displayValue(0, ratioStore.ratioSet.MU)}
           </View>
         </TouchableOpacity>
       )}
