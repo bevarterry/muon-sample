@@ -73,6 +73,8 @@ const BuyVp = (props: any) => {
   };
 
   function moveToComfirmPage() {
+    if(!isActiveDoneButton()) return;
+    
     const param : ConfirmBuyVpProps = {coin: coin, muAmount: inputMuAmount, fromVault: fromVault}
 
     navigation.navigate(

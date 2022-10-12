@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import {Image, StyleSheet, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {useDispatch} from 'react-redux';
+import { updateCoinRatioAction } from '~/store/action/coinRatioAction';
 import { setGlobalLoadingState } from '~/store/modules/GlobalLoadingReducer';
 import {UserApiResponse} from '../api/interface/userApiResponse';
 import User from '../api/User';
@@ -20,6 +21,8 @@ const Splash = (props: any) => {
   const dispatch: any = useDispatch();
 
   useEffect(() => {
+    dispatch(updateCoinRatioAction());
+    
     setTimeout(() => {
       accessTokenCheck();
     }, 800);
