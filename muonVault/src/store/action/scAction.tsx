@@ -1,7 +1,6 @@
 import {Dispatch} from 'redux';
 import {getBalanceBnb, requestBnbWithdrawConfirm} from '~/bc/VaultBinanceApi';
 import {getBalanceEther, requestEtherWithdrawConfirm} from '~/bc/VaultEtherApi';
-import {ETH_SYMBOL} from '~/view/constantProperties';
 import {SafeAddressSet, WalletSet} from '../../api/interface/userApiResponse';
 import {setGlobalLoadingState} from '../modules/GlobalLoadingReducer';
 import {setScAssets} from '../modules/ScAssetReducer';

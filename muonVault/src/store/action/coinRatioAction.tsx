@@ -1,14 +1,7 @@
 import {Dispatch} from 'redux';
 import { getCoinRatio } from '~/api/CoinRatio';
-import {getBalanceBnb, requestBnbWithdrawConfirm} from '~/bc/VaultBinanceApi';
-import {getBalanceEther, requestEtherWithdrawConfirm} from '~/bc/VaultEtherApi';
 import { Ratio } from '~/model/ratio';
-import {ETH_SYMBOL} from '~/view/constantProperties';
-import {SafeAddressSet, WalletSet} from '../../api/interface/userApiResponse';
 import { setCoinRatio } from '../modules/coinRatioReducer';
-import {setGlobalLoadingState} from '../modules/GlobalLoadingReducer';
-import {setScAssets} from '../modules/ScAssetReducer';
-import {setDefaultVault, setTotalAssets} from '../modules/valutsReducer';
 
 export const updateCoinRatioAction = () => {
   return async (dispatch: Dispatch) => {

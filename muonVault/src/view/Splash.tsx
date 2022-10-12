@@ -11,7 +11,6 @@ import {updateScAssets} from '../store/action/scAction';
 import {updateVaultsFromApi} from '../store/action/VaultAction';
 import {updateWallet} from '../store/action/walletAction';
 import {getCommonInfo, setCommonInfo} from '../store/global/state';
-import {setWallets} from '../store/modules/walletReducer';
 import {CC_LOGHT_YELLOW, SPLASH_BACKGROUND} from './ColorCode';
 import {STORED_ACCESS_TOKEN, STORED_FCM_TOKEN} from './constantProperties';
 const splash_log_1 = require('../../assets/image/splash_logo_1.png');
