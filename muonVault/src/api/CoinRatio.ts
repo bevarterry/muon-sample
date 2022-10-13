@@ -1,8 +1,7 @@
 import Send from './AxiosConfig';
 import {VaultResponse} from './interface/vaultApiResponse';
 
-
-export function getCoinRatio(coinId: string): Promise<Array<VaultResponse>> {
+export function getCoinRatio(coinId: string): Promise<any> {
     return new Promise((resolve, reject) => {
       Send({
         url: `https://api.coinpaprika.com/v1/tickers/${coinId}`,
