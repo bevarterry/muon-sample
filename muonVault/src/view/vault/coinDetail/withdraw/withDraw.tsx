@@ -99,7 +99,7 @@ const WithDraw = (props: any) => {
 
   return (
     <>
-      <ScrollView contentContainerStyle={s.wrapper}>
+      <ScrollView contentContainerStyle={s.wrapper} style={{height: '100%', backgroundColor: BASE_BACKGROUND}}>
         <Top
           title={''}
           component={topCompoennt}

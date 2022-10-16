@@ -23,6 +23,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
+import { mScale } from '~/view/scaling';
 import {
   BASE_BUTTON,
   BASE_GRAY_BACKGROUND,
@@ -31,12 +32,9 @@ import {
 } from '../../../ColorCode';
 import ButtonComponent from '../../../common/ButtonComponent';
 const withraw_money_icon = require('../../../../../assets/image/withdraw_money_img.png');
-const {width, height} = Dimensions.get('window');
-const buttonWidth = (width - 30) / 2;
 
 const PilotWithdrawBottomDialog = forwardRef((props: any, ref) => {
-  const address = '1YoURbEATcoiN99MYWaLLetiDaDdRess72';
-
+  
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   // variables
@@ -89,12 +87,12 @@ const PilotWithdrawBottomDialog = forwardRef((props: any, ref) => {
         onChange={handleSheetChanges}>
         <View style={s.contentContainer}>
           <Text style={s.title}>Pilot withdrawal is made</Text>
-          <View style={{height: 44}} />
+          <View style={{height: mScale(44) }} />
           <FastImage
             resizeMode="contain"
             style={{
-              width: 230,
-              height: 120,
+              width: mScale(230),
+              height: mScale(120),
             }}
             source={withraw_money_icon}
           />
@@ -150,21 +148,21 @@ const s = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    marginTop: 30,
-    fontSize: 24,
+    marginTop: mScale(30),
+    fontSize: mScale(24),
     fontWeight: '700',
   },
   guide: {
-    width: 330,
+    width: mScale(330) ,
     textAlign: 'center',
-    fontSize: 16,
+    fontSize: mScale(16),
     fontWeight: '400',
-    lineHeight: 22.4,
-    marginTop: 24,
+    lineHeight: mScale(22.4),
+    marginTop: mScale(24),
   },
   close: {
-    marginTop: 20,
-    fontSize: 20,
+    marginTop: mScale(20),
+    fontSize: mScale(20),
     fontWeight: '700',
   },
 });
