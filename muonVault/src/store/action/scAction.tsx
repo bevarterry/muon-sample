@@ -74,7 +74,7 @@ export const updateScAssets = (
         },
         muon: {
           symbol: 'MU',
-          displayName: 'Muon',
+          displayName: 'MU',
           contractAddress: '',
         },
       }),

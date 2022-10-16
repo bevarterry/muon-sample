@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Platform} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {MAIN_BLACK} from '../ColorCode';
+import { fontScale, mScale } from '../scaling';
 
 type Props = {
   title: string;
@@ -23,8 +24,8 @@ const TabIcon: React.FC<React.PropsWithChildren<Props>> = ({
       <FastImage
         resizeMode="contain"
         style={{
-          width: 60,
-          height: 40,
+          width: mScale(60),
+          height: mScale(40),
           opacity: active ? 1 : 0.2,
         }}
         source={icon}
@@ -56,10 +57,10 @@ const s = StyleSheet.create({
     alignItems: 'center',
   },
   tabOptionText: {
-    fontSize: 12,
+    fontSize: mScale(12),
     fontWeight: '800',
   },
   tabOptionTextBox: {
-    paddingBottom: 3,
+    paddingBottom: mScale(3),
   },
 });

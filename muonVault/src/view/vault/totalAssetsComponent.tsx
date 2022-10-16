@@ -59,7 +59,7 @@ const TotalAssetsComponent = () => {
         )}
         {displayCoinRow(
           scAssetsStore.muon,
-          vaultStore.totalAssets.muon,
+          0,
           ratioStore.ratioSet.MU,
         )}
       </View>

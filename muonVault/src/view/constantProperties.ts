@@ -20,7 +20,7 @@ export const BNB_DISPLAY_SYMBOL = 'Binance';
 export const USDC_SYMBOL = 'USDC';
 export const USDC_DISPLAY_SYMBOL = 'USDC';
 export const MU_SYMBOL = 'MU';
-export const MU_DISPLAY_SYMBOL = 'MU:P';
+export const MU_DISPLAY_SYMBOL = 'MU';
 
 
 

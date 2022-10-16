@@ -23,6 +23,7 @@ import {
 } from '../ColorCode';
 import BasicTextInput from '../common/basicTextInput';
 import ButtonComponent from '../common/ButtonComponent';
+import { mScale } from '../scaling';
 
 type Props = {
   closeModal?: Function;
@@ -69,11 +70,11 @@ const CreateNewSafeModalComponent: React.FC<React.PropsWithChildren<Props>> = ({
 
         <View
           style={{
-            marginTop: 60,
+            marginTop: mScale(60),
             width: '100%',
             display: 'flex',
             justifyContent: 'center',
-            paddingHorizontal: 38,
+            paddingHorizontal: mScale(38),
           }}>
           <BasicTextInput
             update={(e: string) => {
@@ -81,32 +82,32 @@ const CreateNewSafeModalComponent: React.FC<React.PropsWithChildren<Props>> = ({
             }}
             blur={(e: string) => {}}
             style={{
-              paddingVertical: Platform.OS === 'ios' ? 16: 5,
+              paddingVertical: Platform.OS === 'ios' ? mScale(16): mScale(5),
               width: '100%',
               borderTopWidth: 0,
-              borderBottomWidth: 3,
+              borderBottomWidth: mScale(3),
               borderColor: MAIN_BLACK,
               borderRightWidth: 0,
               borderRadius: 0,
               borderLeftWidth: 0,
-              marginTop: 10,
+              marginTop: mScale(10),
             }}
             initValue={safeName}
             textContentStyle={{
-              fontSize: 22,
+              fontSize: mScale(22),
               color: '#000000',
               fontWeight: '700',
             }}
           />
           
-          <View style={{height: 33}} />
+          <View style={{height: mScale(33)}} />
           <ButtonComponent
             title="Create"
             fontSize={18}
             width={'100%'}
             borderColor={BASE_BUTTON}
             titleColor={DIMED_GRAY}
-            paddingVertical={21}
+            paddingVertical={mScale(21)}
             borderRadius={16}
             activeColor={isActiveDoneButton() ? MAIN_BLACK : BASE_BUTTON}
             activeFontColor={isActiveDoneButton() ? CC_WHITE : DIMED_GRAY}
@@ -136,18 +137,18 @@ const s = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: 24,
+    fontSize: mScale(24),
     fontWeight: '700',
   },
   address: {
-    fontSize: 12,
+    fontSize: mScale(12),
     fontWeight: '500',
-    lineHeight: 24,
-    marginTop: 7,
+    lineHeight: mScale(24),
+    marginTop: mScale(7),
   },
   close: {
-    marginTop: 20,
-    fontSize: 20,
+    marginTop: mScale(20),
+    fontSize: mScale(20),
     fontWeight: '700',
   },
 });

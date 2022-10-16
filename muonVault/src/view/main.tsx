@@ -30,6 +30,7 @@ import { updateScAssets } from '~/store/action/scAction';
 import User from '~/api/User';
 import { UserApiResponse } from '~/api/interface/userApiResponse';
 import { parseToEther } from '~/bc/VaultEtherApi';
+import { hScale, mScale, vScale } from './scaling';
 
 const Tab = createBottomTabNavigator();
 
@@ -259,19 +260,19 @@ const s = StyleSheet.create({
     bottom: 0,
     backgroundColor: BASE_BACKGROUND,
     flexDirection: 'row',
-    paddingHorizontal: 22,
+    paddingHorizontal: mScale(22),
     paddingTop: 5,
     paddingBottom:
-      Platform.OS === 'ios' && deviceInfoModule.hasNotch() ? 30 : 0,
+      Platform.OS === 'ios' && deviceInfoModule.hasNotch() ? mScale(30) : 0,
   },
   tabOptionWrapper: {
     width: '20%',
-    height: 60,
+    height: vScale(60),
   },
   allWrapper: {
     zIndex: -1,
     paddingTop: getStatusBarHeight(),
-    paddingBottom: Platform.OS==='ios' ? 0: 15,
+    paddingBottom: Platform.OS==='ios' ? 0: vScale(15),
     width: '100%',
     backgroundColor: BASE_BACKGROUND,
     height: '100%',
