@@ -65,7 +65,8 @@ const Main = () => {
 
   messaging().onMessage(async (remoteMessage: any) => {
     if (remoteMessage === null) return;
-
+    if (remoteMessage.data.title === NOTI_AUTH_PHONE) return;
+    
     console.log('**************** 앱 켜져있을떄 호출됨 : ', remoteMessage.data);
     const hashCodeRomoteMessage = stringToHash(JSON.stringify(remoteMessage));
     console.log(hashCodeRomoteMessage);

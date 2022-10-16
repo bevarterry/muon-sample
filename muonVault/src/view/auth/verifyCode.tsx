@@ -47,8 +47,6 @@ const VerifyCode = (props: any) => {
 
 
   useEffect(() => {
-    setVerifyCode('');
-
     if (props.route.params.type) {
       const { type, value } = props.route.params;
 
@@ -60,8 +58,10 @@ const VerifyCode = (props: any) => {
   }, []);
 
 
-  messaging().onMessage(async (remoteMessage: any) => {
+  messaging().onMessage((remoteMessage: any) => {
     if (remoteMessage === null) return;
+
+    console.log('**************** auth 앱 켜져있을떄 호출됨 : ', remoteMessage.data);
     const hashCodeRomoteMessage = stringToHash(JSON.stringify(remoteMessage));
     if (isDuplicated(hashCodeRomoteMessage)) return;
 
@@ -97,7 +97,7 @@ const VerifyCode = (props: any) => {
 
         navigation.pop(0);
         navigation.pop(1);
-        navigation.goBack();
+        return navigation.replace('InputEmail' as never);
       })
       .catch((err) => {
         Alert.alert('inherit code를 처리하는데 문제가 발생했습니다.')
