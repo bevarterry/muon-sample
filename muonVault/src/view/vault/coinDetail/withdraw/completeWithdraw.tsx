@@ -99,7 +99,7 @@ const CompleteWithdraw = (props: any) => {
             <>
               {badge('Total')}
               <Text style={s.componentText}>
-                ${Number(item.amount * item.coin.ratio).toFixed(6)}
+                ${Number(item.amount * item.coin.ratio).toFixed(2)}
               </Text>
             </>
           }

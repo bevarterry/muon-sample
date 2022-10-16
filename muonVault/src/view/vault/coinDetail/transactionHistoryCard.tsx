@@ -59,7 +59,7 @@ const TransactionHistoryCard: React.FC<React.PropsWithChildren<Props>> = ({
       </View>
       <View style={[{alignItems: 'flex-end'}, s.columWrapper]}>
         <Text style={s.value}>
-          {parseToEther(history.value)} {symbol}
+          {Number(parseToEther(history.value)).toFixed(6)} {symbol}
         </Text>
         <View style={s.purpose}>
           <BasicBadge title="to" backgroundColor={'#EFEFEF'} />

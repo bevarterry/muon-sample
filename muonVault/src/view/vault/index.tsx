@@ -28,7 +28,7 @@ const Vault = () => {
 
   return (
     <>
-      <ScrollView style={s.wrapper}>
+      <ScrollView contentContainerStyle={s.wrapper}>
         <TopComponent />
         <AssetSummaryComponent totalDollar={totalValueInDallor()} />
         <View
@@ -92,8 +92,8 @@ export default Vault;
 const s = StyleSheet.create({
   wrapper: {
     width: '100%',
-    height: '100%',
     backgroundColor: BASE_BACKGROUND,
+    paddingBottom: 100
   },
   summaryComponentWrapper: {
     width: '100%',

@@ -97,8 +97,8 @@ const VaultDetail = (props: any) => {
             alignItems: 'flex-end',
             justifyContent: 'flex-end',
           }}>
-          <Text style={s.value}>{Number(value) === 0 ? '0.0' : Number(value).toFixed(8)}</Text>
-          <Text style={s.dollarValue}>${Number(value * ratio).toFixed(0)}</Text>
+          <Text style={s.value}>{Number(value) === 0 ? '0.0' : Number(value).toFixed(6)}</Text>
+          <Text style={s.dollarValue}>${Number(value * ratio).toFixed(2)}</Text>
         </View>
       </TouchableOpacity>
     );

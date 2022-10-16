@@ -94,7 +94,7 @@ const InputAmount: React.FC<React.PropsWithChildren<Props>> = ({
               source={convert_value_icon}
             />
           </TouchableOpacity>
-          <Text>${(coin.ratio * Number(amount)).toFixed(6)}</Text>
+          <Text>${(coin.ratio * Number(amount)).toFixed(2)}</Text>
         </View>
       </View>
       <View
@@ -110,7 +110,7 @@ const InputAmount: React.FC<React.PropsWithChildren<Props>> = ({
         <Text style={s.balanceText}>
           Balance{' '}
           <Text style={{color: MAIN_BLACK}}>
-            {coin.value.toFixed(8)} {coin.symbol}
+            {coin.value.toFixed(6)} {coin.symbol}
           </Text>
           (${(coin.value * coin.ratio).toFixed(2)})
         </Text>

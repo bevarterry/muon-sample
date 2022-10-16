@@ -161,7 +161,7 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
               fontColor={'#ffffff'}
               fontSize={12}
             />
-            <Text style={s.totalValue}>${totalAmountToDollar().toFixed(6)}</Text>
+            <Text style={s.totalValue}>${totalAmountToDollar().toFixed(2)}</Text>
           </>
         }
       />

@@ -186,7 +186,7 @@ const ConfirmBuyVp = (props: any) => {
             alignItems: 'flex-end',
             justifyContent: 'flex-end',
           }}>
-          <Text style={s.value}>{value.toFixed(8)}</Text>
+          <Text style={s.value}>{value.toFixed(6)}</Text>
           <Text style={s.dollarValue}>$({value * ratio})</Text>
         </View>
       </View>
@@ -217,7 +217,7 @@ const ConfirmBuyVp = (props: any) => {
             ]}>
             <Text style={s.summaryText}>Buy {muAmount} MU:Points using</Text>
             <Text style={s.summaryText}>
-              {toValue.toFixed(8)} {coin.symbol} ($ {toValue * coin.ratio})
+              {toValue.toFixed(6)} {coin.symbol} ($ {toValue * coin.ratio})
             </Text>
 
             <View style={{width: '100%', marginTop: 96}}>

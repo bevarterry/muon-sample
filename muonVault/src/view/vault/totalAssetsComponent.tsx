@@ -22,7 +22,7 @@ const TotalAssetsComponent = () => {
           <Text style={s.displayCoinName}>{asset.displayName}</Text>
           <View style={s.assetValueWrapper}>
             <Text style={s.displayCoinName}>
-              {Number(totalValue) === 0 ? '0.0' : Number(totalValue).toFixed(8)}
+              {Number(totalValue) === 0 ? '0.0' : Number(totalValue).toFixed(6)}
             </Text>
             <Text style={s.coinValue}>{asset.symbol}</Text>
             <Text style={s.dollarValue}>

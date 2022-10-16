@@ -62,17 +62,6 @@ const CompleteBuyVp = (props: any) => {
     <>
       <View style={s.wrapper}>
         <Text style={s.completeText}>Complete!</Text>
-        {/* <Text
-          style={{
-            textAlign: 'center',
-            paddingHorizontal: 38,
-            marginTop: 24,
-            marginBottom: 30,
-          }}>
-          {item.amount} {item.coin.symbol} ($
-          {Number(item.amount * item.coin.ratio).toFixed(0)}) has been
-          transferred to the {item.to}
-        </Text> */}
 
         <SummaryCard
           serviceFee={10}
@@ -81,7 +70,7 @@ const CompleteBuyVp = (props: any) => {
             <>
               {badge('Amount')}
               <Text style={s.componentText}>
-                {item.amount.toFixed(8)} {item.coin.symbol}
+                {item.amount.toFixed(6)} {item.coin.symbol}
               </Text>
             </>
           }
@@ -95,7 +84,7 @@ const CompleteBuyVp = (props: any) => {
             <>
               {badge('Total')}
               <Text style={s.componentText}>
-                ${Number(item.amount * item.coin.ratio).toFixed(6)}
+                ${Number(item.amount * item.coin.ratio).toFixed(2)}
               </Text>
             </>
           }

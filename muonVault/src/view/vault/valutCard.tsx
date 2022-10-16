@@ -48,7 +48,7 @@ const ValutCard: React.FC<React.PropsWithChildren<Prop>> = ({vault}) => {
     return (
       <>
         <View style={s.assetValueWrapper}>
-          <Text style={s.displayCoinName}>{Number(value) === 0 ? '0.0' : Number(value).toFixed(8) }</Text>
+          <Text style={s.displayCoinName}>{Number(value) === 0 ? '0.0' : Number(value).toFixed(6) }</Text>
           <Text style={s.dollarValue}>
             (${Number(value * ratio).toFixed(0)})
           </Text>

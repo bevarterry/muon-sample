@@ -70,7 +70,7 @@ const InsertVpCard: React.FC<React.PropsWithChildren<Props>> = ({
         />
         <View style={[s.row]}>
           <Text style={s.value}>
-            {}Maximum {Number(posibleBuyAmount).toFixed(0)}MU:P
+            {}Maximum {Number(posibleBuyAmount).toFixed(2)}MU:P
           </Text>
         </View>
       </View>
