@@ -8,6 +8,7 @@ const onboard_center_image = require('../../../assets/image/step2_img.png');
 import Top from '../common/top';
 
 const StepTwo = () => {
+  
   const navigation = useNavigation();
 
   function moveToEmailAuth() {

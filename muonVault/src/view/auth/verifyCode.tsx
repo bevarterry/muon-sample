@@ -91,7 +91,7 @@ const VerifyCode = (props: any) => {
     const deadPin = props.route.params.inheritCode;
 
     console.log(token, deadPin);
-    postInheritPin(deadPin,token)
+    postInheritPin(deadPin, token)
       .then((e) => {
         console.log(props.route.params.inheritCode);
 
@@ -99,7 +99,7 @@ const VerifyCode = (props: any) => {
         navigation.pop(1);
         navigation.goBack();
       })
-      .catch((err)=> {
+      .catch((err) => {
         Alert.alert('inherit code를 처리하는데 문제가 발생했습니다.')
       })
   }
@@ -117,7 +117,7 @@ const VerifyCode = (props: any) => {
         const { token } = res.data;
 
         if (verifyItems.type === AUTH_PHONE_TYPE) {
-          
+
 
           if (props.route.params.inheritCode) {
             props.navigation.navigate('BiometicContainer', {
@@ -126,13 +126,13 @@ const VerifyCode = (props: any) => {
               reject: () => { reject() }
             } as never);
 
-            return ;
+            return;
           }
-          
+
           navigation.pop(1);
           return navigation.replace('InputEmail' as never);
         }
-        
+
 
         await setAccessToken({ accessToken: token });
         setCommonInfo(STORED_ACCESS_TOKEN, token);
@@ -197,9 +197,7 @@ const VerifyCode = (props: any) => {
 
   return (
     <>
-      <KeyboardAvoidingView
-        style={{ backgroundColor: BASE_BACKGROUND, }}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}>
+
         <View
           style={{
             width: '100%',
@@ -220,13 +218,14 @@ const VerifyCode = (props: any) => {
             click={requestVerifyPincode}
           />
         </View>
+        <Top
+          title={'Verification Code'}
+          backgroundColor={BASE_BACKGROUND}
+          left={true}
+          onTouchBackButton={navigation.goBack}
+        />
         <View style={s.wrapper}>
-          <Top
-            title={'Verification Code'}
-            backgroundColor={BASE_BACKGROUND}
-            left={true}
-            onTouchBackButton={navigation.goBack}
-          />
+
           {
             verifyItems.type === AUTH_EMAIL_TYPE &&
             <Text style={s.title}>Please enter code  sent to {verifyItems.value}</Text>
@@ -264,7 +263,6 @@ const VerifyCode = (props: any) => {
             />
           </View>
         </View>
-      </KeyboardAvoidingView>
     </>
   );
 };

@@ -1,10 +1,10 @@
-import React, {useRef} from 'react';
-import {useEffect} from 'react';
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import React, { useRef } from 'react';
+import { useEffect } from 'react';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import {useSelector} from 'react-redux';
-import {RootState} from '../../store/modules';
-import {BASE_BACKGROUND} from '../ColorCode';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/modules';
+import { BASE_BACKGROUND } from '../ColorCode';
 import TopComponent from '@view/common/topComponent';
 import TotalAssetsComponent from './totalAssetsComponent';
 import ValutCardListComponent from './valutCardListComponent';
@@ -19,10 +19,10 @@ const Vault = () => {
 
     return Number(
       vaultsStore.totalAssets.bitcoin * ratioStore.ratioSet.BTC +
-        vaultsStore.totalAssets.ethereum * ratioStore.ratioSet.ETH +
-        vaultsStore.totalAssets.binance * ratioStore.ratioSet.BNB +
-        vaultsStore.totalAssets.usdc * ratioStore.ratioSet.USDC +
-        vaultsStore.totalAssets.muon * ratioStore.ratioSet.MU,
+      vaultsStore.totalAssets.ethereum * ratioStore.ratioSet.ETH +
+      vaultsStore.totalAssets.binance * ratioStore.ratioSet.BNB +
+      vaultsStore.totalAssets.usdc * ratioStore.ratioSet.USDC +
+      vaultsStore.totalAssets.muon * ratioStore.ratioSet.MU,
     ).toFixed(2);
   };
 
@@ -53,12 +53,12 @@ type PropAssetSummary = {
 };
 const AssetSummaryComponent: React.FC<
   React.PropsWithChildren<PropAssetSummary>
-> = ({totalDollar}) => {
+> = ({ totalDollar }) => {
   return (
     <View style={s.summaryComponentWrapper}>
       <FastImage
         resizeMode="stretch"
-        style={{width: 62, height: 62, borderRadius: 50}}
+        style={{ width: 62, height: 62, borderRadius: 50 }}
         source={{
           uri: 'https://lh3.googleusercontent.com/-vgHaHJKRzXxXWd6OuY0vCwesaHfOHYeBbuvs6gZe9NoCK3I-NqTWngMAKDEyO7suAY8RQQLNbV5TlqYZULFpaQ6WQ7rkVuqaXkH=s168',
         }}
