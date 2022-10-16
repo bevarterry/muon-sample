@@ -69,7 +69,6 @@ const Main = () => {
     console.log('**************** 앱 켜져있을떄 호출됨 : ', remoteMessage.data);
     const hashCodeRomoteMessage = stringToHash(JSON.stringify(remoteMessage));
     console.log(hashCodeRomoteMessage);
-    console.log(isDuplicated(hashCodeRomoteMessage));
     console.log(remoteMessage.data.title, remoteMessage.data.message);
 
     if (isDuplicated(hashCodeRomoteMessage)) return;
@@ -117,7 +116,7 @@ const Main = () => {
     
     if (id === NOTI_AUTH_PHONE) {
       console.log('main noti ', message);
-    }else {
+    } else {
       
       const {symbol,string, purpose, value, status, txid} = JSON.parse(message);
       console.log(symbol);
@@ -128,6 +127,7 @@ const Main = () => {
       console.log(txid);
       if(value === 0) return;
       Toast.show(`[${string}] -> ${status}, ${parseToEther(value)} ${symbol}`, Toast.LONG);
+
       updateUserInfo();
     }
   }
@@ -135,6 +135,7 @@ const Main = () => {
   function updateUserInfo() {
     User.info()
       .then(e => {
+        console.log(e);
         const res: UserApiResponse = e;
 
         dispatch(updateWallet(res.Wallet));
