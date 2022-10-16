@@ -11,6 +11,7 @@ import {
   KeyboardTypeOptions,
 } from 'react-native';
 import {Value} from 'react-native-reanimated';
+import { hScale } from '../scaling';
 
 const {width, height} = Dimensions.get('window');
 
@@ -93,8 +94,8 @@ const TextInputComponent: React.FC<React.PropsWithChildren<Props>> = ({
           style={[
             s.editBox,
             {
-              width: 210,
-              maxWidth: 300,
+              width: hScale(170),
+              maxWidth: hScale(210),
               fontSize: fontSize ? fontSize : 13,
               fontWeight: fontWeight ? fontWeight : '400',
             },

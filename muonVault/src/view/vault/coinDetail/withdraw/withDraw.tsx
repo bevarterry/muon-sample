@@ -99,7 +99,7 @@ const WithDraw = (props: any) => {
 
   return (
     <>
-      <View style={s.wrapper}>
+      <ScrollView contentContainerStyle={s.wrapper}>
         <Top
           title={''}
           component={topCompoennt}
@@ -232,7 +232,7 @@ const WithDraw = (props: any) => {
             }}
           />
         )}
-      </View>
+      </ScrollView>
       <GlobalLoading action={globalLoadingStateStore.state} />
     </>
   );
@@ -246,7 +246,7 @@ const s = StyleSheet.create({
     paddingTop: 50 + getStatusBarHeight(),
     width: '100%',
     backgroundColor: BASE_BACKGROUND,
-    height: '100%',
+    paddingBottom: 150
   },
   fromRow: {
     width: '100%',
