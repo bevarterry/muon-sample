@@ -44,6 +44,9 @@ const PilotWithdrawBottomDialog = forwardRef((props: any, ref) => {
     openModal() {
       handlePresentModalPress();
     },
+    closeModal() {
+      handlePresentModalClose();
+    },
   }));
 
   // callbacks
@@ -117,7 +120,7 @@ const PilotWithdrawBottomDialog = forwardRef((props: any, ref) => {
               borderRadius={16}
               bodyColor={MAIN_BLACK}
               click={() => {
-                props.close();
+                props.send();
               }}
             />
             <View style={{height: 10}} />

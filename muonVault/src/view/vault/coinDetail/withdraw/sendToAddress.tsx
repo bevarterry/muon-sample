@@ -33,6 +33,7 @@ import Toast from 'react-native-simple-toast';
 import { CompleteWithdrawProps } from './completeWithdraw';
 import { checkBiometic } from '~/view/auth/biometic';
 import CoinDetail from '..';
+import GlobalLoading from '~/view/common/GlobalLoading';
 
 const {width, height} = Dimensions.get('window');
 const buttonWidth = (width - 34) / 2;
@@ -45,11 +46,15 @@ type Props = {
   };
 };
 const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
+  const globalLoadingStateStore = useSelector(
+    (root: RootState) => root.globalLoadingState,
+  );
+
   const pilotWithdrawModalRef = useRef();
   const dispatch: any = useDispatch();
   const navigation: any = useNavigation();
   
-  const pilotAmount  = 1 / props.coin.ratio;
+  const pilotAmount  = (1 / props.coin.ratio).toFixed(8);
   const [remainAmount, setRemainAmount] = useState(0);
   
   useEffect(()=>{
@@ -77,11 +82,12 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
       dispatch(setGlobalLoadingState(true));
       const hash = await requestWithdrawConfirm(remainAmount);
 
-      sendTxid(hash);
+      sendTxid(hash, false);
     } catch (error) {
       dispatch(setGlobalLoadingState(false));
     }
   }
+
 
   async function sendPilot() {
     if(!await checkBiometic()) {
@@ -90,17 +96,17 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
 
     try {
       dispatch(setGlobalLoadingState(true));
-      const hash = await requestWithdrawConfirm(pilotAmount);
+      const hash = await requestWithdrawConfirm(Number(pilotAmount));
 
-      setRemainAmount(remainAmount - pilotAmount);
-      sendTxid(hash);
+      setRemainAmount(remainAmount - Number(pilotAmount));
+      sendTxid(hash, true);
 
     } catch (error) {
       dispatch(setGlobalLoadingState(false));
     }
   }
 
-  function sendTxid(txid: string) {
+  function sendTxid(txid: string, isPilot: boolean) {
     VaultApi.sendTxid({
       txid: txid,
       symbol: props.coin.symbol,
@@ -117,7 +123,8 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
           amount: Number(props.amount),
           coin : props.coin
         }
-        navigation.replace('CompleteWithdraw', param);
+
+        if(!isPilot) navigation.replace('CompleteWithdraw', param);
       })
       .catch(e => {
         dispatch(setGlobalLoadingState(false));
@@ -220,10 +227,14 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
           click={sendAll}
         />
       </View>
-      <PilotWithdrawBottomDialog ref={pilotWithdrawModalRef} close={()=>{
+      <PilotWithdrawBottomDialog ref={pilotWithdrawModalRef} send={()=>{
+        //@ts-ignore
+        pilotWithdrawModalRef.current.closeModal();
+        sendPilot();
         console.log('pilotAmount', pilotAmount);
         console.log('remainAmount', remainAmount);
       }}/>
+      <GlobalLoading action={globalLoadingStateStore.state} />
     </>
   );
 };
