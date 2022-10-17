@@ -103,8 +103,10 @@ const s = StyleSheet.create({
   },
   dollarValue: {
     fontSize: 12,
+    minWidth: 55,
     fontWeight: '400',
     color: DIMED_GRAY,
     lineHeight: 24,
+    textAlign: 'right'
   },
 });
