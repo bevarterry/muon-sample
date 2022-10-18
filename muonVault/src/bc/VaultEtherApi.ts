@@ -2,13 +2,15 @@ import '@ethersproject/shims';
 import {BigNumber, ethers, providers} from 'ethers';
 import muVaultConfig from './mu_vault_ether_abi.json';
 
-const gasPrice = '10';
-const gasLimit = 1000000;
+
+
 
 const provider = new providers.InfuraProvider(
   'goerli',
   '35e8ec5bb21b460bbb74bbe1ee56b2d5',
 );
+
+const gasLimit = 21000;
 
 const isAddress = (address: string) => {
   return ethers.utils.isAddress(address);
@@ -38,11 +40,8 @@ const requestEtherWithdrawConfirm = async (
   privateKey: string,
   contractAddress: string,
 ) => {
-
-  console.log('출금요청 to', to);
-  console.log('출금요청 value', value);
-  console.log('출금요청 privateKey', privateKey);
-  console.log('출금요청 contractAddress', contractAddress);
+  
+  const gasPrice = await provider.getGasPrice()
 
   const wallet = new ethers.Wallet(privateKey);
   const signer = wallet.connect(provider);
@@ -53,6 +52,21 @@ const requestEtherWithdrawConfirm = async (
     signer,
   );
 
+  const estimatedGas = await contract.estimateGas.requestAndConfirmWithdraw(to,
+    ethers.utils.parseUnits(value, 'ether'))
+    console.log('출금요청 estimatedGas', estimatedGas);
+  
+
+  console.log('출금요청 to', to);
+  console.log('출금요청 value', value);
+  console.log('출금요청 privateKey', privateKey);
+  console.log('출금요청 contractAddress', contractAddress);
+  console.log('출금요청 gasPrice', ethers.utils.parseUnits(String(gasPrice), 'wei'));
+  console.log('출금요청 gasLimit', gasLimit);
+  
+
+
+
   let receipt;
   try {
     receipt = await contract.requestAndConfirmWithdraw(
@@ -60,8 +74,8 @@ const requestEtherWithdrawConfirm = async (
       ethers.utils.parseUnits(value, 'ether'),
       {
         from: wallet.address,
-        gasLimit: gasLimit,
-        gasPrice: ethers.utils.parseUnits(gasPrice, 'gwei'),
+        gasLimit: "0x21000",
+        gasPrice: ethers.utils.parseUnits(String(gasPrice), 'wei'),
       },
     );
 
@@ -78,4 +92,10 @@ const parseToEther = (value: number) => {
 
   return ethers.utils.formatEther(BigNumber.from(value));
 }
-export {getBalanceEther, requestEtherWithdrawConfirm, isAddress, parseToEther};
+
+const parseToWei = (value: number) => {
+  if(!value) return '0.0';
+  
+  return String(value * 1000000000000000000);
+}
+export {getBalanceEther, requestEtherWithdrawConfirm, isAddress, parseToEther, parseToWei};

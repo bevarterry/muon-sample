@@ -10,6 +10,7 @@ import TransactionHistoryCard from './transactionHistoryCard';
 import VaultApi from '../../../api/Vault';
 import {RootState} from '~/store/modules';
 import {useSelector} from 'react-redux';
+import { parseToWei } from '~/bc/VaultEtherApi';
 const search_icon = require('../../../../assets/image/search_icon.png');
 type Props = {
   symbol: string;
@@ -61,14 +62,15 @@ const TransactionHistoryContainer: React.FC<React.PropsWithChildren<Props>> = ({
 
     hists
     .filter(e => {
-      return (e.purpose === WITHDRAW || e.purpose === DEPOSIT)
+      return (e.purpose === WITHDRAW || e.purpose === DEPOSIT || e.purpose === 'Transfer')
     })
     .forEach(e => {
+      
       historyList.push({
         from: displayFromName(e.from),
         to: displayToName(e.to),
-        purpose: displayActionName(e.to, e.purpose),
-        value: e.value,
+        purpose: e.purpose === 'Transfer' ? 'Transfer' : displayActionName(e.to, e.purpose),
+        value: e.purpose === 'Transfer' ? parseToWei(e.value) : e.value,
       });
     });
 
