@@ -17,6 +17,8 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
+  Share,
+  Alert,
 } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 import {
@@ -88,6 +90,26 @@ const DepositBottomDialog: React.FC<React.PropsWithChildren<Props>> =
       ),
       [],
     );
+
+    async function onShare () {
+      try {
+        const result = await Share.share({
+          message: getDepositAddressBySymbol(),
+        });
+  
+        if (result.action === Share.sharedAction) {
+          if (result.activityType) {
+            // shared with activity type of result.activityType
+          } else {
+            // shared
+          }
+        } else if (result.action === Share.dismissedAction) {
+          // dismissed
+        }
+      } catch (error) {
+        
+      }
+    };
     // renders
     return (
       <BottomSheetModalProvider>
@@ -140,7 +162,7 @@ const DepositBottomDialog: React.FC<React.PropsWithChildren<Props>> =
                 paddingVertical={21}
                 borderRadius={16}
                 bodyColor={BASE_GRAY_BACKGROUND}
-                click={() => {}}
+                click={onShare}
               />
             </View>
             <TouchableOpacity

@@ -41,12 +41,8 @@ const requestBnbWithdrawConfirm = async (
   privateKey: string,
   contractAddress: string,
 ) => {
-
-  console.log('출금요청 to', to);
-  console.log('출금요청 value', value);
-  console.log('출금요청 privateKey', privateKey);
-  console.log('출금요청 contractAddress', contractAddress);
-
+  
+  
   const wallet = new ethers.Wallet(privateKey);
   const signer = wallet.connect(provider);
 
@@ -56,6 +52,18 @@ const requestBnbWithdrawConfirm = async (
     signer,
   );
 
+  const gasPrice = await provider.getGasPrice()
+  const gasLimit = await contract.estimateGas.requestAndConfirmWithdraw(to, ethers.utils.parseUnits(value, 'ether'));
+
+
+  console.log('출금요청 to', to);
+  console.log('출금요청 value', value);
+  console.log('출금요청 privateKey', privateKey);
+  console.log('출금요청 contractAddress', contractAddress);
+  console.log('출금요청 gasPrice', ethers.utils.parseUnits(String(gasPrice), 'wei'));
+  console.log('출금요청 gasLimit', gasLimit);
+  
+
   let receipt;
   try {
     receipt = await contract.requestAndConfirmWithdraw(
@@ -64,7 +72,7 @@ const requestBnbWithdrawConfirm = async (
       {
         from: wallet.address,
         gasLimit: gasLimit,
-        gasPrice: ethers.utils.parseUnits(gasPrice, 'gwei'),
+        gasPrice: ethers.utils.parseUnits(String(gasPrice), 'wei'),
       },
     );
 
@@ -75,5 +83,6 @@ const requestBnbWithdrawConfirm = async (
   console.log('[ BC 전송 트랜잭션] ', receipt.hash);
   return receipt.hash;
 };
+
 
 export {getBalanceBnb, requestBnbWithdrawConfirm};

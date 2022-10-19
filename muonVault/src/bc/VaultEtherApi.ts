@@ -52,7 +52,7 @@ const requestEtherWithdrawConfirm = async (
   );
 
   const gasPrice = await provider.getGasPrice()
-  const  gasLimit = await contract.estimateGas.requestAndConfirmWithdraw(to, ethers.utils.parseUnits(value, 'ether'));
+  const gasLimit = await contract.estimateGas.requestAndConfirmWithdraw(to, ethers.utils.parseUnits(value, 'ether'));
 
 
   console.log('출금요청 to', to);
