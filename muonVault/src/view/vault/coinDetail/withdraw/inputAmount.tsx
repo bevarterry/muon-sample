@@ -1,10 +1,10 @@
-import {useNavigation} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import {getStatusBarHeight} from 'react-native-status-bar-height';
-import {CoinDetailType} from '../../../../model/coin';
-import {Vault} from '../../../../model/vaults';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { CoinDetailType } from '../../../../model/coin';
+import { Vault } from '../../../../model/vaults';
 import {
   BASE_BACKGROUND,
   BASE_BUTTON,
@@ -15,7 +15,7 @@ import {
 import BasicBadge from '../../../common/basicBadge';
 import ButtonComponent from '../../../common/ButtonComponent';
 import TextInputComponent from '../../../common/TextInputComponent';
-import {WITHDRAW_BEFORE_EXECUTE} from '../../../constantProperties';
+import { WITHDRAW_BEFORE_EXECUTE } from '../../../constantProperties';
 const convert_value_icon = require('../../../../../assets/image/convert_value_icon.png');
 
 type Props = {
@@ -32,6 +32,13 @@ const InputAmount: React.FC<React.PropsWithChildren<Props>> = ({
   updateStep,
   updateAmount,
 }) => {
+
+
+  useEffect(() => {
+    console.log(1111111, coin);
+  }, [])
+
+
   const [amount, setAmount] = useState('0');
 
   const isActiveDoneButton = () => {
@@ -57,8 +64,8 @@ const InputAmount: React.FC<React.PropsWithChildren<Props>> = ({
           />
         }
         rightComponent={
-          <View style={{marginLeft: 5}}>
-            <Text style={{fontSize: 22, fontWeight: '700'}}>{coin.symbol}</Text>
+          <View style={{ marginLeft: 5 }}>
+            <Text style={{ fontSize: 22, fontWeight: '700' }}>{coin.symbol}</Text>
           </View>
         }
         fontSize={22}
@@ -69,7 +76,7 @@ const InputAmount: React.FC<React.PropsWithChildren<Props>> = ({
           setAmount(e);
         }}
         active={amount !== ''}
-        blur={(e: string) => {}}
+        blur={(e: string) => { }}
       />
       <View
         style={[
@@ -83,7 +90,7 @@ const InputAmount: React.FC<React.PropsWithChildren<Props>> = ({
           },
         ]}>
         <Text>Value</Text>
-        <View style={[s.rowCenter, {paddingHorizontal: 0}]}>
+        <View style={[s.rowCenter, { paddingHorizontal: 0 }]}>
           <TouchableOpacity style={s.convertButton} activeOpacity={0.7}>
             <FastImage
               resizeMode="contain"
@@ -94,7 +101,7 @@ const InputAmount: React.FC<React.PropsWithChildren<Props>> = ({
               source={convert_value_icon}
             />
           </TouchableOpacity>
-          <Text>${(coin.ratio * Number(amount)).toFixed(2)}</Text>
+          <Text>${(coin?.ratio * Number(amount)).toFixed(2)}</Text>
         </View>
       </View>
       <View
@@ -107,21 +114,21 @@ const InputAmount: React.FC<React.PropsWithChildren<Props>> = ({
             marginTop: 24,
           },
         ]}>
-        <Text style={s.balanceText}>
-          Balance{' '}
-          <Text style={{color: MAIN_BLACK}}>
-            {coin.value.toFixed(6)} {coin.symbol}
+          <Text style={s.balanceText}>
+            Balance{' '}
+            <Text style={{ color: MAIN_BLACK }}>
+              {Number(coin?.value).toFixed(6)} {coin.symbol}
+            </Text>
+            (${(coin?.value * coin?.ratio).toFixed(2)})
           </Text>
-          (${(coin.value * coin.ratio).toFixed(2)})
-        </Text>
         <Text style={s.balanceText}>
-          1 {coin.symbol} = ${coin.ratio}
+          1 {coin?.symbol} = ${coin?.ratio}
         </Text>
         {isExcessBalance() && (
-          <Text style={[s.balanceText, {color: 'red'}]}>Excess balance</Text>
+          <Text style={[s.balanceText, { color: 'red' }]}>Excess balance</Text>
         )}
       </View>
-      <View style={{width: '100%', paddingHorizontal: 20, marginTop: 30}}>
+      <View style={{ width: '100%', paddingHorizontal: 20, marginTop: 30 }}>
         <ButtonComponent
           title="Done"
           width="100%"

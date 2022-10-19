@@ -64,8 +64,8 @@ const CompleteBuyVp = (props: any) => {
         <Text style={s.completeText}>Complete!</Text>
 
         <SummaryCard
-          serviceFee={10}
-          estimateGasFee={10}
+          serviceFee={1}
+          estimateGasFee={1000000}
           amountComponent={
             <>
               {badge('Amount')}

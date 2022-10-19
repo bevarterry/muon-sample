@@ -119,7 +119,7 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
           from: props.fromVault.name,
           to: props.toAddress,
           estimateGasFee: 1000000,
-          serviceFee: 10,
+          serviceFee: 1,
           amount: Number(props.amount),
           coin : props.coin
         }

@@ -14,7 +14,7 @@ import {
   WITHDRAW_INPUT_TO_ADDRESS,
 } from '../../../constantProperties';
 import InputToStep from './inputToStep';
-import Step1 from './inputAmount';
+import InputAmount from './inputAmount';
 import SendToAddress from './sendToAddress';
 import SendToVault from './sendToVault';
 import GlobalLoading from '~/view/common/GlobalLoading';
@@ -77,7 +77,10 @@ const WithDraw = (props: any) => {
 
       setFromVault(vault);
       setCoin(coin);
+
+      console.log(333, coin)
     }
+
   }, []);
 
 
@@ -198,7 +201,7 @@ const WithDraw = (props: any) => {
         )}
 
         {step === WITHDRAW_INPUT_AMOUNT && (
-          <Step1
+          <InputAmount
             coin={coin}
             toVault={toVault}
             fromVault={fromVault}
