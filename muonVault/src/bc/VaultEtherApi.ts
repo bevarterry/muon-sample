@@ -41,8 +41,7 @@ const requestEtherWithdrawConfirm = async (
   contractAddress: string,
 ) => {
   
-  const gasPrice = await provider.getGasPrice()
-
+  
   const wallet = new ethers.Wallet(privateKey);
   const signer = wallet.connect(provider);
 
@@ -52,10 +51,9 @@ const requestEtherWithdrawConfirm = async (
     signer,
   );
 
-  const estimatedGas = await contract.estimateGas.requestAndConfirmWithdraw(to,
-    ethers.utils.parseUnits(value, 'ether'))
-    console.log('출금요청 estimatedGas', estimatedGas);
-  
+  const gasPrice = await provider.getGasPrice()
+  const  gasLimit = await contract.estimateGas.requestAndConfirmWithdraw(to, ethers.utils.parseUnits(value, 'ether'));
+
 
   console.log('출금요청 to', to);
   console.log('출금요청 value', value);
@@ -65,8 +63,6 @@ const requestEtherWithdrawConfirm = async (
   console.log('출금요청 gasLimit', gasLimit);
   
 
-
-
   let receipt;
   try {
     receipt = await contract.requestAndConfirmWithdraw(
@@ -74,7 +70,7 @@ const requestEtherWithdrawConfirm = async (
       ethers.utils.parseUnits(value, 'ether'),
       {
         from: wallet.address,
-        gasLimit: "0x21000",
+        gasLimit: gasLimit,
         gasPrice: ethers.utils.parseUnits(String(gasPrice), 'wei'),
       },
     );
