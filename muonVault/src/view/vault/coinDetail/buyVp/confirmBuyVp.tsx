@@ -145,6 +145,7 @@ const ConfirmBuyVp = (props: any) => {
   async function requestWithdrawConfirm() {
     let res;
 
+    console.log(coin.symbol)
     if (coin.symbol === ETH_SYMBOL) {
       
       res = await requestEtherWithdrawConfirm(
@@ -154,7 +155,8 @@ const ConfirmBuyVp = (props: any) => {
         coin.contractAddress,
       );
 
-    } else if (props.coin.symbol === BNB_SYMBOL) {
+    } else if (coin.symbol === BNB_SYMBOL) {
+      console.log(coin.symbol)
       res = await requestBnbWithdrawConfirm(
         BNB_BUY_MU_ADDRESS,
         String(toValue.toFixed(8)),
