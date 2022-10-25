@@ -52,7 +52,6 @@ const InputToStep: React.FC<React.PropsWithChildren<Props>> = ({
         <ScrollView horizontal style={{marginLeft: 10}} showsHorizontalScrollIndicator={false}>
           {vaultsStore.vaults.map((element, index) => {
             if (element.idx === NEW_CREATE) return;
-            if (element.idx === DEFAULT_WALLET) return;
             if (element.idx === vault.idx) return;
 
             return (
