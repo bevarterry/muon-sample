@@ -61,4 +61,5 @@ package-lock.json
 
 # Ruby / CocoaPods
 /ios/Pods/
+/ios/Podfile.lock
 /vendor/bundle/

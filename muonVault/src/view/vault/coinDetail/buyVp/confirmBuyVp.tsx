@@ -25,20 +25,24 @@ import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../../../store/modules';
 import FastImage from 'react-native-fast-image';
 import {CoinDetailType} from '~/model/coin';
-import { requestBnbWithdrawConfirm } from '~/bc/VaultBinanceApi';
-import { requestEtherWithdrawConfirm } from '~/bc/VaultEtherApi';
-import { BNB_BUY_MU_ADDRESS, BNB_SYMBOL, ETH_BUY_MU_ADDRESS, ETH_SYMBOL } from '~/view/constantProperties';
-import { setGlobalLoadingState } from '~/store/modules/GlobalLoadingReducer';
+import {requestBnbWithdrawConfirm} from '~/bc/VaultBinanceApi';
+import {requestEtherWithdrawConfirm} from '~/bc/VaultEtherApi';
+import {
+  BNB_BUY_MU_ADDRESS,
+  BNB_SYMBOL,
+  ETH_BUY_MU_ADDRESS,
+  ETH_SYMBOL,
+} from '~/view/constantProperties';
+import {setGlobalLoadingState} from '~/store/modules/GlobalLoadingReducer';
 import Toast from 'react-native-simple-toast';
 import VaultApi from '../../../../api/Vault';
-import { CompleteBuyVpProps } from './completeBuyVp';
-import { Vault } from '~/model/vaults';
+import {CompleteBuyVpProps} from './completeBuyVp';
+import {Vault} from '~/model/vaults';
 import GlobalLoading from '~/view/common/GlobalLoading';
-import { checkBiometic } from '~/view/auth/biometic';
+import {checkBiometic} from '~/view/auth/biometic';
 
 const buy_vp_icon = require('../../../../../assets/image/buy_vp_icon.png');
 const arrow_down_img = require('../../../../../assets/image/arrow_down_img.png');
-
 
 export type ConfirmBuyVpProps = {
   coin: CoinDetailType;
@@ -69,19 +73,18 @@ const ConfirmBuyVp = (props: any) => {
     color: '#000000',
   });
 
-
   const [coin, setCoin] = useState<CoinDetailType>({
     value: 0,
     ratio: 0,
     symbol: '',
     privateKey: '',
-    contractAddress: ''
+    contractAddress: '',
   });
 
   useEffect(() => {
     if (props.route.params.coin) {
       const {coin, muAmount, fromVault} = props.route.params;
-      
+
       setFromVault(fromVault);
       setCoin(coin);
       setToValue((muAmount * muDollarRatio) / coin.ratio);
@@ -89,30 +92,22 @@ const ConfirmBuyVp = (props: any) => {
     }
   }, []);
 
-
-
-
   async function requestConfirmForBuy() {
-    if(!await checkBiometic()) {
-      return Toast.show(`생체인증에 실패했습니다.`, Toast.SHORT);
-    }
+    // if(!await checkBiometic()) {
+    //   return Toast.show(`생체인증에 실패했습니다.`, Toast.SHORT);
+    // }
 
     dispatch(setGlobalLoadingState(true));
     try {
-      
       const hash = await requestWithdrawConfirm();
 
       sendTxid(hash);
-
     } catch (error) {
       dispatch(setGlobalLoadingState(false));
     }
   }
 
-
-
   function sendTxid(txid: string) {
-
     VaultApi.sendTxid({
       txid: txid,
       symbol: coin.symbol,
@@ -121,18 +116,15 @@ const ConfirmBuyVp = (props: any) => {
         dispatch(setGlobalLoadingState(false));
         Toast.show(`전송 요청을 완료. 컨펌이후 잔고 변경.`, Toast.SHORT);
 
-        const param : CompleteBuyVpProps = {
+        const param: CompleteBuyVpProps = {
           coin: coin,
-          fromVault : fromVault,
-          amount: toValue
-        }
+          fromVault: fromVault,
+          amount: toValue,
+        };
 
         console.log(JSON.stringify(param));
 
-        navigation.replace(
-          'CompleteBuyVp' as never,
-          param as never,
-        );
+        navigation.replace('CompleteBuyVp' as never, param as never);
       })
       .catch(e => {
         console.log('error txid send', JSON.stringify(e));
@@ -140,23 +132,19 @@ const ConfirmBuyVp = (props: any) => {
       });
   }
 
-
-
   async function requestWithdrawConfirm() {
     let res;
 
-    console.log(coin.symbol)
+    console.log(coin.symbol);
     if (coin.symbol === ETH_SYMBOL) {
-      
       res = await requestEtherWithdrawConfirm(
         ETH_BUY_MU_ADDRESS,
         String(toValue.toFixed(8)),
         coin.privateKey,
         coin.contractAddress,
       );
-
     } else if (coin.symbol === BNB_SYMBOL) {
-      console.log(coin.symbol)
+      console.log(coin.symbol);
       res = await requestBnbWithdrawConfirm(
         BNB_BUY_MU_ADDRESS,
         String(toValue.toFixed(8)),
@@ -165,11 +153,8 @@ const ConfirmBuyVp = (props: any) => {
       );
     }
 
-    
     return res;
   }
-
-
 
   const coinRow = (symbol: string, icon: any, value: number, ratio: number) => {
     return (
