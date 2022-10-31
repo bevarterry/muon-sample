@@ -27,10 +27,7 @@ type Prop = {
 const ValutCard: React.FC<React.PropsWithChildren<Prop>> = ({vault}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-
   const ratioStore = useSelector((root: RootState) => root.ratioStore);
-
-  useEffect(() => {}, [vault]);
 
   const devider = () => {
     return (
@@ -48,7 +45,7 @@ const ValutCard: React.FC<React.PropsWithChildren<Prop>> = ({vault}) => {
     return (
       <>
         <View style={s.assetValueWrapper}>
-          <Text style={s.displayCoinName}>{Number(value) === 0 ? '0.0' : Number(value).toFixed(6) }</Text>
+          <Text style={s.displayCoinName}>{Number(value) <= 0 ? '0.0' : Number(value).toFixed(6) }</Text>
           <Text style={s.dollarValue}>
             (${Number(value * ratio).toFixed(0)})
           </Text>

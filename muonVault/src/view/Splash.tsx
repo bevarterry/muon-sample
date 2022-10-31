@@ -22,9 +22,8 @@ const Splash = (props: any) => {
   useEffect(() => {
     dispatch(updateCoinRatioAction());
     
-    setTimeout(() => {
-      accessTokenCheck();
-    }, 800);
+    accessTokenCheck();
+    
   }, []);
 
   async function accessTokenCheck() {
@@ -47,6 +46,8 @@ const Splash = (props: any) => {
       .then(e => {
         const res: UserApiResponse = e;
 
+        dispatch(updateScAssets(res.SafeAddress, res.Wallet, res.MUP));
+        
         dispatch(updateWallet(res.Wallet));
 
         dispatch(updateVaultsFromApi());
@@ -54,9 +55,13 @@ const Splash = (props: any) => {
         console.log(
           '::::::::::::::::::::: [User Info ] ' + JSON.stringify(res),
         );
-        dispatch(updateScAssets(res.SafeAddress, res.Wallet, res.MUP));
-        dispatch(setGlobalLoadingState(false));
-        props.navigation.replace('Main');
+        
+        setTimeout(() => {
+          dispatch(setGlobalLoadingState(false));
+          props.navigation.replace('Main');  
+        }, 1000);
+        
+        
       })
       .catch(e => {
         dispatch(setGlobalLoadingState(false));

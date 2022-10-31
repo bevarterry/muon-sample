@@ -107,11 +107,13 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
   }
 
   function sendTxid(txid: string, isPilot: boolean) {
+    console.log(txid)
     VaultApi.sendTxid({
       txid: txid,
       symbol: props.coin.symbol,
     })
       .then(res => {
+        console.log(txid)
         dispatch(setGlobalLoadingState(false));
         Toast.show(`전송 요청을 완료. 컨펌이후 잔고 변경.`, Toast.SHORT);
         
@@ -124,6 +126,7 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
           coin : props.coin
         }
 
+        console.log(txid, isPilot)
         if(!isPilot) navigation.replace('CompleteWithdraw', param);
       })
       .catch(e => {

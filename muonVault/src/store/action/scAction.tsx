@@ -20,6 +20,15 @@ export const updateScAssets = (
     const muon = Number(totalMuon ? totalMuon : 0);
     console.log('::::::::::::::::::::: muon Balance ', muon);
     try {
+      const res = await getBalanceEther(
+        walletSet.ETH.PRIVATE,
+        SafeAddressSet.ETH,
+      );
+      console.log('::::::::::::::::::::: ether Balance ', res);
+      etherBalance = Number(res);
+    } catch (error) {}
+
+    try {
       const res = await getBalanceBnb(
         walletSet.BNB.PRIVATE,
         SafeAddressSet.BNB,
@@ -28,16 +37,7 @@ export const updateScAssets = (
       binance = Number(res);
     } catch (error) {}
 
-    try {
-      const res = await getBalanceEther(
-        walletSet.ETH.PRIVATE,
-        SafeAddressSet.ETH,
-        //'0xF2974c13c74b7792a2C85fed6a01CaC99Ed3bA03',
-      );
-      console.log('::::::::::::::::::::: ether Balance ', res);
-      etherBalance = Number(res);
-    } catch (error) {}
-
+    
     dispatch(
       setTotalAssets({
         vaults: [],
