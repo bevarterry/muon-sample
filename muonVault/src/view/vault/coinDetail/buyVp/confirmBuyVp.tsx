@@ -1,6 +1,7 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {
+  Alert,
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
@@ -32,6 +33,7 @@ import {
   BNB_SYMBOL,
   ETH_BUY_MU_ADDRESS,
   ETH_SYMBOL,
+  INSUFFICIENT_FUNDS,
 } from '~/view/constantProperties';
 import {setGlobalLoadingState} from '~/store/modules/GlobalLoadingReducer';
 import Toast from 'react-native-simple-toast';
@@ -100,7 +102,11 @@ const ConfirmBuyVp = (props: any) => {
     dispatch(setGlobalLoadingState(true));
     try {
       const hash = await requestWithdrawConfirm();
-
+      if(hash === INSUFFICIENT_FUNDS) {
+        
+        dispatch(setGlobalLoadingState(false));
+        return Alert.alert('Insufficient balance.')
+      }
       sendTxid(hash);
     } catch (error) {
       dispatch(setGlobalLoadingState(false));

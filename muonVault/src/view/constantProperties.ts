@@ -23,7 +23,7 @@ export const MU_SYMBOL = 'MU';
 export const MU_DISPLAY_SYMBOL = 'MU';
 
 
-
+export const INSUFFICIENT_FUNDS="잔액부족";
 export const NOTI_AUTH_PHONE="AUTH_PHONE";
 export const AUTH_PHONE_TYPE="AUTH_PHONE";
 export const AUTH_EMAIL_TYPE="AUTH_EMAIL";
