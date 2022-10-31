@@ -93,9 +93,9 @@ const ConfirmBuyVp = (props: any) => {
   }, []);
 
   async function requestConfirmForBuy() {
-    // if(!await checkBiometic()) {
-    //   return Toast.show(`생체인증에 실패했습니다.`, Toast.SHORT);
-    // }
+    if(!await checkBiometic()) {
+      return Toast.show(`생체인증에 실패했습니다.`, Toast.SHORT);
+    }
 
     dispatch(setGlobalLoadingState(true));
     try {
