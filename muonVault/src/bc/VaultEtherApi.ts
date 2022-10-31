@@ -76,7 +76,7 @@ const requestEtherWithdrawConfirm = async (
       {
         from: wallet.address,
         nonce: nonce,
-        gasLimit: baseGasLimit + parseInt(gasLimit._hex, 16),
+        gasLimit: ethers.utils.hexlify(baseGasLimit + parseInt(gasLimit._hex, 16)),
         gasPrice: ethers.utils.hexlify(gasPrice),
       },
     );
