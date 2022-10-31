@@ -72,7 +72,7 @@ const requestEtherWithdrawConfirm = async (
   console.log('필요한총액', totalNeedValue);
   console.log('출금요청 nonce', nonce);
   
-  if(Number(parseInt(etherBalance._hex, 16)) <  totalNeedValue){
+  if(Number(parseInt(etherBalance._hex, 16)) <  Number(gasLimitNumber*Number(gasPriceNumber))){
     return INSUFFICIENT_FUNDS+","+parseWeiToEther( Number(gasLimitNumber*Number(gasPriceNumber)));
   }
 
