@@ -101,13 +101,15 @@ const ConfirmBuyVp = (props: any) => {
 
     dispatch(setGlobalLoadingState(true));
     try {
-      const hash = await requestWithdrawConfirm();
-      if(hash === INSUFFICIENT_FUNDS) {
-        
+      const response:string = await requestWithdrawConfirm();
+      console.log(response);
+      if(response.includes(INSUFFICIENT_FUNDS)) {
+      
+        const token = response.split(',');
         dispatch(setGlobalLoadingState(false));
-        return Alert.alert('Insufficient balance.')
+        return Alert.alert('Insufficient balance.', `A transaction fee of at least ${token[1]} is required.`)
       }
-      sendTxid(hash);
+      sendTxid(response);
     } catch (error) {
       dispatch(setGlobalLoadingState(false));
     }
@@ -141,7 +143,6 @@ const ConfirmBuyVp = (props: any) => {
   async function requestWithdrawConfirm() {
     let res;
 
-    console.log(coin.symbol);
     if (coin.symbol === ETH_SYMBOL) {
       res = await requestEtherWithdrawConfirm(
         ETH_BUY_MU_ADDRESS,
@@ -150,7 +151,6 @@ const ConfirmBuyVp = (props: any) => {
         coin.contractAddress,
       );
     } else if (coin.symbol === BNB_SYMBOL) {
-      console.log(coin.symbol);
       res = await requestBnbWithdrawConfirm(
         BNB_BUY_MU_ADDRESS,
         String(toValue.toFixed(8)),

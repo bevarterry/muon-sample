@@ -59,25 +59,21 @@ const requestEtherWithdrawConfirm = async (
   );
 
   const gasLimitNumber = baseGasLimit + parseInt(gasLimit._hex, 16);
+  const totalNeedValue = Number(gasLimitNumber*Number(gasPriceNumber)) + Number(parseToWei(Number(value)));
 
-  console.log(baseGasLimit + gasLimit._hex);
   console.log('출금요청 to', to);
   console.log('출금요청 value', value);
   console.log('출금요청 privateKey', privateKey);
   console.log('출금요청 contractAddress', contractAddress);
   console.log('출금요청 gasPriceNumber', gasPriceNumber);
-  console.log(
-    '출금요청 gasLimit',
-    gasLimitNumber,
-  );
-  
   console.log('이더리잔액', parseInt(etherBalance._hex, 16));
   console.log('필요한가스', Number(gasLimitNumber*Number(gasPriceNumber)));
   console.log('전송할이더', parseToWei(Number(value)));
-  console.log('필요한총액', Number(gasLimitNumber*Number(gasPriceNumber)) + Number(parseToWei(Number(value))));
+  console.log('필요한총액', totalNeedValue);
   console.log('출금요청 nonce', nonce);
-  if(Number(parseInt(etherBalance._hex, 16)) <  Number(gasLimitNumber*Number(gasPriceNumber)) + Number(parseToWei(Number(value)))){
-    return INSUFFICIENT_FUNDS;
+  
+  if(Number(parseInt(etherBalance._hex, 16)) <  totalNeedValue){
+    return INSUFFICIENT_FUNDS+","+parseWeiToEther( Number(gasLimitNumber*Number(gasPriceNumber)));
   }
 
   let receipt;
@@ -112,10 +108,16 @@ const parseToWei = (value: number) => {
 
   return String(value * 1000000000000000000);
 };
+
+const parseWeiToEther = (value: number) => {
+  
+  return (value / 1000000000000000000).toFixed(6);
+};
 export {
   getBalanceEther,
   requestEtherWithdrawConfirm,
   isAddress,
   parseToEther,
   parseToWei,
+  parseWeiToEther
 };

@@ -1,6 +1,7 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useRef, useState} from 'react';
 import {
+  Alert,
   Dimensions,
   ScrollView,
   StyleSheet,
@@ -25,7 +26,7 @@ import {Vault} from '~/model/vaults';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '~/store/modules';
 import {requestEtherWithdrawConfirm} from '~/bc/VaultEtherApi';
-import {BNB_SYMBOL, ETH_SYMBOL} from '~/view/constantProperties';
+import {BNB_SYMBOL, ETH_SYMBOL, INSUFFICIENT_FUNDS} from '~/view/constantProperties';
 import {requestBnbWithdrawConfirm} from '~/bc/VaultBinanceApi';
 import VaultApi from '../../../../api/Vault';
 import { setGlobalLoadingState } from '~/store/modules/GlobalLoadingReducer';
@@ -80,9 +81,14 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
 
     try {
       dispatch(setGlobalLoadingState(true));
-      const hash = await requestWithdrawConfirm(remainAmount);
-
-      sendTxid(hash, false);
+      const response:string = await requestWithdrawConfirm(remainAmount);
+      if(response.includes(INSUFFICIENT_FUNDS)) {
+      
+        const token = response.split(',');
+        dispatch(setGlobalLoadingState(false));
+        return Alert.alert('Insufficient balance.', `A transaction fee of at least ${token[1]} is required.`)
+      }
+      sendTxid(response, false);
     } catch (error) {
       dispatch(setGlobalLoadingState(false));
     }
@@ -96,10 +102,17 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
 
     try {
       dispatch(setGlobalLoadingState(true));
-      const hash = await requestWithdrawConfirm(Number(pilotAmount));
+      const response:string = await requestWithdrawConfirm(Number(pilotAmount));
+
+      if(response.includes(INSUFFICIENT_FUNDS)) {
+      
+        const token = response.split(',');
+        dispatch(setGlobalLoadingState(false));
+        return Alert.alert('Insufficient balance.', `A transaction fee of at least ${token[1]} is required.`)
+      }
 
       setRemainAmount(remainAmount - Number(pilotAmount));
-      sendTxid(hash, true);
+      sendTxid(response, true);
 
     } catch (error) {
       dispatch(setGlobalLoadingState(false));
