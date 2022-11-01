@@ -8,7 +8,7 @@ const provider = new providers.InfuraProvider(
   '35e8ec5bb21b460bbb74bbe1ee56b2d5',
 );
 
-const baseGasLimit = 25000;
+const baseGasLimit = 21000;
 
 const isAddress = (address: string) => {
   return ethers.utils.isAddress(address);
