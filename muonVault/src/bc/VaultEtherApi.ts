@@ -111,7 +111,7 @@ const parseToWei = (value: number) => {
 
 const parseWeiToEther = (value: number) => {
   
-  return (value / 1000000000000000000).toFixed(6);
+  return (value / 1000000000000000000).toFixed(8);
 };
 export {
   getBalanceEther,
