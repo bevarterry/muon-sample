@@ -50,10 +50,9 @@ const VaultDetail = (props: any) => {
   const totalValueInDallor = () => {
     return Number(
       vault.BTC * ratioStore.ratioSet.BTC +
-        vault.ETH * ratioStore.ratioSet.ETH +
+        (vault.ETH <=0 ? 0: vault.ETH) * ratioStore.ratioSet.ETH +
         vault.BNB * ratioStore.ratioSet.BNB +
-        vault.USDC * ratioStore.ratioSet.USDC +
-        vault.VP * ratioStore.ratioSet.MU,
+        vault.USDC * ratioStore.ratioSet.USDC
     ).toFixed(2);
   };
 
@@ -97,8 +96,8 @@ const VaultDetail = (props: any) => {
             alignItems: 'flex-end',
             justifyContent: 'flex-end',
           }}>
-          <Text style={s.value}>{Number(value) === 0 ? '0.0' : Number(value).toFixed(6)}</Text>
-          <Text style={s.dollarValue}>${Number(value * ratio).toFixed(2)}</Text>
+          <Text style={s.value}>{Number(value) <= 0 ? '0.0' : Number(value).toFixed(6)}</Text>
+          <Text style={s.dollarValue}>${Number(value) <=0 ? '0.0': Number(value * ratio).toFixed(2)}</Text>
         </View>
       </TouchableOpacity>
     );

@@ -94,10 +94,10 @@ const CoinDetail = (props: any) => {
           source={coin.icon}
         />
         <Text style={s.coinValue}>
-          {Number(coin.value) === 0 ? '0.0' : Number(coin.value).toFixed(6)} {coin.symbol}
+          {Number(coin.value) <= 0 ? '0.0' : Number(coin.value).toFixed(6)} {coin.symbol}
         </Text>
         <Text style={s.dollarValue}>
-          Value ${Number(coin.value * coin.ratio).toFixed(0)}
+          Value ${Number(coin.value)<=0? '0.0' : Number(coin.value * coin.ratio).toFixed(0)}
         </Text>
 
         <TransactionButtonContainer
