@@ -48,7 +48,6 @@ const requestEtherWithdrawConfirm = async (
     signer,
   );
 
-  const nonce = await provider.getTransactionCount(wallet.address);
   const gasPriceNumber = await provider.getGasPrice();
   const gasLimit = await contract.estimateGas.requestAndConfirmWithdraw(
     to,
@@ -70,7 +69,6 @@ const requestEtherWithdrawConfirm = async (
   console.log('필요한가스', Number(gasLimitNumber*Number(gasPriceNumber)));
   console.log('전송할이더', parseToWei(Number(value)));
   console.log('필요한총액', totalNeedValue);
-  console.log('출금요청 nonce', nonce);
   
   if(Number(parseInt(etherBalance._hex, 16)) <  Number(gasLimitNumber*Number(gasPriceNumber))){
     return INSUFFICIENT_FUNDS+","+parseWeiToEther( Number(gasLimitNumber*Number(gasPriceNumber)));
@@ -83,7 +81,6 @@ const requestEtherWithdrawConfirm = async (
       ethers.utils.parseUnits(value, 'ether'),
       {
         from: wallet.address,
-        nonce: nonce,
         gasLimit: ethers.utils.hexlify(gasLimitNumber),
         gasPrice: ethers.utils.hexlify(gasPriceNumber),
       },
