@@ -31,6 +31,7 @@ import User from '~/api/User';
 import { UserApiResponse } from '~/api/interface/userApiResponse';
 import { parseToEther } from '~/bc/VaultEtherApi';
 import { hScale, mScale, vScale } from './scaling';
+import { setGlobalLoadingState } from '~/store/modules/GlobalLoadingReducer';
 
 const Tab = createBottomTabNavigator();
 
@@ -126,6 +127,7 @@ const Main = () => {
       console.log(value);
       console.log(status);
       console.log(txid);
+      dispatch(setGlobalLoadingState(false));
       if(value === 0) return;
       Toast.show(`[${string}] -> ${status}, ${parseToEther(value)} ${symbol}`, Toast.LONG);
 

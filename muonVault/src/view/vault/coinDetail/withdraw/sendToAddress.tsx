@@ -50,7 +50,7 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
   const globalLoadingStateStore = useSelector(
     (root: RootState) => root.globalLoadingState,
   );
-
+  const [isVisiblePilotSendButton, setIsVisiblePilotSendButton] = useState(true);
   const pilotWithdrawModalRef = useRef();
   const dispatch: any = useDispatch();
   const navigation: any = useNavigation();
@@ -138,9 +138,13 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
           amount: Number(props.amount),
           coin : props.coin
         }
+        setIsVisiblePilotSendButton(false);
 
         console.log(txid, isPilot)
         if(!isPilot) navigation.replace('CompleteWithdraw', param);
+        else {
+          dispatch(setGlobalLoadingState(true));
+        }
       })
       .catch(e => {
         dispatch(setGlobalLoadingState(false));
@@ -214,7 +218,7 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
           paddingHorizontal: 12,
         }}>
 
-          {isOverPilotVue() && 
+          {(isOverPilotVue() && isVisiblePilotSendButton ) &&
           <>
             <ButtonComponent
               title="Send $1"
@@ -234,7 +238,7 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
 
         <ButtonComponent
           title="Send All"
-          width={isOverPilotVue() ? buttonWidth : '100%'}
+          width={isOverPilotVue() && isVisiblePilotSendButton ? buttonWidth : '100%'}
           borderColor={BASE_BUTTON}
           titleColor={isOverPilotVue() ? MAIN_BLACK : CC_WHITE}
           paddingVertical={21}
@@ -250,7 +254,6 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
         console.log('pilotAmount', pilotAmount);
         console.log('remainAmount', remainAmount);
       }}/>
-      <GlobalLoading action={globalLoadingStateStore.state} />
     </>
   );
 };
