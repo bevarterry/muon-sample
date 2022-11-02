@@ -2,11 +2,14 @@ import '@ethersproject/shims';
 import {BigNumber, ethers, providers} from 'ethers';
 import { INSUFFICIENT_FUNDS } from '~/view/constantProperties';
 import muVaultConfig from './mu_vault_ether_abi.json';
+const Web3 = require("web3");
 
 const provider = new providers.InfuraProvider(
   'goerli',
   '35e8ec5bb21b460bbb74bbe1ee56b2d5',
 );
+
+const web3 = new Web3("https://goerli.infura.io/v3/35e8ec5bb21b460bbb74bbe1ee56b2d5");
 
 const baseGasLimit = 21000;
 
@@ -15,21 +18,17 @@ const isAddress = (address: string) => {
 };
 
 const getBalanceEther = async (privateKey: string, contractAddress: string) => {
-  const wallet = new ethers.Wallet(privateKey);
-
-  const signer = wallet.connect(provider);
-
-  let contract = await new ethers.Contract(
-    contractAddress,
+  const account = web3.eth.accounts.privateKeyToAccount(privateKey);
+  const contract = new web3.eth.Contract(
     muVaultConfig.abi,
-    signer,
-  );
+    contractAddress
+);
 
-  const balance = await contract.getBalance({
-    from: wallet.address,
+  let receipt = await contract.methods.getBalance().call({
+    from: account.address
   });
 
-  return ethers.utils.formatEther(balance);
+  return ethers.utils.formatEther(receipt);
 };
 
 const requestEtherWithdrawConfirm = async (
