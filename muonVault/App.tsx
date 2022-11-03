@@ -1,7 +1,7 @@
 import {NavigationContainer} from '@react-navigation/native';
 import React, {useEffect, type PropsWithChildren} from 'react';
 import {navigationRef} from './src/view/RootNavigation';
-import {ActivityIndicator, useColorScheme} from 'react-native';
+import {ActivityIndicator, LogBox, useColorScheme} from 'react-native';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import Splash from './src/view/Splash';
 import Home from './src/view/home';
@@ -34,7 +34,10 @@ import {RootState} from '~/store/modules';
 import ConfirmBuyVp from '~/view/vault/coinDetail/buyVp/confirmBuyVp';
 import TransactionHistory from '~/view/vault/coinDetail/transactionHistory';
 import BiometicContainer from '~/view/auth/biometicContainer';
-import './shim';
+LogBox.ignoreLogs([
+  "The provided value 'ms-stream' is not a valid 'responseType'.",
+  "The provided value 'moz-chunked-arraybuffer' is not a valid 'responseType'.",
+]);
 const Stack = createStackNavigator();
 const baseTransitionOption = {
   ...TransitionPresets.SlideFromRightIOS,

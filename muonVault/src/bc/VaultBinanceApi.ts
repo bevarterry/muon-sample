@@ -1,9 +1,10 @@
 import '@ethersproject/shims';
 import {ethers, providers} from 'ethers';
-import { INSUFFICIENT_FUNDS } from '~/view/constantProperties';
+import {INSUFFICIENT_FUNDS} from '~/view/constantProperties';
 import muVaultConfig from './mu_vault_bnb_abi.json';
-import { parseToWei, parseWeiToEther } from './VaultEtherApi';
-
+import {parseToWei, parseWeiToEther} from './VaultEtherApi';
+const Web3 = require('web3');
+const web3 = new Web3('https://data-seed-prebsc-1-s1.binance.org:8545/');
 const predefine = {
   scan_bsc_mainnet: 'https://api.bscscan.com/',
   scan_bsc_testnet: 'https://api-testnet.bscscan.com/',
@@ -11,13 +12,11 @@ const predefine = {
   node_host_bsc_testnet: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
 };
 
-const baseGasLimit = 21000;
-
 let provider = new ethers.providers.JsonRpcProvider(
   predefine.node_host_bsc_testnet,
 );
 
-const MU_VAULT_CONTRACT = '0x70068D8B45F04056C896C6E44A4b5E0Fb02c7d67';
+const baseGasLimit = web3.utils.toHex(1000000);
 
 const getBalanceBnb = async (privateKey: string, contractAddress: string) => {
   const wallet = new ethers.Wallet(privateKey);
@@ -43,62 +42,58 @@ const requestBnbWithdrawConfirm = async (
   privateKey: string,
   contractAddress: string,
 ) => {
-  const wallet = new ethers.Wallet(privateKey);
-  const signer = wallet.connect(provider);
-  const etherBalance = await provider.getBalance(wallet.address);
+  const account = web3.eth.accounts.privateKeyToAccount(privateKey);
+  web3.eth.accounts.wallet.add(privateKey);
+  const realBalance = await provider.getBalance(account.address);
+  const contract = new web3.eth.Contract(muVaultConfig.abi, contractAddress);
+  const valueToWei = web3.utils.toWei(value, 'ether');
 
-  let contract = new ethers.Contract(
-    contractAddress,
-    muVaultConfig.abi,
-    signer,
-  );
-
-  //const nonce = await provider.getTransactionCount(wallet.address);
-  const gasPriceNumber = await provider.getGasPrice();
-  const gasLimit = await contract.estimateGas.requestAndConfirmWithdraw(
+  const gasPriceHex = await getGasPrice();
+  const gasLimitHex = await getEstimateGasLimit(
+    account.address,
     to,
-    ethers.utils.parseUnits(value, 'ether'),
-    {
-      from: wallet.address,
-    },
+    valueToWei,
   );
+  const needTxFee =
+    web3.utils.hexToNumber(gasLimitHex) * web3.utils.hexToNumber(gasPriceHex);
 
-  const gasLimitNumber = baseGasLimit + parseInt(gasLimit._hex, 16);
-  const totalNeedValue = Number(gasLimitNumber*Number(gasPriceNumber)) + Number(parseToWei(Number(value)));
-
+  web3.utils.hexToNumber;
   console.log('출금요청 to', to);
-  console.log('출금요청 value', value);
+  console.log('출금요청 from', account.address);
+  console.log('출금요청 value', valueToWei);
   console.log('출금요청 privateKey', privateKey);
   console.log('출금요청 contractAddress', contractAddress);
-  console.log('출금요청 gasPriceNumber', gasPriceNumber);
-  console.log('이더리잔액', parseInt(etherBalance._hex, 16));
-  console.log('필요한가스', Number(gasLimitNumber*Number(gasPriceNumber)));
-  console.log('전송할이더', parseToWei(Number(value)));
-  console.log('필요한총액', totalNeedValue);
-  
-  if(Number(parseInt(etherBalance._hex, 16)) <  Number(gasLimitNumber*Number(gasPriceNumber))){
-    return INSUFFICIENT_FUNDS+","+parseWeiToEther( Number(gasLimitNumber*Number(gasPriceNumber)));
+  console.log('출금요청 gasPrice', gasPriceHex);
+  console.log('출금요청 gasLimit', gasLimitHex);
+  console.log('비앤비잔액', parseInt(realBalance._hex, 16));
+  console.log('필요한가스', needTxFee);
+
+  if (Number(parseInt(realBalance._hex, 16)) < needTxFee) {
+    return INSUFFICIENT_FUNDS + ',' + parseWeiToEther(needTxFee);
   }
 
-  let receipt;
-  try {
-    receipt = await contract.requestAndConfirmWithdraw(
-      to,
-      ethers.utils.parseUnits(value, 'ether'),
-      {
-        from: wallet.address,
-        gasLimit: ethers.utils.hexlify(gasLimitNumber),
-        gasPrice: ethers.utils.hexlify(gasPriceNumber),
-      },
-    );
+  const receipt = await contract.methods.requestAndConfirmWithdraw(
+    to,
+    valueToWei,
+  );
 
-    console.log(JSON.stringify(receipt));
-  } catch (err) {
-    console.error(JSON.stringify(err));
-  }
-  console.log('[ BC 전송 트랜잭션] ', receipt.hash);
-  return receipt.hash;
+  const result = await receipt.send({
+    from: account.address,
+    gasLimit: gasLimitHex,
+    gasPrice: gasPriceHex,
+  });
+  console.log('result ::::::', result);
+  console.log('[ BC 전송 트랜잭션] ', result.transactionHash);
+  return result.transactionHash;
 };
-
+const getEstimateGasLimit = async (from: string, to: string, value: string) => {
+  const gasAmount = await web3.eth.estimateGas({to, from, value});
+  return web3.utils.toHex(
+    web3.utils.hexToNumber(gasAmount) + web3.utils.hexToNumber(baseGasLimit),
+  );
+};
+const getGasPrice = async () => {
+  return web3.utils.toHex(await web3.eth.getGasPrice());
+};
 
 export {getBalanceBnb, requestBnbWithdrawConfirm};

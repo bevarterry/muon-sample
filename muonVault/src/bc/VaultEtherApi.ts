@@ -1,11 +1,17 @@
 import {BigNumber, ethers, providers} from 'ethers';
 import {INSUFFICIENT_FUNDS} from '~/view/constantProperties';
 import muVaultConfig from './mu_vault_ether_abi.json';
-import '../../shim';
+
 const Web3 = require('web3');
 const web3 = new Web3(
   'https://goerli.infura.io/v3/35e8ec5bb21b460bbb74bbe1ee56b2d5',
 );
+
+const provider = new providers.InfuraProvider(
+  'goerli',
+  '35e8ec5bb21b460bbb74bbe1ee56b2d5',
+);
+
 const baseGasLimit = web3.utils.toHex(1000000);
 const isAddress = (address: string) => {
   return ethers.utils.isAddress(address);
@@ -26,26 +32,34 @@ const requestEtherWithdrawConfirm = async (
 ) => {
   const account = web3.eth.accounts.privateKeyToAccount(privateKey);
   web3.eth.accounts.wallet.add(privateKey);
+  const realBalance = await provider.getBalance(account.address);
   const contract = new web3.eth.Contract(muVaultConfig.abi, contractAddress);
   const valueToWei = web3.utils.toWei(value, 'ether');
 
-  const gasPrice = await getGasPrice();
-  const gasLimit = await getEstimateGasLimit(account.address, to, valueToWei);
+  const gasPriceHex = await getGasPrice();
+  const gasLimitHex = await getEstimateGasLimit(
+    account.address,
+    to,
+    valueToWei,
+  );
+  const needTxFee =
+    web3.utils.hexToNumber(gasLimitHex) * web3.utils.hexToNumber(gasPriceHex);
+
+  web3.utils.hexToNumber;
   console.log('출금요청 to', to);
   console.log('출금요청 from', account.address);
   console.log('출금요청 value', valueToWei);
   console.log('출금요청 privateKey', privateKey);
   console.log('출금요청 contractAddress', contractAddress);
-  console.log('출금요청 gasPrice', gasPrice);
-  console.log('출금요청 gasLimit', gasLimit);
-  console.log('출금요청 contract method', contract.methods);
-  // console.log('필요한가스', Number(gasLimitNumber*Number(gasPriceNumber)));
-  // console.log('출금요청 gasPriceNumber', gasPriceNumber);
-  // console.log('이더리잔액', parseInt(etherBalance._hex, 16));
-  // console.log('필요한가스', Number(gasLimitNumber*Number(gasPriceNumber)));
-  // console.log('전송할이더', parseToWei(Number(value)));
-  // console.log('필요한총액', totalNeedValue);
-  // console.log('출금요청 nonce', nonce);
+  console.log('출금요청 gasPrice', gasPriceHex);
+  console.log('출금요청 gasLimit', gasLimitHex);
+  console.log('이더리잔액', parseInt(realBalance._hex, 16));
+  console.log('필요한가스', needTxFee);
+
+  if (Number(parseInt(realBalance._hex, 16)) < needTxFee) {
+    return INSUFFICIENT_FUNDS + ',' + parseWeiToEther(needTxFee);
+  }
+
   const receipt = await contract.methods.requestAndConfirmWithdraw(
     to,
     valueToWei,
@@ -53,8 +67,8 @@ const requestEtherWithdrawConfirm = async (
 
   const result = await receipt.send({
     from: account.address,
-    gasLimit: gasLimit,
-    gasPrice: gasPrice,
+    gasLimit: gasLimitHex,
+    gasPrice: gasPriceHex,
   });
   console.log('result ::::::', result);
   console.log('[ BC 전송 트랜잭션] ', result.transactionHash);
