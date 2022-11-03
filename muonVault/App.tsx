@@ -30,11 +30,11 @@ import MyInsuranceConfirm from '~/view/concierge/myInsuranceConfirm';
 import MyInsuranceComplete from '~/view/concierge/myInsuranceComplete';
 import InputPhone from '~/view/auth/inputPhone';
 import GlobalLoading from '~/view/common/GlobalLoading';
-import { RootState } from '~/store/modules';
+import {RootState} from '~/store/modules';
 import ConfirmBuyVp from '~/view/vault/coinDetail/buyVp/confirmBuyVp';
 import TransactionHistory from '~/view/vault/coinDetail/transactionHistory';
 import BiometicContainer from '~/view/auth/biometicContainer';
-
+import './shim';
 const Stack = createStackNavigator();
 const baseTransitionOption = {
   ...TransitionPresets.SlideFromRightIOS,
@@ -66,138 +66,136 @@ const App = () => {
 
   return (
     <>
-    <Provider store={store}>
-      <NavigationContainer
-        ref={navigationRef}
-        fallback={<ActivityIndicator color="blue" size="large" />}>
-        <Stack.Navigator
-          screenOptions={{headerShown: false}}
-          initialRouteName="Splash">
-          <Stack.Screen name="Splash" component={Splash} />
-          <Stack.Screen
-            name="Main"
-            component={Main}
-            options={baseTransitionOption}
-          />
-          <Stack.Screen
-            name="InputEmail"
-            component={InputEmail}
-            options={baseTransitionOption}
-          />
-          <Stack.Screen
-            name="InputPhone"
-            component={InputPhone}
-            options={baseTransitionOption}
-          />
-          <Stack.Screen
-            name="VerifyCode"
-            component={VerifyCode}
-            options={baseTransitionOption}
-          />
-          <Stack.Screen
-            name="BiometicContainer"
-            component={BiometicContainer}
-            options={modalPresentOption}
-          />
-          <Stack.Screen
-            name="Home"
-            component={Home}
-            options={baseTransitionOption}
-          />
-          <Stack.Screen
-            name="Crypto"
-            component={Crypto}
-            options={baseTransitionOption}
-          />
+      <Provider store={store}>
+        <NavigationContainer
+          ref={navigationRef}
+          fallback={<ActivityIndicator color="blue" size="large" />}>
+          <Stack.Navigator
+            screenOptions={{headerShown: false}}
+            initialRouteName="Splash">
+            <Stack.Screen name="Splash" component={Splash} />
+            <Stack.Screen
+              name="Main"
+              component={Main}
+              options={baseTransitionOption}
+            />
+            <Stack.Screen
+              name="InputEmail"
+              component={InputEmail}
+              options={baseTransitionOption}
+            />
+            <Stack.Screen
+              name="InputPhone"
+              component={InputPhone}
+              options={baseTransitionOption}
+            />
+            <Stack.Screen
+              name="VerifyCode"
+              component={VerifyCode}
+              options={baseTransitionOption}
+            />
+            <Stack.Screen
+              name="BiometicContainer"
+              component={BiometicContainer}
+              options={modalPresentOption}
+            />
+            <Stack.Screen
+              name="Home"
+              component={Home}
+              options={baseTransitionOption}
+            />
+            <Stack.Screen
+              name="Crypto"
+              component={Crypto}
+              options={baseTransitionOption}
+            />
 
-          <Stack.Screen
-            name="Asset"
-            component={Asset}
-            options={baseTransitionOption}
-          />
-          <Stack.Screen
-            name="StepOne"
-            component={StepOne}
-            options={baseTransitionOption}
-          />
-          <Stack.Screen
-            name="StepTwo"
-            component={StepTwo}
-            options={baseTransitionOption}
-          />
-          <Stack.Screen
-            name="Inherit"
-            component={InputInheritCode}
-            options={baseTransitionOption}
-          />
-          <Stack.Screen
-            name="VaultDetail"
-            component={VaultDetail}
-            options={baseTransitionOption}
-          />
-          <Stack.Screen
-            name="CoinDetail"
-            component={CoinDetail}
-            options={baseTransitionOption}
-          />
-          <Stack.Screen
-            name="TransactionHistory"
-            component={TransactionHistory}
-            options={baseTransitionOption}
-          />
-          
-          <Stack.Screen
-            name="WithDraw"
-            component={WithDraw}
-            options={baseTransitionOption}
-          />
-          <Stack.Screen
-            name="BuyVP"
-            component={BuyVp}
-            options={baseTransitionOption}
-          />
-          <Stack.Screen
-            name="ConfirmBuyVp"
-            component={ConfirmBuyVp}
-            options={baseTransitionOption}
-          />
-          
-          <Stack.Screen
-            name="CompleteBuyVp"
-            component={CompleteBuyVp}
-            options={baseTransitionOption}
-          />
-          <Stack.Screen
-            name="CompleteWithdraw"
-            component={CompleteWithdraw}
-            options={baseTransitionOption}
-          />
-          <Stack.Screen
-            name="MyInsurance"
-            component={MyInsurance}
-            options={baseTransitionOption}
-          />
-          <Stack.Screen
-            name="MyInsuranceConfirm"
-            component={MyInsuranceConfirm}
-            options={baseTransitionOption}
-          />
-          <Stack.Screen
-            name="MyInsuranceComplete"
-            component={MyInsuranceComplete}
-            options={baseTransitionOption}
-          />
+            <Stack.Screen
+              name="Asset"
+              component={Asset}
+              options={baseTransitionOption}
+            />
+            <Stack.Screen
+              name="StepOne"
+              component={StepOne}
+              options={baseTransitionOption}
+            />
+            <Stack.Screen
+              name="StepTwo"
+              component={StepTwo}
+              options={baseTransitionOption}
+            />
+            <Stack.Screen
+              name="Inherit"
+              component={InputInheritCode}
+              options={baseTransitionOption}
+            />
+            <Stack.Screen
+              name="VaultDetail"
+              component={VaultDetail}
+              options={baseTransitionOption}
+            />
+            <Stack.Screen
+              name="CoinDetail"
+              component={CoinDetail}
+              options={baseTransitionOption}
+            />
+            <Stack.Screen
+              name="TransactionHistory"
+              component={TransactionHistory}
+              options={baseTransitionOption}
+            />
 
-          {/*
+            <Stack.Screen
+              name="WithDraw"
+              component={WithDraw}
+              options={baseTransitionOption}
+            />
+            <Stack.Screen
+              name="BuyVP"
+              component={BuyVp}
+              options={baseTransitionOption}
+            />
+            <Stack.Screen
+              name="ConfirmBuyVp"
+              component={ConfirmBuyVp}
+              options={baseTransitionOption}
+            />
+
+            <Stack.Screen
+              name="CompleteBuyVp"
+              component={CompleteBuyVp}
+              options={baseTransitionOption}
+            />
+            <Stack.Screen
+              name="CompleteWithdraw"
+              component={CompleteWithdraw}
+              options={baseTransitionOption}
+            />
+            <Stack.Screen
+              name="MyInsurance"
+              component={MyInsurance}
+              options={baseTransitionOption}
+            />
+            <Stack.Screen
+              name="MyInsuranceConfirm"
+              component={MyInsuranceConfirm}
+              options={baseTransitionOption}
+            />
+            <Stack.Screen
+              name="MyInsuranceComplete"
+              component={MyInsuranceComplete}
+              options={baseTransitionOption}
+            />
+
+            {/*
         <Stack.Screen name="Character" component={Character} options={{...TransitionPresets.ModalSlideFromBottomIOS, 
           title: 'Select Character',
           headerShown: true }}
           /> */}
-        </Stack.Navigator>
-        
-      </NavigationContainer>
-      
-    </Provider>
+          </Stack.Navigator>
+        </NavigationContainer>
+      </Provider>
     </>
   );
 };

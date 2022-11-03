@@ -26,13 +26,17 @@ import {Vault} from '~/model/vaults';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '~/store/modules';
 import {requestEtherWithdrawConfirm} from '~/bc/VaultEtherApi';
-import {BNB_SYMBOL, ETH_SYMBOL, INSUFFICIENT_FUNDS} from '~/view/constantProperties';
+import {
+  BNB_SYMBOL,
+  ETH_SYMBOL,
+  INSUFFICIENT_FUNDS,
+} from '~/view/constantProperties';
 import {requestBnbWithdrawConfirm} from '~/bc/VaultBinanceApi';
 import VaultApi from '../../../../api/Vault';
-import { setGlobalLoadingState } from '~/store/modules/GlobalLoadingReducer';
+import {setGlobalLoadingState} from '~/store/modules/GlobalLoadingReducer';
 import Toast from 'react-native-simple-toast';
-import { CompleteWithdrawProps } from './completeWithdraw';
-import { checkBiometic } from '~/view/auth/biometic';
+import {CompleteWithdrawProps} from './completeWithdraw';
+import {checkBiometic} from '~/view/auth/biometic';
 import CoinDetail from '..';
 import GlobalLoading from '~/view/common/GlobalLoading';
 
@@ -50,98 +54,102 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
   const globalLoadingStateStore = useSelector(
     (root: RootState) => root.globalLoadingState,
   );
-  const [isVisiblePilotSendButton, setIsVisiblePilotSendButton] = useState(true);
+  const [isVisiblePilotSendButton, setIsVisiblePilotSendButton] =
+    useState(true);
   const pilotWithdrawModalRef = useRef();
   const dispatch: any = useDispatch();
   const navigation: any = useNavigation();
-  
-  const pilotAmount  = (1 / props.coin.ratio).toFixed(8);
+
+  const pilotAmount = (1 / props.coin.ratio).toFixed(8);
   const [remainAmount, setRemainAmount] = useState(0);
-  
-  useEffect(()=>{
+
+  useEffect(() => {
     setRemainAmount(Number(props.amount));
-  }, [props.amount])
-
-
+  }, [props.amount]);
 
   const isOverPilotVue = () => {
     // 100 달러 기준
-    return (100 - totalAmountToDollar() < 0);
-  }
+    return 100 - totalAmountToDollar() < 0;
+  };
 
   const totalAmountToDollar = () => {
-    return (props.coin.ratio * Number(props.amount));
-  }
-
+    return props.coin.ratio * Number(props.amount);
+  };
 
   async function sendAll() {
-    if(!await checkBiometic()) {
+    if (!(await checkBiometic())) {
       return Toast.show(`생체인증에 실패했습니다.`, Toast.SHORT);
     }
 
     try {
       dispatch(setGlobalLoadingState(true));
-      const response:string = await requestWithdrawConfirm(remainAmount);
-      if(response.includes(INSUFFICIENT_FUNDS)) {
-      
+      const response: string = await requestWithdrawConfirm(remainAmount);
+      if (response.includes(INSUFFICIENT_FUNDS)) {
         const token = response.split(',');
         dispatch(setGlobalLoadingState(false));
-        return Alert.alert('Insufficient balance.', `A transaction fee of at least ${token[1]} is required.`)
+        return Alert.alert(
+          'Insufficient balance.',
+          `A transaction fee of at least ${token[1]} is required.`,
+        );
       }
       sendTxid(response, false);
     } catch (error) {
+      console.log(error);
       dispatch(setGlobalLoadingState(false));
     }
   }
 
-
   async function sendPilot() {
-    if(!await checkBiometic()) {
+    if (!(await checkBiometic())) {
       return Toast.show(`생체인증에 실패했습니다.`, Toast.SHORT);
     }
 
     try {
       dispatch(setGlobalLoadingState(true));
-      const response:string = await requestWithdrawConfirm(Number(pilotAmount));
+      const response: string = await requestWithdrawConfirm(
+        Number(pilotAmount),
+      );
 
-      if(response.includes(INSUFFICIENT_FUNDS)) {
-      
+      if (response.includes(INSUFFICIENT_FUNDS)) {
         const token = response.split(',');
         dispatch(setGlobalLoadingState(false));
-        return Alert.alert('Insufficient balance.', `A transaction fee of at least ${token[1]} is required.`)
+        return Alert.alert(
+          'Insufficient balance.',
+          `A transaction fee of at least ${token[1]} is required.`,
+        );
       }
 
       setRemainAmount(remainAmount - Number(pilotAmount));
       sendTxid(response, true);
-
     } catch (error) {
+      console.log(error);
       dispatch(setGlobalLoadingState(false));
     }
   }
 
   function sendTxid(txid: string, isPilot: boolean) {
-    console.log(txid)
+    console.log(txid);
     VaultApi.sendTxid({
       txid: txid,
       symbol: props.coin.symbol,
     })
       .then(res => {
-        console.log(txid)
+        console.log(txid);
         dispatch(setGlobalLoadingState(false));
         Toast.show(`전송 요청을 완료. 컨펌이후 잔고 변경.`, Toast.SHORT);
-        
-        const param:CompleteWithdrawProps  = {
+
+        const param: CompleteWithdrawProps = {
           from: props.fromVault.name,
           to: props.toAddress,
           estimateGasFee: 1000000,
           serviceFee: 1,
           amount: Number(props.amount),
-          coin : props.coin
-        }
+          coin: props.coin,
+        };
         setIsVisiblePilotSendButton(false);
 
-        console.log(txid, isPilot)
-        if(!isPilot) navigation.replace('CompleteWithdraw', param);
+        console.log(txid, isPilot);
+        if (!isPilot) navigation.replace('CompleteWithdraw', param);
         else {
           dispatch(setGlobalLoadingState(true));
         }
@@ -150,7 +158,6 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
         dispatch(setGlobalLoadingState(false));
       });
   }
-
 
   async function requestWithdrawConfirm(value: number) {
     let res;
@@ -188,7 +195,9 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
               fontColor={'#ffffff'}
               fontSize={12}
             />
-            <Text style={s.totalValue}>${totalAmountToDollar().toFixed(2)}</Text>
+            <Text style={s.totalValue}>
+              ${totalAmountToDollar().toFixed(2)}
+            </Text>
           </>
         }
       />
@@ -217,8 +226,7 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
           flexDirection: 'row',
           paddingHorizontal: 12,
         }}>
-
-          {(isOverPilotVue() && isVisiblePilotSendButton ) &&
+        {isOverPilotVue() && isVisiblePilotSendButton && (
           <>
             <ButtonComponent
               title="Send $1"
@@ -231,14 +239,17 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
               click={() => {
                 //@ts-ignore
                 pilotWithdrawModalRef.current.openModal();
-              }}/>
+              }}
+            />
             <View style={{width: 10}} />
-            </>
-          }
+          </>
+        )}
 
         <ButtonComponent
           title="Send All"
-          width={isOverPilotVue() && isVisiblePilotSendButton ? buttonWidth : '100%'}
+          width={
+            isOverPilotVue() && isVisiblePilotSendButton ? buttonWidth : '100%'
+          }
           borderColor={BASE_BUTTON}
           titleColor={isOverPilotVue() ? MAIN_BLACK : CC_WHITE}
           paddingVertical={21}
@@ -247,13 +258,16 @@ const SendToAddress: React.FC<React.PropsWithChildren<Props>> = ({props}) => {
           click={sendAll}
         />
       </View>
-      <PilotWithdrawBottomDialog ref={pilotWithdrawModalRef} send={()=>{
-        //@ts-ignore
-        pilotWithdrawModalRef.current.closeModal();
-        sendPilot();
-        console.log('pilotAmount', pilotAmount);
-        console.log('remainAmount', remainAmount);
-      }}/>
+      <PilotWithdrawBottomDialog
+        ref={pilotWithdrawModalRef}
+        send={() => {
+          //@ts-ignore
+          pilotWithdrawModalRef.current.closeModal();
+          sendPilot();
+          console.log('pilotAmount', pilotAmount);
+          console.log('remainAmount', remainAmount);
+        }}
+      />
     </>
   );
 };

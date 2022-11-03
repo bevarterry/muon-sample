@@ -95,22 +95,25 @@ const ConfirmBuyVp = (props: any) => {
   }, []);
 
   async function requestConfirmForBuy() {
-    if(!await checkBiometic()) {
+    if (!(await checkBiometic())) {
       return Toast.show(`생체인증에 실패했습니다.`, Toast.SHORT);
     }
 
     dispatch(setGlobalLoadingState(true));
     try {
-      const response:string = await requestWithdrawConfirm();
+      const response: string = await requestWithdrawConfirm();
       console.log(response);
-      if(response.includes(INSUFFICIENT_FUNDS)) {
-      
+      if (response.includes(INSUFFICIENT_FUNDS)) {
         const token = response.split(',');
         dispatch(setGlobalLoadingState(false));
-        return Alert.alert('Insufficient balance.', `A transaction fee of at least ${token[1]} is required.`)
+        return Alert.alert(
+          'Insufficient balance.',
+          `A transaction fee of at least ${token[1]} is required.`,
+        );
       }
       sendTxid(response);
     } catch (error) {
+      console.log(error);
       dispatch(setGlobalLoadingState(false));
     }
   }
